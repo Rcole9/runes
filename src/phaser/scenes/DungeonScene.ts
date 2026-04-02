@@ -28,6 +28,7 @@ export class DungeonScene extends Phaser.Scene {
   private telegraphCooldown = 1200;
   private addSummonCooldown = 2600;
   private statusText!: Phaser.GameObjects.Text;
+  private attackQueued = false;
 
   constructor() {
     super("DungeonScene");
@@ -66,13 +67,21 @@ export class DungeonScene extends Phaser.Scene {
     );
     this.player.setDepth(this.mapOrigin.y + start.y + 90);
 
-    this.keys = this.input.keyboard!.addKeys("W,A,S,D,SPACE") as Record<
+    this.keys = this.input.keyboard!.addKeys("W,A,S,D,SPACE,J") as Record<
       string,
       Phaser.Input.Keyboard.Key
     >;
+    this.input.keyboard?.addCapture([
+      Phaser.Input.Keyboard.KeyCodes.SPACE,
+      Phaser.Input.Keyboard.KeyCodes.J,
+    ]);
+
+    this.input.on("pointerdown", () => {
+      this.attackQueued = true;
+    });
 
     this.statusText = this.add
-      .text(16, 16, "Clear waves to summon the boss", {
+      .text(16, 16, "Clear waves to summon the boss | Space/J/click attack", {
         color: "#ffe6ef",
         fontSize: "14px",
       })
@@ -235,9 +244,14 @@ export class DungeonScene extends Phaser.Scene {
     this.player.setDepth(this.mapOrigin.y + pos.y + 90);
 
     this.attackCooldown -= dt;
-    if (Phaser.Input.Keyboard.JustDown(this.keys.SPACE)) {
+    const attackPressed =
+      Phaser.Input.Keyboard.JustDown(this.keys.SPACE) ||
+      Phaser.Input.Keyboard.JustDown(this.keys.J) ||
+      this.attackQueued;
+    if (attackPressed) {
       this.playerAttack();
     }
+    this.attackQueued = false;
 
     this.enemies.forEach((enemy) => this.updateEnemy(enemy, dt));
 
