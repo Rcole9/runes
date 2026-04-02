@@ -1,0 +1,150 @@
+import { getClassLabel } from "./classes";
+import { addToInventory, equipItem, unequipSlot } from "./inventory";
+import { generateLoot } from "./loot";
+import { loadGame, saveGame } from "./persistence";
+import { nextDungeonTier, nextLevel } from "./progression";
+import { hashSeed, mulberry32 } from "./rng";
+import { computePowerLevel, derivePlayerStats } from "./stats";
+import { Equipment, Item, PlayerClassId, SaveData } from "./types";
+
+export interface RuntimeState {
+  classId: PlayerClassId;
+  classLabel: string;
+  level: number;
+  dungeonTier: number;
+  hp: number;
+  maxHp: number;
+  powerLevel: number;
+  equipment: Equipment;
+  inventory: Item[];
+  latestLoot: Item | null;
+}
+
+const listeners = new Set<() => void>();
+
+let state: RuntimeState = {
+  classId: "dps",
+  classLabel: "DPS",
+  level: 1,
+  dungeonTier: 1,
+  hp: 140,
+  maxHp: 140,
+  powerLevel: 0,
+  equipment: {
+    weapon: null,
+    armor: null,
+  },
+  inventory: [],
+  latestLoot: null,
+};
+
+function recalcState(): void {
+  const stats = derivePlayerStats(state.classId, state.level, state.equipment);
+  state.maxHp = stats.maxHp;
+  state.hp = Math.min(state.hp, stats.maxHp);
+  state.powerLevel = computePowerLevel(stats, state.level);
+  state.classLabel = getClassLabel(state.classId);
+}
+
+function persist(): void {
+  const save: SaveData = {
+    progress: {
+      classId: state.classId,
+      level: state.level,
+      dungeonTier: state.dungeonTier,
+      powerLevel: state.powerLevel,
+    },
+    inventory: state.inventory,
+    equipment: state.equipment,
+  };
+  saveGame(save);
+}
+
+function emit(): void {
+  listeners.forEach((listener) => listener());
+}
+
+function commit(mutator: () => void): void {
+  mutator();
+  recalcState();
+  persist();
+  emit();
+}
+
+export function initializeStore(): void {
+  const loaded = loadGame();
+  if (loaded) {
+    state = {
+      ...state,
+      classId: loaded.progress.classId,
+      level: loaded.progress.level,
+      dungeonTier: loaded.progress.dungeonTier,
+      equipment: loaded.equipment,
+      inventory: loaded.inventory,
+      hp: 9999,
+      latestLoot: null,
+      classLabel: "DPS",
+      powerLevel: loaded.progress.powerLevel,
+      maxHp: 140,
+    };
+  }
+  recalcState();
+  state.hp = state.maxHp;
+  emit();
+}
+
+export const gameStore = {
+  subscribe(listener: () => void): () => void {
+    listeners.add(listener);
+    return () => listeners.delete(listener);
+  },
+  getState(): RuntimeState {
+    return state;
+  },
+  setClass(classId: PlayerClassId): void {
+    commit(() => {
+      state.classId = classId;
+      state.hp = 9999;
+    });
+    state.hp = state.maxHp;
+  },
+  takeDamage(amount: number): void {
+    commit(() => {
+      state.hp = Math.max(0, state.hp - amount);
+    });
+  },
+  heal(amount: number): void {
+    commit(() => {
+      state.hp = Math.min(state.maxHp, state.hp + amount);
+    });
+  },
+  completeDungeonAndGrantLoot(seed: string): Item {
+    let dropped: Item;
+    commit(() => {
+      const rng = mulberry32(hashSeed(seed));
+      dropped = generateLoot(rng, state.dungeonTier);
+      state.inventory = addToInventory(state.inventory, dropped);
+      state.latestLoot = dropped;
+      state.dungeonTier = nextDungeonTier(state.dungeonTier);
+      state.level = nextLevel(state.level, state.dungeonTier);
+    });
+    return dropped!;
+  },
+  equip(itemId: string): void {
+    commit(() => {
+      const item = state.inventory.find((i) => i.id === itemId);
+      if (!item) return;
+      state.equipment = equipItem(state.equipment, item);
+    });
+  },
+  unequip(slot: "weapon" | "armor"): void {
+    commit(() => {
+      state.equipment = unequipSlot(state.equipment, slot);
+    });
+  },
+  resetHp(): void {
+    commit(() => {
+      state.hp = state.maxHp;
+    });
+  },
+};
