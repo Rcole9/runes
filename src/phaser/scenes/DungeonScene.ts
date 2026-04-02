@@ -142,6 +142,33 @@ export class DungeonScene extends Phaser.Scene {
     this.statusText.setText("Boss phase 1: watch telegraphs");
   }
 
+  private playAttackEffect(x: number, y: number, didHit: boolean): void {
+    const slash = this.add.image(x, y - 8, "slash");
+    slash.setDepth(y + 220);
+    slash.setScale(didHit ? 0.55 : 0.42);
+    slash.setAlpha(0.9);
+    slash.setAngle(Phaser.Math.Between(-18, 18));
+    slash.setTint(didHit ? 0xfff2b5 : 0xcad2df);
+
+    this.tweens.add({
+      targets: slash,
+      alpha: 0,
+      scale: didHit ? 0.86 : 0.62,
+      angle: slash.angle + 22,
+      y: slash.y - 8,
+      duration: didHit ? 130 : 110,
+      ease: "Cubic.Out",
+      onComplete: () => slash.destroy(),
+    });
+  }
+
+  private playHitFlash(target: Phaser.GameObjects.Image): void {
+    target.setTintFill(0xffffff);
+    this.time.delayedCall(70, () => {
+      if (target.active) target.clearTint();
+    });
+  }
+
   private playerAttack(): void {
     if (this.attackCooldown > 0) return;
     this.attackCooldown = 380;
@@ -172,6 +199,8 @@ export class DungeonScene extends Phaser.Scene {
     }
 
     if (target && best < 86) {
+      this.playAttackEffect(target.sprite.x, target.sprite.y, true);
+      this.playHitFlash(target.sprite);
       target.hp -= stats.attack;
       if (target.hp <= 0) {
         target.sprite.destroy();
@@ -184,7 +213,12 @@ export class DungeonScene extends Phaser.Scene {
         }
         this.enemies = this.enemies.filter((e) => e !== target);
       }
+      return;
     }
+
+    const swingX = this.mapOrigin.x + playerScreen.x;
+    const swingY = this.mapOrigin.y + playerScreen.y;
+    this.playAttackEffect(swingX, swingY, false);
   }
 
   private updateEnemy(enemy: Enemy, dt: number): void {
