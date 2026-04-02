@@ -15,6 +15,7 @@ type Enemy = {
 export class DungeonScene extends Phaser.Scene {
   private playerWorld = { x: 8, y: 8 };
   private player!: Phaser.GameObjects.Image;
+  private mapOrigin = { x: 0, y: 140 };
   private keys!: Record<string, Phaser.Input.Keyboard.Key>;
   private enemies: Enemy[] = [];
   private boss: Enemy | null = null;
@@ -42,21 +43,28 @@ export class DungeonScene extends Phaser.Scene {
 
   create(): void {
     this.cameras.main.setBackgroundColor("#1e1118");
-    const map = this.add.container(this.scale.width * 0.5, 140);
+    this.mapOrigin = {
+      x: this.cameras.main.centerX,
+      y: 140,
+    };
 
     for (let gx = 0; gx < 16; gx += 1) {
       for (let gy = 0; gy < 16; gy += 1) {
         const p = worldToScreen({ x: gx, y: gy });
-        const tile = this.add.image(p.x, p.y, "tile").setTint(0x705870);
+        const tile = this.add
+          .image(this.mapOrigin.x + p.x, this.mapOrigin.y + p.y, "tile")
+          .setTint(0x705870);
         tile.setDepth(p.y);
-        map.add(tile);
       }
     }
 
     const start = worldToScreen(this.playerWorld);
-    this.player = this.add.image(start.x, start.y - 14, "player");
-    this.player.setDepth(start.y + 90);
-    map.add(this.player);
+    this.player = this.add.image(
+      this.mapOrigin.x + start.x,
+      this.mapOrigin.y + start.y - 14,
+      "player",
+    );
+    this.player.setDepth(this.mapOrigin.y + start.y + 90);
 
     this.keys = this.input.keyboard!.addKeys("W,A,S,D,SPACE") as Record<
       string,
@@ -88,8 +96,12 @@ export class DungeonScene extends Phaser.Scene {
       const ex = 3 + this.rng() * 10;
       const ey = 3 + this.rng() * 10;
       const p = worldToScreen({ x: ex, y: ey });
-      const sprite = this.add.image(p.x, p.y - 10, "enemy");
-      sprite.setDepth(p.y + 80);
+      const sprite = this.add.image(
+        this.mapOrigin.x + p.x,
+        this.mapOrigin.y + p.y - 10,
+        "enemy",
+      );
+      sprite.setDepth(this.mapOrigin.y + p.y + 80);
       this.enemies.push({
         sprite,
         hp: scaled.hp,
@@ -105,8 +117,12 @@ export class DungeonScene extends Phaser.Scene {
   private spawnBoss(): void {
     const p = worldToScreen({ x: 9, y: 5 });
     const scaled = enemyScaleFromDifficulty(this.difficulty + 5, gameStore.getState().powerLevel);
-    const sprite = this.add.image(p.x, p.y - 18, "boss");
-    sprite.setDepth(p.y + 100);
+    const sprite = this.add.image(
+      this.mapOrigin.x + p.x,
+      this.mapOrigin.y + p.y - 18,
+      "boss",
+    );
+    sprite.setDepth(this.mapOrigin.y + p.y + 100);
     this.boss = {
       sprite,
       hp: scaled.hp * 8,
@@ -130,13 +146,15 @@ export class DungeonScene extends Phaser.Scene {
     let target: Enemy | null = null;
     let best = 999;
     const playerScreen = worldToScreen(this.playerWorld);
+    const playerX = this.mapOrigin.x + playerScreen.x;
+    const playerY = this.mapOrigin.y + playerScreen.y;
 
     for (const enemy of candidates) {
       const d = Phaser.Math.Distance.Between(
         enemy.sprite.x,
         enemy.sprite.y,
-        playerScreen.x,
-        playerScreen.y,
+        playerX,
+        playerY,
       );
       if (d < best) {
         best = d;
@@ -162,11 +180,13 @@ export class DungeonScene extends Phaser.Scene {
 
   private updateEnemy(enemy: Enemy, dt: number): void {
     const screen = worldToScreen(this.playerWorld);
+    const playerX = this.mapOrigin.x + screen.x;
+    const playerY = this.mapOrigin.y + screen.y;
     const angle = Phaser.Math.Angle.Between(
       enemy.sprite.x,
       enemy.sprite.y,
-      screen.x,
-      screen.y,
+      playerX,
+      playerY,
     );
 
     enemy.sprite.x += Math.cos(angle) * enemy.speed * dt * 60;
@@ -174,7 +194,7 @@ export class DungeonScene extends Phaser.Scene {
     enemy.sprite.setDepth(enemy.sprite.y + 80);
 
     enemy.cooldown -= dt;
-    const dist = Phaser.Math.Distance.Between(enemy.sprite.x, enemy.sprite.y, screen.x, screen.y);
+    const dist = Phaser.Math.Distance.Between(enemy.sprite.x, enemy.sprite.y, playerX, playerY);
     if (dist < 20 && enemy.cooldown <= 0) {
       enemy.cooldown = 1000;
       gameStore.takeDamage(Math.max(1, enemy.damage - 2));
@@ -208,8 +228,11 @@ export class DungeonScene extends Phaser.Scene {
     this.playerWorld.x = Phaser.Math.Clamp(this.playerWorld.x, 1, 14);
     this.playerWorld.y = Phaser.Math.Clamp(this.playerWorld.y, 1, 14);
     const pos = worldToScreen(this.playerWorld);
-    this.player.setPosition(pos.x, pos.y - 14);
-    this.player.setDepth(pos.y + 90);
+    this.player.setPosition(
+      this.mapOrigin.x + pos.x,
+      this.mapOrigin.y + pos.y - 14,
+    );
+    this.player.setDepth(this.mapOrigin.y + pos.y + 90);
 
     this.attackCooldown -= dt;
     if (Phaser.Input.Keyboard.JustDown(this.keys.SPACE)) {
@@ -251,8 +274,12 @@ export class DungeonScene extends Phaser.Scene {
         this.addSummonCooldown = 3600;
         const bossWorld = { x: 9 + this.rng() * 2 - 1, y: 5 + this.rng() * 2 - 1 };
         const p = worldToScreen(bossWorld);
-        const sprite = this.add.image(p.x, p.y - 8, "add");
-        sprite.setDepth(p.y + 80);
+        const sprite = this.add.image(
+          this.mapOrigin.x + p.x,
+          this.mapOrigin.y + p.y - 8,
+          "add",
+        );
+        sprite.setDepth(this.mapOrigin.y + p.y + 80);
         this.enemies.push({
           sprite,
           hp: 25 + this.difficulty * 6,

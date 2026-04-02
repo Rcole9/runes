@@ -6,9 +6,12 @@ import { worldToScreen } from "../iso";
 export class OverworldScene extends Phaser.Scene {
   private playerWorld = { x: 6, y: 6 };
   private player!: Phaser.GameObjects.Image;
+  private npc!: Phaser.GameObjects.Image;
+  private portal!: Phaser.GameObjects.Image;
   private keys!: Record<string, Phaser.Input.Keyboard.Key>;
   private portalWorld = { x: 11, y: 8 };
   private hudText!: Phaser.GameObjects.Text;
+  private mapOrigin = { x: 0, y: 120 };
 
   constructor() {
     super("OverworldScene");
@@ -16,31 +19,46 @@ export class OverworldScene extends Phaser.Scene {
 
   create(): void {
     this.cameras.main.setBackgroundColor("#132018");
+    this.mapOrigin = {
+      x: this.cameras.main.centerX,
+      y: 120,
+    };
 
-    const map = this.add.container(this.scale.width * 0.5, 120);
     for (let gx = 0; gx < 14; gx += 1) {
       for (let gy = 0; gy < 14; gy += 1) {
         const p = worldToScreen({ x: gx, y: gy });
-        const tile = this.add.image(p.x, p.y, "tile");
+        const tile = this.add.image(
+          this.mapOrigin.x + p.x,
+          this.mapOrigin.y + p.y,
+          "tile",
+        );
         tile.setDepth(p.y);
-        map.add(tile);
       }
     }
 
     const npcPos = worldToScreen({ x: 4, y: 9 });
-    const npc = this.add.image(npcPos.x, npcPos.y - 20, "npc");
-    npc.setDepth(npcPos.y + 100);
-    map.add(npc);
+    this.npc = this.add.image(
+      this.mapOrigin.x + npcPos.x,
+      this.mapOrigin.y + npcPos.y - 20,
+      "npc",
+    );
+    this.npc.setDepth(this.mapOrigin.y + npcPos.y + 100);
 
     const portalPos = worldToScreen(this.portalWorld);
-    const portal = this.add.image(portalPos.x, portalPos.y - 24, "portal");
-    portal.setDepth(portalPos.y + 120);
-    map.add(portal);
+    this.portal = this.add.image(
+      this.mapOrigin.x + portalPos.x,
+      this.mapOrigin.y + portalPos.y - 24,
+      "portal",
+    );
+    this.portal.setDepth(this.mapOrigin.y + portalPos.y + 120);
 
     const start = worldToScreen(this.playerWorld);
-    this.player = this.add.image(start.x, start.y - 14, "player");
-    this.player.setDepth(start.y + 90);
-    map.add(this.player);
+    this.player = this.add.image(
+      this.mapOrigin.x + start.x,
+      this.mapOrigin.y + start.y - 14,
+      "player",
+    );
+    this.player.setDepth(this.mapOrigin.y + start.y + 90);
 
     this.cameras.main.startFollow(this.player, true, 0.09, 0.09);
     this.cameras.main.setDeadzone(180, 120);
@@ -70,8 +88,11 @@ export class OverworldScene extends Phaser.Scene {
     this.playerWorld.y = Phaser.Math.Clamp(this.playerWorld.y, 0, 13);
 
     const pos = worldToScreen(this.playerWorld);
-    this.player.setPosition(pos.x, pos.y - 14);
-    this.player.setDepth(pos.y + 90);
+    this.player.setPosition(
+      this.mapOrigin.x + pos.x,
+      this.mapOrigin.y + pos.y - 14,
+    );
+    this.player.setDepth(this.mapOrigin.y + pos.y + 90);
 
     const portalDist = Phaser.Math.Distance.Between(
       this.playerWorld.x,
