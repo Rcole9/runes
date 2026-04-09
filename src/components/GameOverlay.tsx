@@ -99,9 +99,7 @@ export default function GameOverlay() {
             Latest loot: {state.latestLoot.name}
           </div>
         )}
-      </section>
 
-      <section className="overlay-panel">
         <h3>Inventory</h3>
         <div className="inventory-list">
           {state.inventory.length === 0 && <p>No loot yet. Clear a dungeon.</p>}
