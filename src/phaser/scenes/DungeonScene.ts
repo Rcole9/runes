@@ -49,7 +49,7 @@ export class DungeonScene extends Phaser.Scene {
   }
 
   create(): void {
-    this.cameras.main.setBackgroundColor("#1e1118");
+    this.cameras.main.setBackgroundColor("#232a33");
     this.mapOrigin = {
       x: this.cameras.main.centerX,
       y: 140,
@@ -60,7 +60,7 @@ export class DungeonScene extends Phaser.Scene {
         const p = worldToScreen({ x: gx, y: gy });
         const tile = this.add
           .image(this.mapOrigin.x + p.x, this.mapOrigin.y + p.y, "tile")
-          .setTint(0x705870);
+          .setTint(0x2d3340);
         tile.setDepth(p.y);
       }
     }
@@ -89,7 +89,7 @@ export class DungeonScene extends Phaser.Scene {
 
     this.statusText = this.add
       .text(16, 16, "Clear waves to summon the boss | Space/J/click attack | H potion", {
-        color: "#ffe6ef",
+        color: "#e7e3da",
         fontSize: "14px",
       })
       .setScrollFactor(0)

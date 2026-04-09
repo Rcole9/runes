@@ -22,7 +22,7 @@ export class OverworldScene extends Phaser.Scene {
   }
 
   create(): void {
-    this.cameras.main.setBackgroundColor("#132018");
+    this.cameras.main.setBackgroundColor("#2f4c3b");
     this.mapOrigin = {
       x: this.cameras.main.centerX,
       y: 120,
@@ -74,7 +74,7 @@ export class OverworldScene extends Phaser.Scene {
 
     this.hudText = this.add
       .text(16, 16, "WASD move | F enter portal | E near NPC", {
-        color: "#e8ffea",
+        color: "#e7e3da",
         fontSize: "14px",
       })
       .setScrollFactor(0)

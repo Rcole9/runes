@@ -1,11 +1,28 @@
 :root {
-  --bg-top: #0d1724;
-  --bg-bottom: #1f2e27;
-  --panel: rgba(15, 20, 27, 0.86);
-  --panel-border: rgba(150, 203, 173, 0.28);
-  --text: #edf7ee;
-  --muted: #b8d2bc;
-  --accent: #ffd166;
+  --ink-dark: #1b1e24;
+  --ink-mid: #2d3340;
+  --shadow-cool: #232a33;
+  --stone-light: #c9ced6;
+  --paper-light: #e7e3da;
+
+  --sun-highlight: #f6e2a8;
+  --sun-warm: #e9c77b;
+  --ambient-cool: #a7b7c9;
+
+  --grass-shadow: #2f4c3b;
+  --grass-dark: #3c6a4a;
+  --grass-mid: #4e8b5c;
+  --grass-light: #6fb275;
+  --grass-highlight: #9ad48a;
+  --grass-accent: #b7d77a;
+
+  --bg-top: #232a33;
+  --bg-bottom: #3c6a4a;
+  --panel: rgba(27, 30, 36, 0.9);
+  --panel-border: rgba(167, 183, 201, 0.35);
+  --text: var(--paper-light);
+  --muted: var(--stone-light);
+  --accent: var(--sun-warm);
   --danger: #ff6b6b;
   --common: #e5e7eb;
   --uncommon: #86efac;
@@ -27,7 +44,7 @@ body {
   overflow: hidden;
   font-family: "Trebuchet MS", "Segoe UI", sans-serif;
   color: var(--text);
-  background: radial-gradient(circle at top left, #203750 0%, var(--bg-top) 45%),
+  background: radial-gradient(circle at top left, #3c6a4a 0%, var(--bg-top) 45%),
     linear-gradient(150deg, var(--bg-top), var(--bg-bottom));
 }
 
@@ -42,8 +59,8 @@ a {
   width: 100vw;
   height: 100vh;
   padding: 1rem;
-  background: radial-gradient(circle at 20% 20%, rgba(255, 209, 102, 0.15), transparent 55%),
-    radial-gradient(circle at 80% 80%, rgba(100, 181, 246, 0.12), transparent 55%);
+  background: radial-gradient(circle at 20% 20%, rgba(246, 226, 168, 0.2), transparent 55%),
+    radial-gradient(circle at 80% 80%, rgba(167, 183, 201, 0.18), transparent 55%);
 }
 
 .landing-card {
@@ -69,7 +86,7 @@ a {
   padding: 0.75rem 1.4rem;
   border-radius: 999px;
   background: var(--accent);
-  color: #1c1c1c;
+  color: var(--ink-dark);
   font-weight: 700;
 }
 
@@ -146,14 +163,14 @@ a {
   border: none;
   border-radius: 6px;
   padding: 0.2rem 0.45rem;
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(167, 183, 201, 0.2);
   color: var(--text);
   cursor: pointer;
 }
 
 .class-buttons button.active {
   background: var(--accent);
-  color: #1c1c1c;
+  color: var(--ink-dark);
   font-weight: 700;
 }
 
