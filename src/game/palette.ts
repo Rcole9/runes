@@ -1,0 +1,105 @@
+export const PALETTE = {
+  neutrals: {
+    inkDark: "#1B1E24",
+    inkMid: "#2D3340",
+    shadowCool: "#232A33",
+    stoneLight: "#C9CED6",
+    paperLight: "#E7E3DA",
+  },
+  sunlight: {
+    highlight: "#F6E2A8",
+    warm: "#E9C77B",
+    ambientCool: "#A7B7C9",
+  },
+  grass: {
+    shadow: "#2F4C3B",
+    dark: "#3C6A4A",
+    mid: "#4E8B5C",
+    light: "#6FB275",
+    highlight: "#9AD48A",
+    accent: "#B7D77A",
+  },
+  dirt: {
+    shadow: "#3D2B22",
+    dark: "#5B3B2A",
+    mid: "#7A5338",
+    light: "#A0714B",
+    highlight: "#C49A6C",
+  },
+  path: {
+    shadow: "#3A332B",
+    dark: "#5A4F40",
+    mid: "#7A6A55",
+    light: "#A18E73",
+    pebbleLight: "#BDB4A2",
+  },
+  water: {
+    deep: "#1E3B5A",
+    dark: "#285277",
+    mid: "#3A78A3",
+    light: "#6CB1C9",
+    foam: "#CFE7E6",
+  },
+  wood: {
+    shadow: "#3E2A1F",
+    dark: "#5A3A2B",
+    mid: "#7A513A",
+    light: "#A06E4C",
+    highlight: "#C68F63",
+  },
+  stone: {
+    shadow: "#2C313A",
+    dark: "#3D4652",
+    mid: "#586476",
+    light: "#7B8A9E",
+    highlight: "#A9B6C7",
+  },
+  metal: {
+    shadow: "#2B2F38",
+    dark: "#404958",
+    mid: "#5E6C80",
+    light: "#8C9BB0",
+    highlight: "#D4DCE6",
+  },
+  foliage: {
+    flowerRed: "#C94B4B",
+    flowerPink: "#E17BA5",
+    flowerBlue: "#4A77C9",
+    flowerYellow: "#E0C15A",
+    leafDeep: "#2D5A3F",
+    leafBright: "#78C06A",
+  },
+  void: {
+    purpleDeep: "#241A3A",
+    purpleDark: "#3A2760",
+    purpleMid: "#5B3B9A",
+    purpleLight: "#8A6AD1",
+    tealDeep: "#0F2E33",
+    tealDark: "#1A4D55",
+    tealMid: "#2B7C86",
+    tealLight: "#4EC2B8",
+    glow: "#B6F2E6",
+  },
+  skinLight: {
+    shadow: "#8E5C4D",
+    mid: "#B67B67",
+    light: "#D9A48B",
+    highlight: "#F0C7A8",
+  },
+  skinMedium: {
+    shadow: "#6E463B",
+    mid: "#8F5D4F",
+    light: "#B47A67",
+    highlight: "#D7A286",
+  },
+  hair: {
+    dark: "#2A2423",
+    brown: "#4A3428",
+    light: "#7A563D",
+    highlight: "#B0845B",
+  },
+} as const;
+
+export function hexToNumber(hex: string): number {
+  return Number.parseInt(hex.replace("#", ""), 16);
+}

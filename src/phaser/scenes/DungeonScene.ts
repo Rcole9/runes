@@ -1,5 +1,6 @@
 import * as Phaser from "phaser";
 import { generateLoot } from "@/game/loot";
+import { PALETTE, hexToNumber } from "@/game/palette";
 import { gameStore } from "@/game/store";
 import { hashSeed, mulberry32 } from "@/game/rng";
 import { derivePlayerStats, enemyScaleFromDifficulty } from "@/game/stats";
@@ -49,7 +50,7 @@ export class DungeonScene extends Phaser.Scene {
   }
 
   create(): void {
-    this.cameras.main.setBackgroundColor("#232a33");
+    this.cameras.main.setBackgroundColor(PALETTE.void.purpleDeep);
     this.mapOrigin = {
       x: this.cameras.main.centerX,
       y: 140,
@@ -57,10 +58,11 @@ export class DungeonScene extends Phaser.Scene {
 
     for (let gx = 0; gx < 16; gx += 1) {
       for (let gy = 0; gy < 16; gy += 1) {
+        const texture = (gx + gy) % 4 === 0 ? "tile-dirt" : (gx * 2 + gy) % 7 === 0 ? "tile-water" : "tile";
         const p = worldToScreen({ x: gx, y: gy });
         const tile = this.add
-          .image(this.mapOrigin.x + p.x, this.mapOrigin.y + p.y, "tile")
-          .setTint(0x2d3340);
+          .image(this.mapOrigin.x + p.x, this.mapOrigin.y + p.y, texture)
+          .setTint(hexToNumber(PALETTE.void.tealDeep));
         tile.setDepth(p.y);
       }
     }
@@ -89,9 +91,11 @@ export class DungeonScene extends Phaser.Scene {
 
     this.statusText = this.add
       .text(16, 16, "Clear waves to summon the boss | Space/J/click attack | H potion", {
-        color: "#e7e3da",
+        color: PALETTE.neutrals.paperLight,
         fontSize: "14px",
       })
+      .setBackgroundColor(PALETTE.neutrals.inkMid)
+      .setPadding(8, 4, 8, 4)
       .setScrollFactor(0)
       .setDepth(5000);
 
@@ -108,9 +112,9 @@ export class DungeonScene extends Phaser.Scene {
     const pct = Phaser.Math.Clamp(enemy.hp / enemy.maxHp, 0, 1);
 
     enemy.hpBar.clear();
-    enemy.hpBar.fillStyle(0x1e1e1e, 0.9);
+    enemy.hpBar.fillStyle(hexToNumber(PALETTE.neutrals.inkDark), 0.9);
     enemy.hpBar.fillRect(x - 1, y - 1, width + 2, height + 2);
-    enemy.hpBar.fillStyle(0x4caf50, 1);
+    enemy.hpBar.fillStyle(hexToNumber(PALETTE.foliage.leafBright), 1);
     enemy.hpBar.fillRect(x, y, width * pct, height);
     enemy.hpBar.setDepth(enemy.sprite.depth + 50);
   }
@@ -126,7 +130,7 @@ export class DungeonScene extends Phaser.Scene {
 
     const lootText = this.add
       .text(enemy.sprite.x - 48, enemy.sprite.y - 38, `+ ${dropped.rarity} Loot`, {
-        color: "#ffd166",
+        color: PALETTE.sunlight.warm,
         fontSize: "12px",
       })
       .setDepth(enemy.sprite.depth + 110);
@@ -213,7 +217,11 @@ export class DungeonScene extends Phaser.Scene {
     slash.setScale(didHit ? 0.55 : 0.42);
     slash.setAlpha(0.9);
     slash.setAngle(Phaser.Math.Between(-18, 18));
-    slash.setTint(didHit ? 0xfff2b5 : 0xcad2df);
+    slash.setTint(
+      didHit
+        ? hexToNumber(PALETTE.sunlight.highlight)
+        : hexToNumber(PALETTE.sunlight.ambientCool),
+    );
 
     this.tweens.add({
       targets: slash,

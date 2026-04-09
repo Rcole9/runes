@@ -10,6 +10,13 @@ export default function Home() {
           Descend into seeded dungeon instances, outplay telegraphed boss attacks,
           and build your power level with loot.
         </p>
+        <p>
+          Art packs supported from{" "}
+          <a href="https://kenney.nl/assets" target="_blank" rel="noreferrer">
+            Kenney
+          </a>
+          .
+        </p>
         <Link href="/play" className="play-button">
           Play
         </Link>

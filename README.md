@@ -86,4 +86,28 @@ No custom server configuration is required.
 ## Notes
 
 - Assets are generated at runtime with Phaser graphics (no external CDNs required).
+- Optional Kenney texture override support is available through `public/assets/kenney/manifest.json`.
 - Prototype intentionally uses lightweight overlap/proximity checks instead of heavy physics.
+
+## Kenney Assets
+
+You can integrate asset packs from Kenney (https://kenney.nl/assets) without changing code.
+
+1. Place PNG files in `public/assets/kenney/`.
+2. Map texture keys in `public/assets/kenney/manifest.json`.
+3. Launch the game. Any missing key automatically falls back to generated art.
+
+Expected texture keys:
+
+- `tile`
+- `tile-dirt`
+- `tile-path`
+- `tile-water`
+- `player`
+- `enemy`
+- `boss`
+- `telegraph`
+- `portal`
+- `npc`
+- `add`
+- `slash`

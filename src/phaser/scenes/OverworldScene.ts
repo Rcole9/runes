@@ -1,4 +1,5 @@
 import * as Phaser from "phaser";
+import { PALETTE } from "@/game/palette";
 import { gameStore } from "@/game/store";
 import {
   difficultyOffsetForLevel,
@@ -22,7 +23,7 @@ export class OverworldScene extends Phaser.Scene {
   }
 
   create(): void {
-    this.cameras.main.setBackgroundColor("#2f4c3b");
+    this.cameras.main.setBackgroundColor(PALETTE.grass.shadow);
     this.mapOrigin = {
       x: this.cameras.main.centerX,
       y: 120,
@@ -31,10 +32,11 @@ export class OverworldScene extends Phaser.Scene {
     for (let gx = 0; gx < 14; gx += 1) {
       for (let gy = 0; gy < 14; gy += 1) {
         const p = worldToScreen({ x: gx, y: gy });
+        const texture = (gx + gy) % 5 === 0 ? "tile-path" : (gx * 3 + gy) % 7 === 0 ? "tile-dirt" : "tile";
         const tile = this.add.image(
           this.mapOrigin.x + p.x,
           this.mapOrigin.y + p.y,
-          "tile",
+          texture,
         );
         tile.setDepth(p.y);
       }
@@ -74,9 +76,11 @@ export class OverworldScene extends Phaser.Scene {
 
     this.hudText = this.add
       .text(16, 16, "WASD move | F enter portal | E near NPC", {
-        color: "#e7e3da",
+        color: PALETTE.neutrals.paperLight,
         fontSize: "14px",
       })
+      .setBackgroundColor(PALETTE.neutrals.inkMid)
+      .setPadding(8, 4, 8, 4)
       .setScrollFactor(0)
       .setDepth(3000);
   }

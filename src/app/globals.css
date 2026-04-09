@@ -16,6 +16,74 @@
   --grass-highlight: #9ad48a;
   --grass-accent: #b7d77a;
 
+  --dirt-shadow: #3d2b22;
+  --dirt-dark: #5b3b2a;
+  --dirt-mid: #7a5338;
+  --dirt-light: #a0714b;
+  --dirt-highlight: #c49a6c;
+
+  --path-shadow: #3a332b;
+  --path-dark: #5a4f40;
+  --path-mid: #7a6a55;
+  --path-light: #a18e73;
+  --pebble-light: #bdb4a2;
+
+  --water-deep: #1e3b5a;
+  --water-dark: #285277;
+  --water-mid: #3a78a3;
+  --water-light: #6cb1c9;
+  --water-foam: #cfe7e6;
+
+  --wood-shadow: #3e2a1f;
+  --wood-dark: #5a3a2b;
+  --wood-mid: #7a513a;
+  --wood-light: #a06e4c;
+  --wood-highlight: #c68f63;
+
+  --stone-shadow: #2c313a;
+  --stone-dark: #3d4652;
+  --stone-mid: #586476;
+  --stone-light-ramp: #7b8a9e;
+  --stone-highlight: #a9b6c7;
+
+  --metal-shadow: #2b2f38;
+  --metal-dark: #404958;
+  --metal-mid: #5e6c80;
+  --metal-light: #8c9bb0;
+  --metal-highlight: #d4dce6;
+
+  --flower-red: #c94b4b;
+  --flower-pink: #e17ba5;
+  --flower-blue: #4a77c9;
+  --flower-yellow: #e0c15a;
+  --leaf-deep: #2d5a3f;
+  --leaf-bright: #78c06a;
+
+  --void-purple-deep: #241a3a;
+  --void-purple-dark: #3a2760;
+  --void-purple-mid: #5b3b9a;
+  --void-purple-light: #8a6ad1;
+  --void-teal-deep: #0f2e33;
+  --void-teal-dark: #1a4d55;
+  --void-teal-mid: #2b7c86;
+  --void-teal-light: #4ec2b8;
+  --void-glow: #b6f2e6;
+
+  --skin-light-shadow: #8e5c4d;
+  --skin-light-mid: #b67b67;
+  --skin-light-light: #d9a48b;
+  --skin-light-highlight: #f0c7a8;
+
+  --skin-medium-shadow: #6e463b;
+  --skin-medium-mid: #8f5d4f;
+  --skin-medium-light: #b47a67;
+  --skin-medium-highlight: #d7a286;
+
+  --hair-dark: #2a2423;
+  --hair-brown: #4a3428;
+  --hair-light: #7a563d;
+  --hair-highlight: #b0845b;
+
   --bg-top: #232a33;
   --bg-bottom: #3c6a4a;
   --panel: rgba(27, 30, 36, 0.9);

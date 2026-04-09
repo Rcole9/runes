@@ -1,80 +1,160 @@
 import * as Phaser from "phaser";
+import { hexToNumber, PALETTE } from "@/game/palette";
 
 export class BootScene extends Phaser.Scene {
+  private static readonly KENNEY_MANIFEST_KEY = "kenney-manifest";
+
   constructor() {
     super("BootScene");
   }
 
+  preload(): void {
+    this.load.json(
+      BootScene.KENNEY_MANIFEST_KEY,
+      "/assets/kenney/manifest.json",
+    );
+  }
+
   create(): void {
+    const manifest = this.cache.json.get(BootScene.KENNEY_MANIFEST_KEY) as
+      | Record<string, string>
+      | undefined;
+
+    if (manifest && Object.keys(manifest).length > 0) {
+      Object.entries(manifest).forEach(([key, assetPath]) => {
+        this.load.image(key, assetPath);
+      });
+
+      this.load.once("complete", () => this.finishBoot());
+      this.load.start();
+      return;
+    }
+
+    this.finishBoot();
+  }
+
+  private finishBoot(): void {
     const g = this.add.graphics({ x: 0, y: 0 });
     g.setVisible(false);
 
-    g.clear();
-    g.fillStyle(0x4e8b5c, 1);
-    g.fillRect(0, 0, 64, 32);
-    g.fillStyle(0x6fb275, 1);
-    g.fillRect(0, 0, 24, 12);
-    g.fillStyle(0x9ad48a, 1);
-    g.fillRect(8, 12, 18, 8);
-    g.fillStyle(0x3c6a4a, 1);
-    g.fillRect(34, 16, 22, 10);
-    g.fillStyle(0x2f4c3b, 1);
-    g.fillRect(50, 4, 10, 7);
-    g.generateTexture("tile", 64, 32);
+    const generateIfMissing = (key: string, draw: () => void): void => {
+      if (this.textures.exists(key)) return;
+      g.clear();
+      draw();
+    };
 
-    g.clear();
-    g.fillStyle(0xa7b7c9, 1);
-    g.fillCircle(12, 12, 10);
-    g.lineStyle(2, 0x2d3340, 1);
-    g.strokeCircle(12, 12, 10);
-    g.generateTexture("player", 24, 24);
+    generateIfMissing("tile", () => {
+      g.fillStyle(hexToNumber(PALETTE.grass.mid), 1);
+      g.fillRect(0, 0, 64, 32);
+      g.fillStyle(hexToNumber(PALETTE.grass.light), 1);
+      g.fillRect(0, 0, 24, 12);
+      g.fillStyle(hexToNumber(PALETTE.grass.highlight), 1);
+      g.fillRect(8, 12, 18, 8);
+      g.fillStyle(hexToNumber(PALETTE.grass.dark), 1);
+      g.fillRect(34, 16, 22, 10);
+      g.fillStyle(hexToNumber(PALETTE.grass.shadow), 1);
+      g.fillRect(50, 4, 10, 7);
+      g.generateTexture("tile", 64, 32);
+    });
 
-    g.clear();
-    g.fillStyle(0xe9c77b, 1);
-    g.fillCircle(10, 10, 9);
-    g.lineStyle(2, 0x2d3340, 1);
-    g.strokeCircle(10, 10, 9);
-    g.generateTexture("enemy", 20, 20);
+    generateIfMissing("tile-dirt", () => {
+      g.fillStyle(hexToNumber(PALETTE.dirt.mid), 1);
+      g.fillRect(0, 0, 64, 32);
+      g.fillStyle(hexToNumber(PALETTE.dirt.light), 1);
+      g.fillRect(8, 8, 18, 8);
+      g.fillStyle(hexToNumber(PALETTE.dirt.dark), 1);
+      g.fillRect(30, 14, 20, 8);
+      g.fillStyle(hexToNumber(PALETTE.dirt.shadow), 1);
+      g.fillRect(48, 4, 10, 7);
+      g.generateTexture("tile-dirt", 64, 32);
+    });
 
-    g.clear();
-    g.fillStyle(0xf6e2a8, 1);
-    g.fillCircle(20, 20, 18);
-    g.lineStyle(3, 0x2d3340, 1);
-    g.strokeCircle(20, 20, 18);
-    g.generateTexture("boss", 40, 40);
+    generateIfMissing("tile-path", () => {
+      g.fillStyle(hexToNumber(PALETTE.path.mid), 1);
+      g.fillRect(0, 0, 64, 32);
+      g.fillStyle(hexToNumber(PALETTE.path.light), 1);
+      g.fillRect(6, 10, 16, 7);
+      g.fillStyle(hexToNumber(PALETTE.path.dark), 1);
+      g.fillRect(28, 16, 20, 7);
+      g.fillStyle(hexToNumber(PALETTE.path.pebbleLight), 1);
+      g.fillRect(44, 6, 3, 3);
+      g.fillRect(52, 20, 3, 3);
+      g.generateTexture("tile-path", 64, 32);
+    });
 
-    g.clear();
-    g.fillStyle(0xd7263d, 0.35);
-    g.fillCircle(48, 48, 46);
-    g.generateTexture("telegraph", 96, 96);
+    generateIfMissing("tile-water", () => {
+      g.fillStyle(hexToNumber(PALETTE.water.dark), 1);
+      g.fillRect(0, 0, 64, 32);
+      g.fillStyle(hexToNumber(PALETTE.water.mid), 1);
+      g.fillRect(6, 8, 22, 8);
+      g.fillStyle(hexToNumber(PALETTE.water.light), 1);
+      g.fillRect(24, 14, 16, 6);
+      g.fillStyle(hexToNumber(PALETTE.water.foam), 1);
+      g.fillRect(43, 11, 7, 2);
+      g.generateTexture("tile-water", 64, 32);
+    });
 
-    g.clear();
-    g.fillStyle(0x2d3340, 1);
-    g.fillRect(0, 0, 36, 52);
-    g.lineStyle(3, 0xa7b7c9, 1);
-    g.strokeRect(2, 2, 32, 48);
-    g.generateTexture("portal", 36, 52);
+    generateIfMissing("player", () => {
+      g.fillStyle(hexToNumber(PALETTE.sunlight.ambientCool), 1);
+      g.fillCircle(12, 12, 10);
+      g.lineStyle(2, hexToNumber(PALETTE.neutrals.inkMid), 1);
+      g.strokeCircle(12, 12, 10);
+      g.generateTexture("player", 24, 24);
+    });
 
-    g.clear();
-    g.fillStyle(0xe9c77b, 1);
-    g.fillRect(0, 0, 20, 28);
-    g.lineStyle(2, 0x2d3340, 1);
-    g.strokeRect(0, 0, 20, 28);
-    g.generateTexture("npc", 20, 28);
+    generateIfMissing("enemy", () => {
+      g.fillStyle(hexToNumber(PALETTE.sunlight.warm), 1);
+      g.fillCircle(10, 10, 9);
+      g.lineStyle(2, hexToNumber(PALETTE.neutrals.inkMid), 1);
+      g.strokeCircle(10, 10, 9);
+      g.generateTexture("enemy", 20, 20);
+    });
 
-    g.clear();
-    g.fillStyle(0xb7d77a, 1);
-    g.fillCircle(8, 8, 7);
-    g.lineStyle(2, 0x2d3340, 1);
-    g.strokeCircle(8, 8, 7);
-    g.generateTexture("add", 16, 16);
+    generateIfMissing("boss", () => {
+      g.fillStyle(hexToNumber(PALETTE.sunlight.highlight), 1);
+      g.fillCircle(20, 20, 18);
+      g.lineStyle(3, hexToNumber(PALETTE.neutrals.inkMid), 1);
+      g.strokeCircle(20, 20, 18);
+      g.generateTexture("boss", 40, 40);
+    });
 
-    g.clear();
-    g.fillStyle(0xf6e2a8, 0.95);
-    g.fillTriangle(6, 32, 58, 14, 58, 50);
-    g.lineStyle(3, 0xe9c77b, 1);
-    g.strokeTriangle(6, 32, 58, 14, 58, 50);
-    g.generateTexture("slash", 64, 64);
+    generateIfMissing("telegraph", () => {
+      g.fillStyle(0xd7263d, 0.35);
+      g.fillCircle(48, 48, 46);
+      g.generateTexture("telegraph", 96, 96);
+    });
+
+    generateIfMissing("portal", () => {
+      g.fillStyle(hexToNumber(PALETTE.neutrals.inkMid), 1);
+      g.fillRect(0, 0, 36, 52);
+      g.lineStyle(3, hexToNumber(PALETTE.sunlight.ambientCool), 1);
+      g.strokeRect(2, 2, 32, 48);
+      g.generateTexture("portal", 36, 52);
+    });
+
+    generateIfMissing("npc", () => {
+      g.fillStyle(hexToNumber(PALETTE.sunlight.warm), 1);
+      g.fillRect(0, 0, 20, 28);
+      g.lineStyle(2, hexToNumber(PALETTE.neutrals.inkMid), 1);
+      g.strokeRect(0, 0, 20, 28);
+      g.generateTexture("npc", 20, 28);
+    });
+
+    generateIfMissing("add", () => {
+      g.fillStyle(hexToNumber(PALETTE.grass.accent), 1);
+      g.fillCircle(8, 8, 7);
+      g.lineStyle(2, hexToNumber(PALETTE.neutrals.inkMid), 1);
+      g.strokeCircle(8, 8, 7);
+      g.generateTexture("add", 16, 16);
+    });
+
+    generateIfMissing("slash", () => {
+      g.fillStyle(hexToNumber(PALETTE.sunlight.highlight), 0.95);
+      g.fillTriangle(6, 32, 58, 14, 58, 50);
+      g.lineStyle(3, hexToNumber(PALETTE.sunlight.warm), 1);
+      g.strokeTriangle(6, 32, 58, 14, 58, 50);
+      g.generateTexture("slash", 64, 64);
+    });
 
     g.destroy();
 
