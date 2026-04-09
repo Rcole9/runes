@@ -1,4 +1,5 @@
 import * as Phaser from "phaser";
+import { generateLoot } from "@/game/loot";
 import { gameStore } from "@/game/store";
 import { hashSeed, mulberry32 } from "@/game/rng";
 import { derivePlayerStats, enemyScaleFromDifficulty } from "@/game/stats";
@@ -6,10 +7,15 @@ import { worldToScreen } from "../iso";
 
 type Enemy = {
   sprite: Phaser.GameObjects.Image;
+  hpBar: Phaser.GameObjects.Graphics;
+  maxHp: number;
   hp: number;
   damage: number;
   speed: number;
   cooldown: number;
+  regenPerSecond: number;
+  regenDelayMs: number;
+  regenDelayRemaining: number;
 };
 
 export class DungeonScene extends Phaser.Scene {
@@ -93,6 +99,50 @@ export class DungeonScene extends Phaser.Scene {
     this.spawnWave();
   }
 
+  private updateEnemyHealthBar(enemy: Enemy): void {
+    const width = 28;
+    const height = 5;
+    const x = enemy.sprite.x - width / 2;
+    const y = enemy.sprite.y - 20;
+    const pct = Phaser.Math.Clamp(enemy.hp / enemy.maxHp, 0, 1);
+
+    enemy.hpBar.clear();
+    enemy.hpBar.fillStyle(0x1e1e1e, 0.9);
+    enemy.hpBar.fillRect(x - 1, y - 1, width + 2, height + 2);
+    enemy.hpBar.fillStyle(0x4caf50, 1);
+    enemy.hpBar.fillRect(x, y, width * pct, height);
+    enemy.hpBar.setDepth(enemy.sprite.depth + 50);
+  }
+
+  private removeEnemy(enemy: Enemy): void {
+    enemy.hpBar.destroy();
+    enemy.sprite.destroy();
+  }
+
+  private maybeDropLoot(enemy: Enemy): void {
+    const shouldDrop = this.rng() < 0.45;
+    if (!shouldDrop) return;
+
+    const dropped = generateLoot(this.rng, this.difficulty + this.wave);
+    gameStore.grantLoot(dropped);
+
+    const lootText = this.add
+      .text(enemy.sprite.x - 48, enemy.sprite.y - 38, `+ ${dropped.rarity} Loot`, {
+        color: "#ffd166",
+        fontSize: "12px",
+      })
+      .setDepth(enemy.sprite.depth + 110);
+
+    this.tweens.add({
+      targets: lootText,
+      y: lootText.y - 18,
+      alpha: 0,
+      duration: 700,
+      ease: "Cubic.Out",
+      onComplete: () => lootText.destroy(),
+    });
+  }
+
   private spawnWave(): void {
     this.wave += 1;
     const count = 2 + this.wave;
@@ -111,13 +161,22 @@ export class DungeonScene extends Phaser.Scene {
         "enemy",
       );
       sprite.setDepth(this.mapOrigin.y + p.y + 80);
+      const hpBar = this.add.graphics();
+      const maxHp = scaled.hp;
       this.enemies.push({
         sprite,
-        hp: scaled.hp,
+        hpBar,
+        maxHp,
+        hp: maxHp,
         damage: scaled.attack,
         speed: 0.003 + this.rng() * 0.001,
         cooldown: 0,
+        regenPerSecond: 3 + this.difficulty * 0.3,
+        regenDelayMs: 1400,
+        regenDelayRemaining: 0,
       });
+
+      this.updateEnemyHealthBar(this.enemies[this.enemies.length - 1]);
     }
 
     this.statusText.setText(`Dungeon wave ${this.wave}`);
@@ -132,13 +191,21 @@ export class DungeonScene extends Phaser.Scene {
       "boss",
     );
     sprite.setDepth(this.mapOrigin.y + p.y + 100);
+    const hpBar = this.add.graphics();
+    const maxHp = scaled.hp * 8;
     this.boss = {
       sprite,
-      hp: scaled.hp * 8,
+      hpBar,
+      maxHp,
+      hp: maxHp,
       damage: scaled.attack + 7,
       speed: 0.0015,
       cooldown: 0,
+      regenPerSecond: 4 + this.difficulty * 0.45,
+      regenDelayMs: 1900,
+      regenDelayRemaining: 0,
     };
+    this.updateEnemyHealthBar(this.boss);
     this.statusText.setText("Boss phase 1: watch telegraphs");
   }
 
@@ -202,15 +269,19 @@ export class DungeonScene extends Phaser.Scene {
       this.playAttackEffect(target.sprite.x, target.sprite.y, true);
       this.playHitFlash(target.sprite);
       target.hp -= stats.attack;
+      target.regenDelayRemaining = target.regenDelayMs;
+      this.updateEnemyHealthBar(target);
       if (target.hp <= 0) {
-        target.sprite.destroy();
         if (target === this.boss) {
+          this.removeEnemy(target);
           this.boss = null;
           const loot = gameStore.completeDungeonAndGrantLoot(this.seed);
           this.statusText.setText(`Boss defeated: ${loot.name}`);
           this.time.delayedCall(1400, () => this.scene.start("OverworldScene"));
           return;
         }
+        this.maybeDropLoot(target);
+        this.removeEnemy(target);
         this.enemies = this.enemies.filter((e) => e !== target);
       }
       return;
@@ -235,6 +306,15 @@ export class DungeonScene extends Phaser.Scene {
     enemy.sprite.x += Math.cos(angle) * enemy.speed * dt * 60;
     enemy.sprite.y += Math.sin(angle) * enemy.speed * dt * 60;
     enemy.sprite.setDepth(enemy.sprite.y + 80);
+
+    if (enemy.regenDelayRemaining > 0) {
+      enemy.regenDelayRemaining -= dt;
+    } else if (enemy.hp < enemy.maxHp) {
+      enemy.hp = Math.min(enemy.maxHp, enemy.hp + enemy.regenPerSecond * (dt / 1000));
+      this.updateEnemyHealthBar(enemy);
+    }
+
+    this.updateEnemyHealthBar(enemy);
 
     enemy.cooldown -= dt;
     const dist = Phaser.Math.Distance.Between(enemy.sprite.x, enemy.sprite.y, playerX, playerY);
@@ -328,13 +408,21 @@ export class DungeonScene extends Phaser.Scene {
           "add",
         );
         sprite.setDepth(this.mapOrigin.y + p.y + 80);
+        const hpBar = this.add.graphics();
+        const maxHp = 25 + this.difficulty * 6;
         this.enemies.push({
           sprite,
-          hp: 25 + this.difficulty * 6,
+          hpBar,
+          maxHp,
+          hp: maxHp,
           damage: 8 + this.difficulty,
           speed: 0.0045,
           cooldown: 0,
+          regenPerSecond: 2 + this.difficulty * 0.2,
+          regenDelayMs: 1200,
+          regenDelayRemaining: 0,
         });
+        this.updateEnemyHealthBar(this.enemies[this.enemies.length - 1]);
       }
     }
   }

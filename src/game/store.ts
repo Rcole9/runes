@@ -130,6 +130,12 @@ export const gameStore = {
     });
     return dropped!;
   },
+  grantLoot(item: Item): void {
+    commit(() => {
+      state.inventory = addToInventory(state.inventory, item);
+      state.latestLoot = item;
+    });
+  },
   equip(itemId: string): void {
     commit(() => {
       const item = state.inventory.find((i) => i.id === itemId);
