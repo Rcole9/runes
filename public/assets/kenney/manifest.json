@@ -1,0 +1,11 @@
+{
+  "tile": "/assets/tiles/rpg-tilesets/freepixel-rpg-tilesets/grass-tile-green-lawn-texture-001.png",
+  "tile-dirt": "/assets/tiles/rpg-tilesets/freepixel-rpg-tilesets/dirt-path-tile-brown-earth-009.png",
+  "tile-path": "/assets/tiles/rpg-tilesets/freepixel-rpg-tilesets/cobblestone-path-tile-grey-stones-005.png",
+  "tile-water": "/assets/tiles/rpg-tilesets/freepixel-rpg-tilesets/river-water-tile-flowing-stream-013.png",
+  "player": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/warrior-knight-with-sword-021.png",
+  "enemy": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/imp-familiar-small-demon-005.png",
+  "boss": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/dragon-mount-flying-dragon-045-v5.png",
+  "npc": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/merchant-shopkeeper-npc-friendly-012-v2.png",
+  "add": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/cat-pet-companion-small-031-v4.png"
+}
