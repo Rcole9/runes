@@ -120,9 +120,6 @@ export class DungeonScene extends Phaser.Scene {
   }
 
   private maybeDropLoot(enemy: Enemy): void {
-    const shouldDrop = this.rng() < 0.45;
-    if (!shouldDrop) return;
-
     const dropped = generateLoot(this.rng, this.difficulty + this.wave);
     gameStore.grantLoot(dropped);
 
@@ -318,10 +315,16 @@ export class DungeonScene extends Phaser.Scene {
 
     enemy.cooldown -= dt;
     const dist = Phaser.Math.Distance.Between(enemy.sprite.x, enemy.sprite.y, playerX, playerY);
-    if (dist < 20 && enemy.cooldown <= 0) {
-      enemy.cooldown = 1000;
-      gameStore.takeDamage(Math.max(1, enemy.damage - 2));
-      if (gameStore.getState().hp <= 0) {
+    if (dist < 28 && enemy.cooldown <= 0) {
+      enemy.cooldown = 850;
+      const damage = Math.max(1, enemy.damage - 2);
+      gameStore.takeDamage(damage);
+
+      const current = gameStore.getState();
+      this.statusText.setText(`Hit for ${damage} | HP ${current.hp}/${current.maxHp}`);
+      this.cameras.main.shake(75, 0.0015);
+
+      if (current.hp <= 0) {
         gameStore.resetHp();
         this.scene.start("OverworldScene");
       }
