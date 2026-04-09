@@ -15,12 +15,14 @@ export interface RuntimeState {
   hp: number;
   maxHp: number;
   powerLevel: number;
+  potions: number;
   equipment: Equipment;
   inventory: Item[];
   latestLoot: Item | null;
 }
 
 const listeners = new Set<() => void>();
+const DEFAULT_STARTER_POTIONS = 3;
 
 let state: RuntimeState = {
   classId: "dps",
@@ -30,6 +32,7 @@ let state: RuntimeState = {
   hp: 140,
   maxHp: 140,
   powerLevel: 0,
+  potions: DEFAULT_STARTER_POTIONS,
   equipment: {
     weapon: null,
     armor: null,
@@ -58,6 +61,7 @@ function persist(): void {
       level: state.level,
       dungeonTier: state.dungeonTier,
       powerLevel: state.powerLevel,
+      potions: state.potions,
     },
     inventory: state.inventory,
     equipment: state.equipment,
@@ -89,6 +93,7 @@ export function initializeStore(): void {
       classId: loaded.progress.classId,
       level: loaded.progress.level,
       dungeonTier: loaded.progress.dungeonTier,
+      potions: loaded.progress.potions ?? DEFAULT_STARTER_POTIONS,
       equipment: loaded.equipment,
       inventory: loaded.inventory,
       hp: 9999,
@@ -171,6 +176,14 @@ export const gameStore = {
       state.level = nextLevel(state.level, state.dungeonTier);
     });
     return dropped!;
+  },
+  usePotion(): void {
+    commit(() => {
+      if (state.potions <= 0) return;
+      if (state.hp >= state.maxHp) return;
+      state.potions -= 1;
+      state.hp = Math.min(state.maxHp, state.hp + Math.round(state.maxHp * 0.35));
+    });
   },
   grantLoot(item: Item): void {
     commit(() => {

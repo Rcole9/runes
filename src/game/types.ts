@@ -35,6 +35,7 @@ export interface PlayerProgress {
   level: number;
   dungeonTier: number;
   powerLevel: number;
+  potions: number;
 }
 
 export interface SaveData {

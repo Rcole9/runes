@@ -66,6 +66,18 @@ export default function GameOverlay() {
             {state.hp}/{state.maxHp}
           </strong>
         </div>
+        <div className="overlay-row">
+          <span>Health Potions</span>
+          <strong>{state.potions}</strong>
+        </div>
+        <div className="item">
+          <button
+            onClick={() => gameStore.usePotion()}
+            disabled={state.potions <= 0 || state.hp >= state.maxHp}
+          >
+            Use Potion
+          </button>
+        </div>
         <div className="hp-wrap">
           <div className="hp-bar" style={{ width: `${hpPercent}%` }} />
         </div>
