@@ -1,4 +1,4 @@
-import { getClassLabel } from "./classes";
+import { getClassLabel, getStarterWeapon } from "./classes";
 import { addToInventory, equipItem, unequipSlot } from "./inventory";
 import { generateLoot } from "./loot";
 import { loadGame, saveGame } from "./persistence";
@@ -37,6 +37,11 @@ let state: RuntimeState = {
   inventory: [],
   latestLoot: null,
 };
+
+function ensureInventoryHasItem(inventory: Item[], item: Item): Item[] {
+  if (inventory.some((existing) => existing.id === item.id)) return inventory;
+  return addToInventory(inventory, item);
+}
 
 function recalcState(): void {
   const stats = derivePlayerStats(state.classId, state.level, state.equipment);
@@ -88,8 +93,19 @@ export function initializeStore(): void {
       maxHp: 140,
     };
   }
+
+  const starter = getStarterWeapon(state.classId);
+  state.inventory = ensureInventoryHasItem(state.inventory, starter);
+  if (!state.equipment.weapon) {
+    state.equipment = {
+      ...state.equipment,
+      weapon: starter,
+    };
+  }
+
   recalcState();
   state.hp = state.maxHp;
+  persist();
   emit();
 }
 
@@ -104,6 +120,12 @@ export const gameStore = {
   setClass(classId: PlayerClassId): void {
     commit(() => {
       state.classId = classId;
+      const starter = getStarterWeapon(classId);
+      state.inventory = ensureInventoryHasItem(state.inventory, starter);
+      state.equipment = {
+        ...state.equipment,
+        weapon: starter,
+      };
       state.hp = 9999;
     });
     state.hp = state.maxHp;
