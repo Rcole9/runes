@@ -29,26 +29,82 @@ function randomSlot(rng: SeededRng): Slot {
   return rng() > 0.5 ? "weapon" : "armor";
 }
 
+const WEAPON_BASES = [
+  "Voidblade",
+  "Runespear",
+  "Warden Mace",
+  "Sunshot Bow",
+  "Storm Dagger",
+  "Lifebloom Staff",
+];
+
+const ARMOR_BASES = [
+  "Aegis Vest",
+  "Warden Plate",
+  "Mistweave Robe",
+  "Shadow Jerkin",
+  "Bastion Mail",
+  "Runecloak",
+];
+
+const NAME_PREFIXES = [
+  "Ancient",
+  "Forged",
+  "Astral",
+  "Dire",
+  "Blessed",
+  "Umbral",
+  "Searing",
+];
+
+function randomFrom<T>(rng: SeededRng, list: T[]): T {
+  return list[Math.floor(rng() * list.length) % list.length];
+}
+
 export function generateLoot(rng: SeededRng, difficulty: number): Item {
   const rarity = chooseRarity(rng, difficulty > 4 ? 2 : 0);
   const slot = randomSlot(rng);
   const tier = rarityPower(rarity);
   const base = 7 + difficulty * 2;
 
+  const roll = rng();
   const statMods =
     slot === "weapon"
-      ? {
-          attack: Math.round(base * tier),
-          healingPower: Math.round(base * 0.3 * tier),
-        }
-      : {
-          maxHp: Math.round(base * 7 * tier),
-          defense: Math.round(base * 0.65 * tier),
-        };
+      ? roll < 0.34
+        ? {
+            attack: Math.round(base * 1.1 * tier),
+            defense: Math.round(base * 0.22 * tier),
+          }
+        : roll < 0.67
+          ? {
+              attack: Math.round(base * 0.95 * tier),
+              healingPower: Math.round(base * 0.45 * tier),
+            }
+          : {
+              attack: Math.round(base * 1.25 * tier),
+            }
+      : roll < 0.34
+        ? {
+            maxHp: Math.round(base * 8.5 * tier),
+            defense: Math.round(base * 0.55 * tier),
+          }
+        : roll < 0.67
+          ? {
+              maxHp: Math.round(base * 6.5 * tier),
+              defense: Math.round(base * 0.9 * tier),
+            }
+          : {
+              maxHp: Math.round(base * 5.5 * tier),
+              healingPower: Math.round(base * 0.5 * tier),
+            };
+
+  const prefix = randomFrom(rng, NAME_PREFIXES);
+  const baseName =
+    slot === "weapon" ? randomFrom(rng, WEAPON_BASES) : randomFrom(rng, ARMOR_BASES);
 
   return {
     id: `${slot}-${rarity}-${Math.floor(rng() * 100000)}`,
-    name: `${rarity} ${slot === "weapon" ? "Voidblade" : "Aegis Vest"}`,
+    name: `${rarity} ${prefix} ${baseName}`,
     slot,
     rarity,
     statMods,

@@ -73,13 +73,14 @@ export class DungeonScene extends Phaser.Scene {
     );
     this.player.setDepth(this.mapOrigin.y + start.y + 90);
 
-    this.keys = this.input.keyboard!.addKeys("W,A,S,D,SPACE,J") as Record<
+    this.keys = this.input.keyboard!.addKeys("W,A,S,D,SPACE,J,H") as Record<
       string,
       Phaser.Input.Keyboard.Key
     >;
     this.input.keyboard?.addCapture([
       Phaser.Input.Keyboard.KeyCodes.SPACE,
       Phaser.Input.Keyboard.KeyCodes.J,
+      Phaser.Input.Keyboard.KeyCodes.H,
     ]);
 
     this.input.on("pointerdown", () => {
@@ -87,7 +88,7 @@ export class DungeonScene extends Phaser.Scene {
     });
 
     this.statusText = this.add
-      .text(16, 16, "Clear waves to summon the boss | Space/J/click attack", {
+      .text(16, 16, "Clear waves to summon the boss | Space/J/click attack | H potion", {
         color: "#ffe6ef",
         fontSize: "14px",
       })
@@ -368,6 +369,10 @@ export class DungeonScene extends Phaser.Scene {
     this.player.setDepth(this.mapOrigin.y + pos.y + 90);
 
     this.attackCooldown -= dt;
+    if (Phaser.Input.Keyboard.JustDown(this.keys.H)) {
+      gameStore.usePotion();
+    }
+
     const attackPressed =
       Phaser.Input.Keyboard.JustDown(this.keys.SPACE) ||
       Phaser.Input.Keyboard.JustDown(this.keys.J) ||
