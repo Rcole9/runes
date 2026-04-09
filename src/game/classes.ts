@@ -57,8 +57,49 @@ const STARTER_WEAPONS: Record<PlayerClassId, Item> = {
   },
 };
 
+const STARTER_ARMOR: Record<PlayerClassId, Item> = {
+  tank: {
+    id: "starter-armor-tank",
+    name: "Common Sentinel Plate",
+    slot: "armor",
+    rarity: "Common",
+    statMods: {
+      maxHp: 28,
+      defense: 4,
+    },
+    powerScore: 34,
+  },
+  healer: {
+    id: "starter-armor-healer",
+    name: "Common Soothing Robe",
+    slot: "armor",
+    rarity: "Common",
+    statMods: {
+      maxHp: 20,
+      healingPower: 3,
+    },
+    powerScore: 30,
+  },
+  dps: {
+    id: "starter-armor-dps",
+    name: "Common Skirmisher Vest",
+    slot: "armor",
+    rarity: "Common",
+    statMods: {
+      maxHp: 16,
+      attack: 2,
+      defense: 1,
+    },
+    powerScore: 31,
+  },
+};
+
 export function getStarterWeapon(classId: PlayerClassId): Item {
   return STARTER_WEAPONS[classId];
+}
+
+export function getStarterArmor(classId: PlayerClassId): Item {
+  return STARTER_ARMOR[classId];
 }
 
 export function getClassLabel(classId: PlayerClassId): string {

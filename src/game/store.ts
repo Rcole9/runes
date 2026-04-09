@@ -1,4 +1,4 @@
-import { getClassLabel, getStarterWeapon } from "./classes";
+import { getClassLabel, getStarterArmor, getStarterWeapon } from "./classes";
 import { addToInventory, equipItem, unequipSlot } from "./inventory";
 import { generateLoot } from "./loot";
 import { loadGame, saveGame } from "./persistence";
@@ -72,6 +72,11 @@ function emit(): void {
 function commit(mutator: () => void): void {
   mutator();
   recalcState();
+  state = {
+    ...state,
+    equipment: { ...state.equipment },
+    inventory: [...state.inventory],
+  };
   persist();
   emit();
 }
@@ -94,17 +99,30 @@ export function initializeStore(): void {
     };
   }
 
-  const starter = getStarterWeapon(state.classId);
-  state.inventory = ensureInventoryHasItem(state.inventory, starter);
+  const starterWeapon = getStarterWeapon(state.classId);
+  const starterArmor = getStarterArmor(state.classId);
+  state.inventory = ensureInventoryHasItem(state.inventory, starterWeapon);
+  state.inventory = ensureInventoryHasItem(state.inventory, starterArmor);
   if (!state.equipment.weapon) {
     state.equipment = {
       ...state.equipment,
-      weapon: starter,
+      weapon: starterWeapon,
+    };
+  }
+  if (!state.equipment.armor) {
+    state.equipment = {
+      ...state.equipment,
+      armor: starterArmor,
     };
   }
 
   recalcState();
   state.hp = state.maxHp;
+  state = {
+    ...state,
+    equipment: { ...state.equipment },
+    inventory: [...state.inventory],
+  };
   persist();
   emit();
 }
@@ -120,15 +138,17 @@ export const gameStore = {
   setClass(classId: PlayerClassId): void {
     commit(() => {
       state.classId = classId;
-      const starter = getStarterWeapon(classId);
-      state.inventory = ensureInventoryHasItem(state.inventory, starter);
+      const starterWeapon = getStarterWeapon(classId);
+      const starterArmor = getStarterArmor(classId);
+      state.inventory = ensureInventoryHasItem(state.inventory, starterWeapon);
+      state.inventory = ensureInventoryHasItem(state.inventory, starterArmor);
       state.equipment = {
         ...state.equipment,
-        weapon: starter,
+        weapon: starterWeapon,
+        armor: starterArmor,
       };
-      state.hp = 9999;
+      state.hp = state.maxHp;
     });
-    state.hp = state.maxHp;
   },
   takeDamage(amount: number): void {
     commit(() => {

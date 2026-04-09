@@ -29,7 +29,7 @@ export default function GameOverlay() {
           <button onClick={() => gameStore.setClass("healer")}>Healer</button>
           <button onClick={() => gameStore.setClass("dps")}>DPS</button>
         </div>
-        <p className="toast">Choosing a class equips its starter weapon.</p>
+        <p className="toast">Choosing a class equips starter weapon and armor.</p>
         <div className="overlay-row">
           <span>Level</span>
           <strong>{state.level}</strong>
