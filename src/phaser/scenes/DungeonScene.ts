@@ -63,6 +63,7 @@ export class DungeonScene extends Phaser.Scene {
         const tile = this.add
           .image(this.mapOrigin.x + p.x, this.mapOrigin.y + p.y, texture)
           .setTint(hexToNumber(PALETTE.void.tealDeep));
+        tile.setDisplaySize(64, 32);
         tile.setDepth(p.y);
       }
     }
@@ -73,6 +74,7 @@ export class DungeonScene extends Phaser.Scene {
       this.mapOrigin.y + start.y - 14,
       "player",
     );
+    this.player.setDisplaySize(24, 24);
     this.player.setDepth(this.mapOrigin.y + start.y + 90);
 
     this.keys = this.input.keyboard!.addKeys("W,A,S,D,SPACE,J,H") as Record<
@@ -162,6 +164,7 @@ export class DungeonScene extends Phaser.Scene {
         this.mapOrigin.y + p.y - 10,
         "enemy",
       );
+      sprite.setDisplaySize(20, 20);
       sprite.setDepth(this.mapOrigin.y + p.y + 80);
       const hpBar = this.add.graphics();
       const maxHp = scaled.hp;
@@ -192,6 +195,7 @@ export class DungeonScene extends Phaser.Scene {
       this.mapOrigin.y + p.y - 18,
       "boss",
     );
+    sprite.setDisplaySize(40, 40);
     sprite.setDepth(this.mapOrigin.y + p.y + 100);
     const hpBar = this.add.graphics();
     const maxHp = scaled.hp * 8;
@@ -430,6 +434,7 @@ export class DungeonScene extends Phaser.Scene {
           this.mapOrigin.y + p.y - 8,
           "add",
         );
+        sprite.setDisplaySize(16, 16);
         sprite.setDepth(this.mapOrigin.y + p.y + 80);
         const hpBar = this.add.graphics();
         const maxHp = 25 + this.difficulty * 6;

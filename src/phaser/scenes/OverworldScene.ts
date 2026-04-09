@@ -38,6 +38,7 @@ export class OverworldScene extends Phaser.Scene {
           this.mapOrigin.y + p.y,
           texture,
         );
+        tile.setDisplaySize(64, 32);
         tile.setDepth(p.y);
       }
     }
@@ -48,6 +49,7 @@ export class OverworldScene extends Phaser.Scene {
       this.mapOrigin.y + npcPos.y - 20,
       "npc",
     );
+    this.npc.setDisplaySize(20, 28);
     this.npc.setDepth(this.mapOrigin.y + npcPos.y + 100);
 
     const portalPos = worldToScreen(this.portalWorld);
@@ -56,6 +58,7 @@ export class OverworldScene extends Phaser.Scene {
       this.mapOrigin.y + portalPos.y - 24,
       "portal",
     );
+    this.portal.setDisplaySize(36, 52);
     this.portal.setDepth(this.mapOrigin.y + portalPos.y + 120);
 
     const start = worldToScreen(this.playerWorld);
@@ -64,6 +67,7 @@ export class OverworldScene extends Phaser.Scene {
       this.mapOrigin.y + start.y - 14,
       "player",
     );
+    this.player.setDisplaySize(24, 24);
     this.player.setDepth(this.mapOrigin.y + start.y + 90);
 
     this.cameras.main.startFollow(this.player, true, 0.09, 0.09);

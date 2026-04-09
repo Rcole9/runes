@@ -93,6 +93,9 @@ No custom server configuration is required.
 
 You can integrate asset packs from Kenney (https://kenney.nl/assets) without changing code.
 
+This repository already includes the Kenney 1-Bit Platformer Pack in
+`public/assets/kenney/1-bit-platformer-pack/` with default tile mappings.
+
 1. Place PNG files in `public/assets/kenney/`.
 2. Map texture keys in `public/assets/kenney/manifest.json`.
 3. Launch the game. Any missing key automatically falls back to generated art.

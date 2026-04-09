@@ -1,34 +1,44 @@
 # Kenney Asset Integration
 
-This project supports optional external textures via `manifest.json`.
+This project is preconfigured for the Kenney 1-Bit Platformer Pack:
+https://kenney.nl/assets/1-bit-platformer-pack
 
-## How to use Kenney assets
+## Installed Pack
 
-1. Download a compatible pack from https://kenney.nl/assets
-2. Export or copy PNG files into `public/assets/kenney/`
-3. Add entries to `manifest.json` where key = in-game texture key and value = public path.
+The downloaded archive is extracted to:
 
-Example `manifest.json`:
+- `public/assets/kenney/1-bit-platformer-pack/`
 
-```json
-{
-  "tile": "/assets/kenney/tile.png",
-  "tile-dirt": "/assets/kenney/tile-dirt.png",
-  "tile-path": "/assets/kenney/tile-path.png",
-  "tile-water": "/assets/kenney/tile-water.png",
-  "player": "/assets/kenney/player.png",
-  "enemy": "/assets/kenney/enemy.png",
-  "boss": "/assets/kenney/boss.png",
-  "telegraph": "/assets/kenney/telegraph.png",
-  "portal": "/assets/kenney/portal.png",
-  "npc": "/assets/kenney/npc.png",
-  "add": "/assets/kenney/add.png",
-  "slash": "/assets/kenney/slash.png"
-}
-```
+The runtime loader reads:
 
-When a key is missing, the game falls back to generated runtime art.
+- `public/assets/kenney/manifest.json`
+
+Current default mapping uses 1-bit transparent tiles for:
+
+- `tile`
+- `tile-dirt`
+- `tile-path`
+- `tile-water`
+
+## Override Any Texture
+
+You can map any supported key to any PNG inside the pack:
+
+- `tile`
+- `tile-dirt`
+- `tile-path`
+- `tile-water`
+- `player`
+- `enemy`
+- `boss`
+- `telegraph`
+- `portal`
+- `npc`
+- `add`
+- `slash`
+
+If a key is not mapped or fails to load, the game falls back to generated runtime art.
 
 ## License
 
-Kenney assets are typically distributed under CC0, but verify the exact license terms of the pack you download.
+See `public/assets/kenney/1-bit-platformer-pack/License.txt`.

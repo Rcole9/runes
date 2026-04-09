@@ -1,1 +1,6 @@
-{}
+{
+	"tile": "/assets/kenney/1-bit-platformer-pack/Tiles/Transparent/tile_0000.png",
+	"tile-dirt": "/assets/kenney/1-bit-platformer-pack/Tiles/Transparent/tile_0001.png",
+	"tile-path": "/assets/kenney/1-bit-platformer-pack/Tiles/Transparent/tile_0002.png",
+	"tile-water": "/assets/kenney/1-bit-platformer-pack/Tiles/Transparent/tile_0003.png"
+}
