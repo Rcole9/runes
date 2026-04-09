@@ -273,6 +273,7 @@ export class DungeonScene extends Phaser.Scene {
           this.removeEnemy(target);
           this.boss = null;
           const loot = gameStore.completeDungeonAndGrantLoot(this.seed);
+          gameStore.refillPotions();
           this.statusText.setText(`Boss defeated: ${loot.name}`);
           this.time.delayedCall(1400, () => this.scene.start("OverworldScene"));
           return;
@@ -325,6 +326,7 @@ export class DungeonScene extends Phaser.Scene {
       this.cameras.main.shake(75, 0.0015);
 
       if (current.hp <= 0) {
+        gameStore.refillPotions();
         gameStore.resetHp();
         this.scene.start("OverworldScene");
       }
@@ -339,6 +341,11 @@ export class DungeonScene extends Phaser.Scene {
       const dist = Phaser.Math.Distance.Between(this.player.x, this.player.y + 10, marker.x, marker.y);
       if (dist < radius) {
         gameStore.takeDamage(damage);
+        if (gameStore.getState().hp <= 0) {
+          gameStore.refillPotions();
+          gameStore.resetHp();
+          this.scene.start("OverworldScene");
+        }
       }
       marker.destroy();
     });

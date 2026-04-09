@@ -185,6 +185,11 @@ export const gameStore = {
       state.hp = Math.min(state.maxHp, state.hp + Math.round(state.maxHp * 0.35));
     });
   },
+  refillPotions(): void {
+    commit(() => {
+      state.potions = DEFAULT_STARTER_POTIONS;
+    });
+  },
   grantLoot(item: Item): void {
     commit(() => {
       state.inventory = addToInventory(state.inventory, item);
