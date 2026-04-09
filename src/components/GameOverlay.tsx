@@ -57,6 +57,33 @@ export default function GameOverlay() {
           <strong>{state.dungeonTier}</strong>
         </div>
         <div className="overlay-row">
+          <span>Dungeon Level</span>
+          <strong>{state.dungeonLevel}</strong>
+        </div>
+        <div className="item class-buttons">
+          <button
+            className={state.dungeonLevel === "easy" ? "active" : undefined}
+            aria-pressed={state.dungeonLevel === "easy"}
+            onClick={() => gameStore.setDungeonLevel("easy")}
+          >
+            Easy
+          </button>
+          <button
+            className={state.dungeonLevel === "medium" ? "active" : undefined}
+            aria-pressed={state.dungeonLevel === "medium"}
+            onClick={() => gameStore.setDungeonLevel("medium")}
+          >
+            Medium
+          </button>
+          <button
+            className={state.dungeonLevel === "hard" ? "active" : undefined}
+            aria-pressed={state.dungeonLevel === "hard"}
+            onClick={() => gameStore.setDungeonLevel("hard")}
+          >
+            Hard
+          </button>
+        </div>
+        <div className="overlay-row">
           <span>Power</span>
           <strong>{state.powerLevel}</strong>
         </div>

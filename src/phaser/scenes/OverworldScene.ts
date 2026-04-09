@@ -1,6 +1,10 @@
 import * as Phaser from "phaser";
 import { gameStore } from "@/game/store";
-import { dungeonSeedForTier } from "@/game/progression";
+import {
+  difficultyOffsetForLevel,
+  dungeonLevelLabel,
+  dungeonSeedForLevel,
+} from "@/game/progression";
 import { worldToScreen } from "../iso";
 
 export class OverworldScene extends Phaser.Scene {
@@ -102,13 +106,19 @@ export class OverworldScene extends Phaser.Scene {
     );
 
     if (portalDist < 1.5) {
-      this.hudText.setText("Press F to enter the dungeon instance");
+      const current = gameStore.getState();
+      const selectedLevelLabel = dungeonLevelLabel(current.dungeonLevel);
+      this.hudText.setText(`Press F to enter ${selectedLevelLabel} dungeon`);
       if (Phaser.Input.Keyboard.JustDown(this.keys.F)) {
         gameStore.resetHp();
-        const tier = gameStore.getState().dungeonTier;
+        const tier = current.dungeonTier;
+        const scaledDifficulty = Math.max(
+          1,
+          tier + difficultyOffsetForLevel(current.dungeonLevel),
+        );
         this.scene.start("DungeonScene", {
-          seed: dungeonSeedForTier(tier),
-          difficulty: tier,
+          seed: dungeonSeedForLevel(tier, current.dungeonLevel),
+          difficulty: scaledDifficulty,
         });
       }
     } else {

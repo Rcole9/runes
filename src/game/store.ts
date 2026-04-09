@@ -5,13 +5,14 @@ import { loadGame, saveGame } from "./persistence";
 import { nextDungeonTier, nextLevel } from "./progression";
 import { hashSeed, mulberry32 } from "./rng";
 import { computePowerLevel, derivePlayerStats } from "./stats";
-import { Equipment, Item, PlayerClassId, SaveData } from "./types";
+import { DungeonLevel, Equipment, Item, PlayerClassId, SaveData } from "./types";
 
 export interface RuntimeState {
   classId: PlayerClassId;
   classLabel: string;
   level: number;
   dungeonTier: number;
+  dungeonLevel: DungeonLevel;
   hp: number;
   maxHp: number;
   powerLevel: number;
@@ -29,6 +30,7 @@ let state: RuntimeState = {
   classLabel: "DPS",
   level: 1,
   dungeonTier: 1,
+  dungeonLevel: "medium",
   hp: 140,
   maxHp: 140,
   powerLevel: 0,
@@ -60,6 +62,7 @@ function persist(): void {
       classId: state.classId,
       level: state.level,
       dungeonTier: state.dungeonTier,
+      dungeonLevel: state.dungeonLevel,
       powerLevel: state.powerLevel,
       potions: state.potions,
     },
@@ -93,6 +96,7 @@ export function initializeStore(): void {
       classId: loaded.progress.classId,
       level: loaded.progress.level,
       dungeonTier: loaded.progress.dungeonTier,
+      dungeonLevel: loaded.progress.dungeonLevel ?? "medium",
       potions: loaded.progress.potions ?? DEFAULT_STARTER_POTIONS,
       equipment: loaded.equipment,
       inventory: loaded.inventory,
@@ -153,6 +157,11 @@ export const gameStore = {
         armor: starterArmor,
       };
       state.hp = state.maxHp;
+    });
+  },
+  setDungeonLevel(level: DungeonLevel): void {
+    commit(() => {
+      state.dungeonLevel = level;
     });
   },
   takeDamage(amount: number): void {

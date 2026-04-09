@@ -1,4 +1,5 @@
 export type PlayerClassId = "tank" | "healer" | "dps";
+export type DungeonLevel = "easy" | "medium" | "hard";
 
 export interface Stats {
   maxHp: number;
@@ -36,6 +37,7 @@ export interface PlayerProgress {
   dungeonTier: number;
   powerLevel: number;
   potions: number;
+  dungeonLevel: DungeonLevel;
 }
 
 export interface SaveData {
