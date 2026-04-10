@@ -2,15 +2,34 @@ import * as Phaser from "phaser";
 import { hexToNumber, PALETTE } from "@/game/palette";
 
 export class BootScene extends Phaser.Scene {
+  private static readonly KENNEY_MANIFEST_KEY = "kenney-manifest";
+
   constructor() {
     super("BootScene");
   }
 
   preload(): void {
-    // No external assets to preload
+    this.load.json(
+      BootScene.KENNEY_MANIFEST_KEY,
+      "/assets/kenney/manifest.json",
+    );
   }
 
   create(): void {
+    const manifest = this.cache.json.get(BootScene.KENNEY_MANIFEST_KEY) as
+      | Record<string, string>
+      | undefined;
+
+    if (manifest && Object.keys(manifest).length > 0) {
+      Object.entries(manifest).forEach(([key, assetPath]) => {
+        this.load.image(key, assetPath);
+      });
+
+      this.load.once("complete", () => this.finishBoot());
+      this.load.start();
+      return;
+    }
+
     this.finishBoot();
   }
 
