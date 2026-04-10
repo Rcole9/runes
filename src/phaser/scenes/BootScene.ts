@@ -44,10 +44,8 @@ export class BootScene extends Phaser.Scene {
     };
 
     generateIfMissing("tile", () => {
-      // diamond: top(32,0), right(64,16), bottom(32,32), left(0,16)
       g.fillStyle(hexToNumber(PALETTE.grass.mid), 1);
-      g.fillTriangle(32, 0, 64, 16, 0, 16);
-      g.fillTriangle(0, 16, 64, 16, 32, 32);
+      g.fillRect(0, 0, 64, 32);
       g.fillStyle(hexToNumber(PALETTE.grass.light), 1);
       g.fillRect(16, 12, 16, 6);
       g.fillStyle(hexToNumber(PALETTE.grass.highlight), 1);
@@ -61,8 +59,7 @@ export class BootScene extends Phaser.Scene {
 
     generateIfMissing("tile-dirt", () => {
       g.fillStyle(hexToNumber(PALETTE.dirt.mid), 1);
-      g.fillTriangle(32, 0, 64, 16, 0, 16);
-      g.fillTriangle(0, 16, 64, 16, 32, 32);
+      g.fillRect(0, 0, 64, 32);
       g.fillStyle(hexToNumber(PALETTE.dirt.light), 1);
       g.fillRect(16, 12, 14, 6);
       g.fillStyle(hexToNumber(PALETTE.dirt.dark), 1);
@@ -74,8 +71,7 @@ export class BootScene extends Phaser.Scene {
 
     generateIfMissing("tile-path", () => {
       g.fillStyle(hexToNumber(PALETTE.path.mid), 1);
-      g.fillTriangle(32, 0, 64, 16, 0, 16);
-      g.fillTriangle(0, 16, 64, 16, 32, 32);
+      g.fillRect(0, 0, 64, 32);
       g.fillStyle(hexToNumber(PALETTE.path.light), 1);
       g.fillRect(18, 12, 12, 5);
       g.fillStyle(hexToNumber(PALETTE.path.dark), 1);
@@ -88,8 +84,7 @@ export class BootScene extends Phaser.Scene {
 
     generateIfMissing("tile-water", () => {
       g.fillStyle(hexToNumber(PALETTE.water.dark), 1);
-      g.fillTriangle(32, 0, 64, 16, 0, 16);
-      g.fillTriangle(0, 16, 64, 16, 32, 32);
+      g.fillRect(0, 0, 64, 32);
       g.fillStyle(hexToNumber(PALETTE.water.mid), 1);
       g.fillRect(14, 12, 18, 7);
       g.fillStyle(hexToNumber(PALETTE.water.light), 1);
