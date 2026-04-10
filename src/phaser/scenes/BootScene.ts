@@ -44,53 +44,58 @@ export class BootScene extends Phaser.Scene {
     };
 
     generateIfMissing("tile", () => {
+      // diamond: top(32,0), right(64,16), bottom(32,32), left(0,16)
       g.fillStyle(hexToNumber(PALETTE.grass.mid), 1);
-      g.fillRect(0, 0, 64, 32);
+      g.fillTriangle(32, 0, 64, 16, 0, 16);
+      g.fillTriangle(0, 16, 64, 16, 32, 32);
       g.fillStyle(hexToNumber(PALETTE.grass.light), 1);
-      g.fillRect(0, 0, 24, 12);
+      g.fillRect(16, 12, 16, 6);
       g.fillStyle(hexToNumber(PALETTE.grass.highlight), 1);
-      g.fillRect(8, 12, 18, 8);
+      g.fillRect(20, 16, 10, 5);
       g.fillStyle(hexToNumber(PALETTE.grass.dark), 1);
-      g.fillRect(34, 16, 22, 10);
+      g.fillRect(36, 16, 12, 6);
       g.fillStyle(hexToNumber(PALETTE.grass.shadow), 1);
-      g.fillRect(50, 4, 10, 7);
+      g.fillRect(38, 12, 8, 5);
       g.generateTexture("tile", 64, 32);
     });
 
     generateIfMissing("tile-dirt", () => {
       g.fillStyle(hexToNumber(PALETTE.dirt.mid), 1);
-      g.fillRect(0, 0, 64, 32);
+      g.fillTriangle(32, 0, 64, 16, 0, 16);
+      g.fillTriangle(0, 16, 64, 16, 32, 32);
       g.fillStyle(hexToNumber(PALETTE.dirt.light), 1);
-      g.fillRect(8, 8, 18, 8);
+      g.fillRect(16, 12, 14, 6);
       g.fillStyle(hexToNumber(PALETTE.dirt.dark), 1);
-      g.fillRect(30, 14, 20, 8);
+      g.fillRect(34, 16, 14, 7);
       g.fillStyle(hexToNumber(PALETTE.dirt.shadow), 1);
-      g.fillRect(48, 4, 10, 7);
+      g.fillRect(38, 12, 8, 4);
       g.generateTexture("tile-dirt", 64, 32);
     });
 
     generateIfMissing("tile-path", () => {
       g.fillStyle(hexToNumber(PALETTE.path.mid), 1);
-      g.fillRect(0, 0, 64, 32);
+      g.fillTriangle(32, 0, 64, 16, 0, 16);
+      g.fillTriangle(0, 16, 64, 16, 32, 32);
       g.fillStyle(hexToNumber(PALETTE.path.light), 1);
-      g.fillRect(6, 10, 16, 7);
+      g.fillRect(18, 12, 12, 5);
       g.fillStyle(hexToNumber(PALETTE.path.dark), 1);
-      g.fillRect(28, 16, 20, 7);
+      g.fillRect(34, 16, 12, 6);
       g.fillStyle(hexToNumber(PALETTE.path.pebbleLight), 1);
-      g.fillRect(44, 6, 3, 3);
-      g.fillRect(52, 20, 3, 3);
+      g.fillRect(28, 14, 3, 3);
+      g.fillRect(36, 19, 3, 3);
       g.generateTexture("tile-path", 64, 32);
     });
 
     generateIfMissing("tile-water", () => {
       g.fillStyle(hexToNumber(PALETTE.water.dark), 1);
-      g.fillRect(0, 0, 64, 32);
+      g.fillTriangle(32, 0, 64, 16, 0, 16);
+      g.fillTriangle(0, 16, 64, 16, 32, 32);
       g.fillStyle(hexToNumber(PALETTE.water.mid), 1);
-      g.fillRect(6, 8, 22, 8);
+      g.fillRect(14, 12, 18, 7);
       g.fillStyle(hexToNumber(PALETTE.water.light), 1);
-      g.fillRect(24, 14, 16, 6);
+      g.fillRect(22, 15, 12, 5);
       g.fillStyle(hexToNumber(PALETTE.water.foam), 1);
-      g.fillRect(43, 11, 7, 2);
+      g.fillRect(32, 12, 6, 2);
       g.generateTexture("tile-water", 64, 32);
     });
 
