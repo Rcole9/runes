@@ -23,27 +23,7 @@ export class OverworldScene extends Phaser.Scene {
   }
 
   private createBackdrop(): void {
-    const { width, height } = this.cameras.main;
-    const sky = this.add.graphics({ x: 0, y: 0 });
-    sky.fillGradientStyle(0x182734, 0x182734, 0x305a4e, 0x305a4e, 1);
-    sky.fillRect(0, 0, width, height);
-    sky.setScrollFactor(0);
-    sky.setDepth(-2000);
-
-    const haze = this.add.graphics({ x: 0, y: 0 });
-    haze.fillStyle(0xf3d99a, 0.14);
-    haze.fillEllipse(width * 0.22, height * 0.2, width * 0.5, height * 0.35);
-    haze.fillStyle(0x9bd5a4, 0.11);
-    haze.fillEllipse(width * 0.8, height * 0.25, width * 0.42, height * 0.3);
-    haze.setScrollFactor(0);
-    haze.setDepth(-1900);
-
-    const vignette = this.add.graphics({ x: 0, y: 0 });
-    vignette.fillStyle(0x0b1014, 0.22);
-    vignette.fillRect(0, 0, width, 30);
-    vignette.fillRect(0, height - 42, width, 42);
-    vignette.setScrollFactor(0);
-    vignette.setDepth(-1800);
+    // Solid background only (decorative graphics removed)
   }
 
   create(): void {

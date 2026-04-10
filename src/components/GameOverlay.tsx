@@ -172,7 +172,16 @@ export default function GameOverlay() {
                 <span className="ui-icon icon-gem" aria-hidden="true" />
                 {item.name}
               </span>
-              <button className="overlay-btn" onClick={() => gameStore.equip(item.id)}>Equip</button>
+              <button 
+                className="overlay-btn" 
+                onClick={() => {
+                  console.log("Equip button clicked for item:", item.id, item.name, item.slot);
+                  gameStore.equip(item.id);
+                  console.log("After equip, equipment:", gameStore.getState().equipment);
+                }}
+              >
+                Equip
+              </button>
             </div>
           ))}
         </div>

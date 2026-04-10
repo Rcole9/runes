@@ -206,10 +206,17 @@ export const gameStore = {
     });
   },
   equip(itemId: string): void {
+    console.log("gameStore.equip called with itemId:", itemId);
     commit(() => {
       const item = state.inventory.find((i) => i.id === itemId);
-      if (!item) return;
+      console.log("Found item:", item);
+      if (!item) {
+        console.warn("Item not found in inventory!");
+        return;
+      }
+      console.log("Before equipItem, equipment:", state.equipment);
       state.equipment = equipItem(state.equipment, item);
+      console.log("After equipItem, equipment:", state.equipment);
     });
   },
   unequip(slot: "weapon" | "armor"): void {
