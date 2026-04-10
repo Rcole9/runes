@@ -114,3 +114,18 @@ Expected texture keys:
 - `npc`
 - `add`
 - `slash`
+
+### Imported ZIP Packs
+
+The following ZIP archives are extracted and wired into `public/assets/kenney/manifest.json`:
+
+- `public/assets/sprites/free-pixel-art-dungeon-crawler-mini-pack-90-sprites-assets.zip`
+- `public/assets/sprites/free-rpg-characters-companions-pixel-art-240-sprites-assets.zip`
+- `public/assets/sprites/free-rpg-weapons-armor-pixel-art-160-sprites-assets.zip`
+- `public/assets/tiles/free-rpg-tilesets-pixel-art-350-sprites-assets.zip`
+- `public/assets/ui/free-pixel-art-ui-kit-mini-pack-80-sprites-assets.zip`
+
+Two archives currently fail to extract (`zipfile corrupt`) and were not imported:
+
+- `public/assets/sprites/free-pixel-art-treasure-chests-475-game-assets-assets.zip`
+- `public/assets/sprites/free-rpg-enemies-bosses-pixel-art-200-sprites-assets.zip`

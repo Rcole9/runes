@@ -1,11 +1,14 @@
 {
   "tile": "/assets/tiles/rpg-tilesets/freepixel-rpg-tilesets/grass-tile-green-lawn-texture-001.png",
-  "tile-dirt": "/assets/tiles/rpg-tilesets/freepixel-rpg-tilesets/dirt-path-tile-brown-earth-009.png",
-  "tile-path": "/assets/tiles/rpg-tilesets/freepixel-rpg-tilesets/cobblestone-path-tile-grey-stones-005.png",
+  "tile-dirt": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-dirt-floor-tile-brown-natural-cave_20260217_215318.png",
+  "tile-path": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-cobblestone-floor-tile-uneven-rough_20260217_214245.png",
   "tile-water": "/assets/tiles/rpg-tilesets/freepixel-rpg-tilesets/river-water-tile-flowing-stream-013.png",
   "player": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/warrior-knight-with-sword-021.png",
-  "enemy": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/imp-familiar-small-demon-005.png",
-  "boss": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/dragon-mount-flying-dragon-045-v5.png",
+  "enemy": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-dark-knight-armored-black-sword-shield_20260217_223005.png",
+  "boss": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-boss-dragon-large-fire-throne-room_20260217_223143.png",
+  "telegraph": "/assets/ui/freepixel-theme-ui-kit/ui-cooldown-overlay-dark-circular-timer_20260217_085336.png",
+  "portal": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-archway-stone-carved-entrance-passage_20260217_215831.png",
   "npc": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/merchant-shopkeeper-npc-friendly-012-v2.png",
-  "add": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/cat-pet-companion-small-031-v4.png"
+  "add": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-bat-flying-swarm-dark-wings-small_20260217_222556.png",
+  "slash": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/dagger-knife-weapon-short-006.png"
 }
