@@ -41,6 +41,13 @@ export class DungeonScene extends Phaser.Scene {
     super("DungeonScene");
   }
 
+  private firstAvailable(candidates: string[], fallback: string): string {
+    for (const key of candidates) {
+      if (this.textures.exists(key)) return key;
+    }
+    return fallback;
+  }
+
   private createBackdrop(): void {
     // Solid background only (decorative graphics removed)
   }
@@ -54,6 +61,14 @@ export class DungeonScene extends Phaser.Scene {
   }
 
   create(): void {
+    const current = gameStore.getState();
+    const classPlayerTexture =
+      current.classId === "tank"
+        ? this.firstAvailable(["player-tank", "player"], "player")
+        : current.classId === "healer"
+          ? this.firstAvailable(["player-healer", "player"], "player")
+          : this.firstAvailable(["player-dps", "player"], "player");
+
     this.cameras.main.setBackgroundColor(0x090c13);
     this.mapOrigin = {
       x: this.cameras.main.centerX,
@@ -77,7 +92,7 @@ export class DungeonScene extends Phaser.Scene {
     this.player = this.add.image(
       this.mapOrigin.x + start.x,
       this.mapOrigin.y + start.y - 14,
-      "player",
+      classPlayerTexture,
     );
     this.player.setDisplaySize(24, 24);
     this.player.setDepth(this.mapOrigin.y + start.y + 90);
@@ -167,7 +182,14 @@ export class DungeonScene extends Phaser.Scene {
       const sprite = this.add.image(
         this.mapOrigin.x + p.x,
         this.mapOrigin.y + p.y - 10,
-        "enemy",
+        this.firstAvailable(
+          [
+            `enemy-${(i + this.wave) % 4}`,
+            `enemy-${(i + this.wave + 1) % 4}`,
+            "enemy",
+          ],
+          "enemy",
+        ),
       );
       sprite.setDisplaySize(20, 20);
       sprite.setDepth(this.mapOrigin.y + p.y + 80);
@@ -198,7 +220,7 @@ export class DungeonScene extends Phaser.Scene {
     const sprite = this.add.image(
       this.mapOrigin.x + p.x,
       this.mapOrigin.y + p.y - 18,
-      "boss",
+      this.firstAvailable(["boss-1", "boss"], "boss"),
     );
     sprite.setDisplaySize(40, 40);
     sprite.setDepth(this.mapOrigin.y + p.y + 100);
@@ -437,7 +459,7 @@ export class DungeonScene extends Phaser.Scene {
         const sprite = this.add.image(
           this.mapOrigin.x + p.x,
           this.mapOrigin.y + p.y - 8,
-          "add",
+          this.firstAvailable(["add-1", "add"], "add"),
         );
         sprite.setDisplaySize(16, 16);
         sprite.setDepth(this.mapOrigin.y + p.y + 80);

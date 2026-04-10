@@ -22,11 +22,26 @@ export class OverworldScene extends Phaser.Scene {
     super("OverworldScene");
   }
 
+  private firstAvailable(candidates: string[], fallback: string): string {
+    for (const key of candidates) {
+      if (this.textures.exists(key)) return key;
+    }
+    return fallback;
+  }
+
   private createBackdrop(): void {
     // Solid background only (decorative graphics removed)
   }
 
   create(): void {
+    const current = gameStore.getState();
+    const classPlayerTexture =
+      current.classId === "tank"
+        ? this.firstAvailable(["player-tank", "player"], "player")
+        : current.classId === "healer"
+          ? this.firstAvailable(["player-healer", "player"], "player")
+          : this.firstAvailable(["player-dps", "player"], "player");
+
     this.cameras.main.setBackgroundColor(0x182734);
     this.mapOrigin = {
       x: this.cameras.main.centerX,
@@ -52,7 +67,7 @@ export class OverworldScene extends Phaser.Scene {
     this.npc = this.add.image(
       this.mapOrigin.x + npcPos.x,
       this.mapOrigin.y + npcPos.y - 20,
-      "npc",
+      this.firstAvailable(["npc-merchant", "npc-guard", "npc"], "npc"),
     );
     this.npc.setDisplaySize(20, 28);
     this.npc.setDepth(this.mapOrigin.y + npcPos.y + 100);
@@ -70,7 +85,7 @@ export class OverworldScene extends Phaser.Scene {
     this.player = this.add.image(
       this.mapOrigin.x + start.x,
       this.mapOrigin.y + start.y - 14,
-      "player",
+      classPlayerTexture,
     );
     this.player.setDisplaySize(24, 24);
     this.player.setDepth(this.mapOrigin.y + start.y + 90);
