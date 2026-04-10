@@ -1,8 +1,6 @@
 {
-  "tile": "/assets/tiles/rpg-tilesets/freepixel-rpg-tilesets/grass-tile-green-lawn-texture-001.png",
   "tile-dirt": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-dirt-floor-tile-brown-natural-cave_20260217_215318.png",
   "tile-path": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-cobblestone-floor-tile-uneven-rough_20260217_214245.png",
-  "tile-water": "/assets/tiles/rpg-tilesets/freepixel-rpg-tilesets/river-water-tile-flowing-stream-013.png",
   "player": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/warrior-knight-with-sword-021.png",
   "enemy": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-dark-knight-armored-black-sword-shield_20260217_223005.png",
   "boss": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-boss-dragon-large-fire-throne-room_20260217_223143.png",
