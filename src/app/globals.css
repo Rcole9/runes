@@ -147,8 +147,11 @@ a {
   width: 100vw;
   height: 100vh;
   padding: 1rem;
-  background: radial-gradient(circle at 20% 20%, rgba(246, 226, 168, 0.2), transparent 55%),
-    radial-gradient(circle at 80% 80%, rgba(167, 183, 201, 0.18), transparent 55%);
+  background:
+    radial-gradient(circle at 18% 16%, rgba(246, 226, 168, 0.22), transparent 38%),
+    radial-gradient(circle at 82% 22%, rgba(78, 194, 184, 0.14), transparent 42%),
+    radial-gradient(circle at 50% 100%, rgba(27, 34, 22, 0.55), transparent 48%),
+    linear-gradient(165deg, #1c2330 0%, #27443a 42%, #141922 100%);
 }
 
 .landing-card {

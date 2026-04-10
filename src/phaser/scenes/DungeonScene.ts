@@ -41,6 +41,30 @@ export class DungeonScene extends Phaser.Scene {
     super("DungeonScene");
   }
 
+  private createBackdrop(): void {
+    const { width, height } = this.cameras.main;
+    const sky = this.add.graphics({ x: 0, y: 0 });
+    sky.fillGradientStyle(0x090c13, 0x090c13, 0x171b2a, 0x171b2a, 1);
+    sky.fillRect(0, 0, width, height);
+    sky.setScrollFactor(0);
+    sky.setDepth(-2200);
+
+    const riftGlow = this.add.graphics({ x: 0, y: 0 });
+    riftGlow.fillStyle(0x4d2e7f, 0.2);
+    riftGlow.fillEllipse(width * 0.52, height * 0.28, width * 0.62, height * 0.35);
+    riftGlow.fillStyle(0x27807f, 0.16);
+    riftGlow.fillEllipse(width * 0.38, height * 0.45, width * 0.5, height * 0.28);
+    riftGlow.setScrollFactor(0);
+    riftGlow.setDepth(-2100);
+
+    const rimShadow = this.add.graphics({ x: 0, y: 0 });
+    rimShadow.fillStyle(0x030508, 0.3);
+    rimShadow.fillRect(0, 0, width, 36);
+    rimShadow.fillRect(0, height - 54, width, 54);
+    rimShadow.setScrollFactor(0);
+    rimShadow.setDepth(-2050);
+  }
+
   init(data: { seed: string; difficulty: number }): void {
     this.seed = data.seed;
     this.difficulty = data.difficulty;
@@ -50,11 +74,12 @@ export class DungeonScene extends Phaser.Scene {
   }
 
   create(): void {
-    this.cameras.main.setBackgroundColor(PALETTE.void.purpleDeep);
+    this.cameras.main.setBackgroundColor(0x090c13);
     this.mapOrigin = {
       x: this.cameras.main.centerX,
       y: 140,
     };
+    this.createBackdrop();
 
     for (let gx = 0; gx < 16; gx += 1) {
       for (let gy = 0; gy < 16; gy += 1) {
