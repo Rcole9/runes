@@ -86,18 +86,10 @@ No custom server configuration is required.
 ## Notes
 
 - Assets are generated at runtime with Phaser graphics (no external CDNs required).
-- Optional Kenney texture override support is available through `public/assets/kenney/manifest.json`.
+
 - Prototype intentionally uses lightweight overlap/proximity checks instead of heavy physics.
 
-## Kenney Assets
 
-You can integrate asset packs from Kenney (https://kenney.nl/assets) without changing code.
-
-This repository already includes the Kenney 1-Bit Platformer Pack in
-`public/assets/kenney/1-bit-platformer-pack/` with default tile mappings.
-
-1. Place PNG files in `public/assets/kenney/`.
-2. Map texture keys in `public/assets/kenney/manifest.json`.
 3. Launch the game. Any missing key automatically falls back to generated art.
 
 Expected texture keys:
@@ -117,7 +109,7 @@ Expected texture keys:
 
 ### Imported ZIP Packs
 
-The following ZIP archives are extracted and wired into `public/assets/kenney/manifest.json`:
+The following ZIP archives are extracted and used via CSS sprite sheets or procedural generation:
 
 - `public/assets/sprites/free-pixel-art-dungeon-crawler-mini-pack-90-sprites-assets.zip`
 - `public/assets/sprites/free-rpg-characters-companions-pixel-art-240-sprites-assets.zip`
