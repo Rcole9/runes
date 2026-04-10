@@ -98,25 +98,16 @@
   --epic: #f9a8d4;
   --legendary: #fbbf24;
 
-  --ui-frame-top: url("/assets/ui/freepixel-theme-ui-kit/ui-frame-window-title-bar-top_20260217_084954.png");
-  --ui-frame-body: url("/assets/ui/freepixel-theme-ui-kit/ui-frame-window-body-middle-section_20260217_085019.png");
-  --ui-frame-footer: url("/assets/ui/freepixel-theme-ui-kit/ui-frame-window-footer-bottom-section_20260217_085032.png");
-  --ui-button-stone: url("/assets/ui/freepixel-theme-ui-kit/ui-button-stone-dungeon-dark-style_20260217_084038.png");
-  --ui-button-green: url("/assets/ui/freepixel-theme-ui-kit/ui-button-green-confirm-accept-ok_20260217_083905.png");
-  --ui-slot-empty: url("/assets/ui/freepixel-theme-ui-kit/ui-frame-item-slot-empty-square_20260217_084846.png");
-  --ui-slot-selected: url("/assets/ui/freepixel-theme-ui-kit/ui-frame-item-slot-selected-highlighted_20260217_084908.png");
-  --ui-health-bar: url("/assets/ui/freepixel-theme-ui-kit/ui-health-bar-red-fill-gradient-frame_20260217_085114.png");
-  --ui-banner: url("/assets/ui/freepixel-theme-ui-kit/ui-popup-achievement-unlocked-banner-star_20260217_090757.png");
-  --ui-icon-crown: url("/assets/ui/freepixel-theme-ui-kit/ui-icon-crown-rank-leader-vip_20260217_085949.png");
-  --ui-icon-flag: url("/assets/ui/freepixel-theme-ui-kit/ui-icon-flag-checkpoint-marker-banner_20260217_090135.png");
-  --ui-icon-trophy: url("/assets/ui/freepixel-theme-ui-kit/ui-icon-trophy-achievement-cup-golden_20260217_085936.png");
-  --ui-icon-star: url("/assets/ui/freepixel-theme-ui-kit/ui-icon-star-favorite-gold-bookmark_20260217_085656.png");
-  --ui-icon-map: url("/assets/ui/freepixel-theme-ui-kit/ui-icon-map-navigation-world-open_20260217_085819.png");
-  --ui-icon-sword: url("/assets/ui/freepixel-theme-ui-kit/ui-icon-sword-attack-red-damage_20260217_085638.png");
-  --ui-icon-heart: url("/assets/ui/freepixel-theme-ui-kit/ui-icon-heart-health-red-life_20260217_085605.png");
-  --ui-icon-gem: url("/assets/ui/freepixel-theme-ui-kit/ui-icon-gem-diamond-premium-currency_20260217_085734.png");
-  --ui-icon-shield: url("/assets/ui/freepixel-theme-ui-kit/ui-icon-shield-defense-blue-armor_20260217_085625.png");
-  --ui-icon-coin: url("/assets/ui/freepixel-theme-ui-kit/ui-icon-coin-gold-currency-money_20260217_085709.png");
+  --ui-frame-top: url("/assets/ui/02.png");
+  --ui-frame-body: url("/assets/ui/04.png");
+  --ui-frame-footer: url("/assets/ui/02.png");
+  --ui-button-stone: url("/assets/ui/00.png");
+  --ui-button-green: url("/assets/ui/00.png");
+  --ui-slot-empty: url("/assets/ui/00.png");
+  --ui-slot-selected: url("/assets/ui/00.png");
+  --ui-health-bar: url("/assets/ui/05.png");
+  --ui-banner: url("/assets/ui/01.png");
+  --ui-icon-sheet: url("/assets/ui/00.png");
 }
 
 * {
@@ -212,11 +203,14 @@ a {
 .overlay-panel {
   pointer-events: auto;
   width: min(360px, 92vw);
-  background-image: var(--ui-frame-top), var(--ui-frame-body), var(--ui-frame-footer),
-    linear-gradient(180deg, rgba(19, 23, 27, 0.86), rgba(19, 23, 27, 0.92));
-  background-repeat: no-repeat, repeat, no-repeat, no-repeat;
-  background-position: top center, center, bottom center, center;
-  background-size: 100% 22px, 100% calc(100% - 44px), 100% 22px, 100% 100%;
+  background-image:
+    linear-gradient(180deg, rgba(17, 21, 26, 0.9), rgba(17, 21, 26, 0.94)),
+    var(--ui-frame-body),
+    var(--ui-frame-top),
+    var(--ui-frame-footer);
+  background-repeat: no-repeat, repeat, repeat-x, repeat-x;
+  background-position: center, center, top center, bottom center;
+  background-size: 100% 100%, 336px 240px, 256px 160px, 256px 160px;
   border: 1px solid rgba(173, 142, 84, 0.45);
   border-radius: 14px;
   padding: 1.1rem 0.85rem 1rem;
@@ -273,9 +267,58 @@ a {
 
 .hp-bar {
   height: 100%;
-  background-image: var(--ui-health-bar);
-  background-repeat: repeat-x;
-  background-size: auto 100%;
+  min-width: 0;
+  transition: width 160ms ease-out, filter 180ms ease-out, box-shadow 180ms ease-out;
+  background-image:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.2) 0%,
+      rgba(255, 255, 255, 0.03) 38%,
+      rgba(0, 0, 0, 0.24) 100%
+    ),
+    var(--ui-health-bar),
+    linear-gradient(90deg, #68dd7a, #3dbd61);
+  background-repeat: no-repeat, repeat-x, no-repeat;
+  background-size: 100% 100%, auto 100%, 100% 100%;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.13);
+}
+
+.hp-bar.hp-mid {
+  background-image:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.2) 0%,
+      rgba(255, 255, 255, 0.03) 38%,
+      rgba(0, 0, 0, 0.24) 100%
+    ),
+    var(--ui-health-bar),
+    linear-gradient(90deg, #f5d76b, #d9a443);
+}
+
+.hp-bar.hp-low {
+  background-image:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.2) 0%,
+      rgba(255, 255, 255, 0.03) 38%,
+      rgba(0, 0, 0, 0.24) 100%
+    ),
+    var(--ui-health-bar),
+    linear-gradient(90deg, #ff7a7a, #d94a4a);
+  filter: saturate(1.2);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2), 0 0 8px rgba(217, 74, 74, 0.45);
+}
+
+.hp-bar.hp-high {
+  background-image:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.2) 0%,
+      rgba(255, 255, 255, 0.03) 38%,
+      rgba(0, 0, 0, 0.24) 100%
+    ),
+    var(--ui-health-bar),
+    linear-gradient(90deg, #69e08a, #39ba63);
 }
 
 .hp-wrap-skin {
@@ -300,9 +343,12 @@ a {
   min-height: 26px;
   padding: 0.25rem 0.7rem;
   border-radius: 8px;
-  background-image: var(--ui-button-stone);
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
+  background-image:
+    linear-gradient(180deg, rgba(17, 20, 24, 0.6), rgba(17, 20, 24, 0.45)),
+    var(--ui-button-stone);
+  background-size: 100% 100%, 320px 160px;
+  background-repeat: no-repeat, no-repeat;
+  background-position: center, 0 -4px;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
   transition: transform 80ms ease;
 }
@@ -317,7 +363,11 @@ a {
 }
 
 .class-buttons .overlay-btn.active {
-  background-image: var(--ui-button-green);
+  background-image:
+    linear-gradient(180deg, rgba(52, 94, 48, 0.42), rgba(28, 66, 29, 0.24)),
+    var(--ui-button-green);
+  background-size: 100% 100%, 320px 160px;
+  background-position: center, 0 -34px;
   color: #14251a;
   font-weight: 700;
   text-shadow: none;
@@ -326,8 +376,8 @@ a {
 .slot-item {
   background-image: var(--ui-slot-empty);
   background-repeat: no-repeat;
-  background-position: 6px center;
-  background-size: 20px 20px;
+  background-position: 6px -124px;
+  background-size: 320px 160px;
   background-color: rgba(17, 20, 24, 0.65);
   border: 1px solid rgba(135, 162, 212, 0.2);
   border-radius: 8px;
@@ -336,57 +386,60 @@ a {
 
 .slot-item:hover {
   background-image: var(--ui-slot-selected);
+  background-position: 6px -104px;
 }
 
 .ui-icon {
-  width: 14px;
-  height: 14px;
-  flex: 0 0 14px;
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
   display: inline-block;
+  background-image: var(--ui-icon-sheet);
   background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
+  background-size: 320px 160px;
+  background-origin: content-box;
+  image-rendering: crisp-edges;
   image-rendering: pixelated;
 }
 
 .icon-crown {
-  background-image: var(--ui-icon-crown);
+  background-position: -208px -96px;
 }
 
 .icon-flag {
-  background-image: var(--ui-icon-flag);
+  background-position: -288px -80px;
 }
 
 .icon-trophy {
-  background-image: var(--ui-icon-trophy);
+  background-position: -224px -112px;
 }
 
 .icon-star {
-  background-image: var(--ui-icon-star);
+  background-position: -64px -96px;
 }
 
 .icon-map {
-  background-image: var(--ui-icon-map);
+  background-position: -272px -112px;
 }
 
 .icon-sword {
-  background-image: var(--ui-icon-sword);
+  background-position: -304px -80px;
 }
 
 .icon-heart {
-  background-image: var(--ui-icon-heart);
+  background-position: -256px -80px;
 }
 
 .icon-gem {
-  background-image: var(--ui-icon-gem);
+  background-position: -224px -16px;
 }
 
 .icon-shield {
-  background-image: var(--ui-icon-shield);
+  background-position: -192px -96px;
 }
 
 .icon-coin {
-  background-image: var(--ui-icon-coin);
+  background-position: -192px -16px;
 }
 
 .inventory-list {
@@ -418,9 +471,9 @@ a {
   }
 
   .ui-icon {
-    width: 13px;
-    height: 13px;
-    flex-basis: 13px;
+    width: 15px;
+    height: 15px;
+    flex-basis: 15px;
   }
 }
 

@@ -15,6 +15,7 @@ const rarityColor: Record<Rarity, string> = {
 export default function GameOverlay() {
   const state = useSyncExternalStore(gameStore.subscribe, gameStore.getState, gameStore.getState);
   const hpPercent = Math.max(0, Math.min(100, (state.hp / state.maxHp) * 100));
+  const hpTier = hpPercent <= 30 ? "low" : hpPercent <= 65 ? "mid" : "high";
 
   return (
     <div className="overlay">
@@ -131,7 +132,7 @@ export default function GameOverlay() {
           </button>
         </div>
         <div className="hp-wrap hp-wrap-skin">
-          <div className="hp-bar" style={{ width: `${hpPercent}%` }} />
+          <div className={`hp-bar hp-${hpTier}`} style={{ width: `${hpPercent}%` }} />
         </div>
 
         <h3 className="overlay-title title-with-icon">
