@@ -35,7 +35,6 @@ export class DungeonScene extends Phaser.Scene {
   private telegraphCooldown = 1200;
   private addSummonCooldown = 2600;
   private statusText!: Phaser.GameObjects.Text;
-  private attackQueued = false;
 
   constructor() {
     super("DungeonScene");
@@ -107,12 +106,8 @@ export class DungeonScene extends Phaser.Scene {
       Phaser.Input.Keyboard.KeyCodes.H,
     ]);
 
-    this.input.on("pointerdown", () => {
-      this.attackQueued = true;
-    });
-
     this.statusText = this.add
-      .text(16, 16, "Clear waves to summon the boss | Space/J/click attack | H potion", {
+      .text(16, 16, "Clear waves to summon the boss | Space/J attack | H potion", {
         color: PALETTE.neutrals.paperLight,
         fontSize: "14px",
       })
@@ -414,12 +409,10 @@ export class DungeonScene extends Phaser.Scene {
 
     const attackPressed =
       Phaser.Input.Keyboard.JustDown(this.keys.SPACE) ||
-      Phaser.Input.Keyboard.JustDown(this.keys.J) ||
-      this.attackQueued;
+      Phaser.Input.Keyboard.JustDown(this.keys.J);
     if (attackPressed) {
       this.playerAttack();
     }
-    this.attackQueued = false;
 
     this.enemies.forEach((enemy) => this.updateEnemy(enemy, dt));
 
