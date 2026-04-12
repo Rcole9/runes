@@ -4,6 +4,15 @@ import { useEffect, useRef } from "react";
 import * as Phaser from "phaser";
 import { initializeStore } from "@/game/store";
 
+// ── game constants ────────────────────────────────────────────────────────────
+const KEYS_TO_UNLOCK  = 5;
+const ENEMY_CHASE_DIST = 220;
+const ATTACK_RANGE    = 110;
+const ATTACK_COOLDOWN = 300;
+
+// per-enemy mutable state stored with getData/setData
+interface EnemyState { hp: number; patrolDir: number; patrolTimer: number; hitTimer: number; }
+
 class MainScene extends Phaser.Scene {
   constructor() {
     super("main");
@@ -11,209 +20,296 @@ class MainScene extends Phaser.Scene {
 
   preload() {
     this.load.pack("public-pack", "/phaser-pack.json");
-    this.load.image("sky", "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-altar-holy-light-divine-healing-golden_20260217_223403.png");
+    this.load.image("sky",    "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-altar-holy-light-divine-healing-golden_20260217_223403.png");
     this.load.image("ground", "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-stone-floor-tile-bloody-stained-dark_20260217_213627.png");
-    this.load.image("star", "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-key-golden-boss-door-master-ornate_20260217_220007.png");
-    this.load.image("bomb", "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-bat-flying-swarm-dark-wings-small_20260217_222556.png");
+    this.load.image("key",    "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-key-golden-boss-door-master-ornate_20260217_220007.png");
+    this.load.image("orc",    "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-orc-large-green-axe-warrior-brute_20260217_222727.png");
+    this.load.image("slime",  "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-slime-green-blob-bouncing-acidic-basic_20260217_222643.png");
+    this.load.image("door",   "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-door-boss-ornate-large-menacing-skull_20260217_215806.png");
     this.load.image("player", "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/warrior-knight-with-sword-021.png");
-    this.load.image("slash", "/assets/kenney/slash.png");
+    this.load.image("slash",  "/assets/kenney/slash.png");
   }
 
   create() {
     const cam = this.cameras.main;
     cam.setRoundPixels(true);
 
-    const worldWidth = 1600;
-    const worldHeight = 1200;
+    const worldWidth = 2400;
+    const worldHeight = 620;
     this.physics.world.setBounds(0, 0, worldWidth, worldHeight);
     cam.setBounds(0, 0, worldWidth, worldHeight);
 
-    this.add.image(400, 300, "sky").setScrollFactor(0).setDepth(-20);
+    // ── background ───────────────────────────────────────────────────────────
+    this.add.tileSprite(0, 0, worldWidth, worldHeight, "sky")
+      .setOrigin(0, 0).setDepth(-20).setAlpha(0.35);
 
+    // ── platforms ────────────────────────────────────────────────────────────
     const platforms = this.physics.add.staticGroup();
-
-    // Each platform tile is forced to a fixed display + body size so the
-    // 200×200 source texture does not create an oversized collision box.
     const makePlatform = (x: number, y: number, w: number, h = 32) => {
       const tile = platforms.create(x, y, "ground") as Phaser.Physics.Arcade.Image;
-      tile.setDisplaySize(w, h);
-      tile.refreshBody();
-      return tile;
+      tile.setDisplaySize(w, h).refreshBody();
+    };
+    makePlatform(1200, 592, 2400, 32); // ground
+    makePlatform(260,  460, 180);
+    makePlatform(560,  380, 180);
+    makePlatform(860,  460, 180);
+    makePlatform(1160, 300, 180);
+    makePlatform(1460, 460, 180);
+    makePlatform(1760, 380, 180);
+    makePlatform(2060, 460, 180);
+
+    // ── door (locked until KEYS_TO_UNLOCK keys are collected) ────────────────
+    const door = this.add.image(2360, 548, "door").setDisplaySize(56, 76).setDepth(50);
+    const doorGlow = this.add
+      .rectangle(2360, 548, 62, 82, 0xff2222, 0.4)
+      .setDepth(49);
+    const doorZoneBody = this.physics.add
+      .image(2360, 548, "door")
+      .setDisplaySize(56, 76)
+      .setAlpha(0) // invisible – only used for overlap
+      .setDepth(0)
+      .setImmovable(true);
+    (doorZoneBody.body as Phaser.Physics.Arcade.Body).setAllowGravity(false);
+
+    // ── keys scattered in the world (plus extras dropped by enemies) ─────────
+    let keysCollected = 0;
+    const keyGroup = this.physics.add.staticGroup();
+    const keySpots: [number, number][] = [
+      [260, 430], [560, 350], [860, 430],
+      [1160, 270], [1460, 430], [1760, 350], [2060, 430],
+    ];
+    for (const [kx, ky] of keySpots) {
+      const k = keyGroup.create(kx, ky, "key") as Phaser.Physics.Arcade.Image;
+      k.setDisplaySize(20, 20).refreshBody();
+    }
+
+    // ── enemies ──────────────────────────────────────────────────────────────
+    const enemies = this.physics.add.group();
+
+    const spawnEnemy = (x: number, y: number, tex: "orc" | "slime") => {
+      const e = enemies.create(x, y, tex) as Phaser.Physics.Arcade.Sprite;
+      e.setDisplaySize(tex === "orc" ? 38 : 30, tex === "orc" ? 38 : 28);
+      (e.body as Phaser.Physics.Arcade.Body).setSize(
+        tex === "orc" ? 26 : 22,
+        tex === "orc" ? 32 : 24,
+      );
+      e.setBounce(0.05).setCollideWorldBounds(true).setDepth(90);
+      e.setData("state", {
+        hp: tex === "orc" ? 3 : 2,
+        patrolDir: Phaser.Math.Between(0, 1) ? 1 : -1,
+        patrolTimer: Phaser.Math.Between(1000, 2500),
+        hitTimer: 0,
+      } satisfies EnemyState);
+      return e;
     };
 
-    // Ground floor – full world width, thin surface
-    makePlatform(800, 584, 1600, 32);
+    spawnEnemy(380,  548, "slime");
+    spawnEnemy(650,  548, "orc");
+    spawnEnemy(950,  548, "slime");
+    spawnEnemy(1250, 548, "orc");
+    spawnEnemy(1550, 548, "slime");
+    spawnEnemy(1850, 548, "orc");
+    spawnEnemy(2150, 548, "slime");
 
-    // Elevated platforms
-    makePlatform(600, 400, 160);
-    makePlatform(50,  250, 160);
-    makePlatform(750, 220, 160);
-    makePlatform(1100, 520, 160);
-    makePlatform(1400, 380, 160);
+    this.physics.add.collider(enemies, platforms);
 
-    const stars = this.physics.add.group({
-      key: "star",
-      repeat: 11,
-      setXY: { x: 12, y: 0, stepX: 120 },
-    });
-
-    const bombs = this.physics.add.group();
-
-    stars.children.iterate((child) => {
-      const star = child as Phaser.Physics.Arcade.Image;
-      star.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
-      star.setDisplaySize(28, 28);
-      return true;
-    });
-
-    // Spawn player above the ground surface (ground top = 584 - 16 = 568)
-    const player = this.physics.add.sprite(100, 520, "player");
-    player.setBounce(0.2);
-    player.setCollideWorldBounds(true);
-    player.setDisplaySize(40, 40);
-    player.setDepth(100);
-    // Explicitly size the body so it matches the 40×40 visual regardless of
-    // source texture dimensions.  Do NOT add extra gravity – world gravity
-    // (arcade.gravity.y = 300) is already applied.
-    const playerBody = player.body as Phaser.Physics.Arcade.Body;
-    playerBody.setSize(28, 38);
-
-    const collectStar: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback = (
-      _playerObj,
-      starObj,
-    ) => {
-      if (!(starObj instanceof Phaser.Physics.Arcade.Image)) return;
-      const star = starObj;
-      star.disableBody(true, true);
-
-      if (stars.countActive(true) === 0) {
-        stars.children.iterate((child) => {
-          const resetStar = child as Phaser.Physics.Arcade.Image;
-          resetStar.enableBody(true, resetStar.x, 0, true, true);
-          return true;
-        });
-
-        const bombX = player.x < 800 ? Phaser.Math.Between(800, 1560) : Phaser.Math.Between(20, 760);
-        const bomb = bombs.create(bombX, 16, "bomb") as Phaser.Physics.Arcade.Image;
-        bomb.setBounce(1);
-        bomb.setCollideWorldBounds(true);
-        bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
-        bomb.setDisplaySize(34, 34);
-        const bombBody = bomb.body as Phaser.Physics.Arcade.Body;
-        bombBody.setAllowGravity(false);
-      }
-    };
-
-    const hitBomb: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback = (
-      playerObj,
-      bombObj,
-    ) => {
-      this.physics.pause();
-
-      if (!(playerObj instanceof Phaser.Physics.Arcade.Sprite)) return;
-      const hitPlayer = playerObj;
-      hitPlayer.setTint(0xff0000);
-      hitPlayer.setVelocity(0, 0);
-
-      if (bombObj instanceof Phaser.Physics.Arcade.Image) {
-        bombObj.setTint(0xaa1111);
-      }
-    };
+    // ── player ───────────────────────────────────────────────────────────────
+    let playerHP = 3;
+    let playerHitCooldown = 0;
+    const player = this.physics.add.sprite(80, 540, "player");
+    player.setBounce(0.1).setCollideWorldBounds(true)
+      .setDisplaySize(40, 40).setDepth(100);
+    (player.body as Phaser.Physics.Arcade.Body).setSize(26, 36);
 
     this.physics.add.collider(player, platforms);
-    this.physics.add.collider(stars, platforms);
-    this.physics.add.collider(bombs, platforms);
-    this.physics.add.overlap(player, stars, collectStar, undefined, this);
-    this.physics.add.collider(player, bombs, hitBomb, undefined, this);
 
-    cam.startFollow(player, true, 0.12, 0.12);
+    // ── HUD ──────────────────────────────────────────────────────────────────
+    const hudStyle = {
+      fontSize: "15px", color: "#ffffff",
+      stroke: "#000000", strokeThickness: 3,
+    };
+    const hpText  = this.add.text(12,  12, "HP: 3 / 3",            hudStyle).setScrollFactor(0).setDepth(200);
+    const keyText = this.add.text(12, 32, `Keys: 0 / ${KEYS_TO_UNLOCK} (unlock door)`, hudStyle).setScrollFactor(0).setDepth(200);
 
+    const updateHUD = () => {
+      hpText.setText(`HP: ${playerHP} / 3`);
+      const locked = keysCollected < KEYS_TO_UNLOCK ? " (unlock door)" : " ✓ DOOR OPEN";
+      keyText.setText(`Keys: ${keysCollected} / ${KEYS_TO_UNLOCK}${locked}`);
+    };
+
+    // ── key collection ───────────────────────────────────────────────────────
+    this.physics.add.overlap(player, keyGroup, (_p, kObj) => {
+      if (!(kObj instanceof Phaser.Physics.Arcade.Image)) return;
+      kObj.destroy();
+      keysCollected++;
+      updateHUD();
+      if (keysCollected >= KEYS_TO_UNLOCK) {
+        doorGlow.setFillStyle(0x00ff99, 0.5);
+        door.setTint(0x88ffcc);
+        this.tweens.add({
+          targets: doorGlow, alpha: { from: 0.5, to: 1 },
+          yoyo: true, repeat: -1, duration: 500,
+        });
+      }
+    });
+
+    // ── door: advance area when unlocked ─────────────────────────────────────
+    let areaCleared = false;
+    this.physics.add.overlap(player, doorZoneBody, () => {
+      if (keysCollected < KEYS_TO_UNLOCK || areaCleared) return;
+      areaCleared = true;
+      this.physics.pause();
+      const cx = this.cameras.main.midPoint.x;
+      const cy = this.cameras.main.midPoint.y;
+      const banner = this.add.text(cx, cy, "✨  AREA CLEARED!  ✨", {
+        fontSize: "34px", color: "#ffd166",
+        stroke: "#000000", strokeThickness: 5,
+      }).setOrigin(0.5).setScrollFactor(0).setDepth(300);
+      this.time.delayedCall(2600, () => {
+        banner.destroy();
+        areaCleared = false;
+        keysCollected = 0;
+        updateHUD();
+        player.clearTint();
+        player.setPosition(80, 540);
+        door.clearTint();
+        doorGlow.setFillStyle(0xff2222, 0.4);
+        this.tweens.killTweensOf(doorGlow);
+        this.physics.resume();
+      });
+    });
+
+    // ── enemy touches player → take damage ──────────────────────────────────
+    this.physics.add.overlap(player, enemies, () => {
+      if (this.time.now < playerHitCooldown) return;
+      playerHitCooldown = this.time.now + 900;
+      playerHP = Math.max(0, playerHP - 1);
+      updateHUD();
+      player.setTint(0xff5555);
+      this.time.delayedCall(300, () => { if (player.active) player.clearTint(); });
+      if (playerHP <= 0) {
+        this.physics.pause();
+        player.setTint(0xff0000);
+        const cx = this.cameras.main.midPoint.x;
+        const cy = this.cameras.main.midPoint.y;
+        const banner = this.add.text(cx, cy, "YOU DIED", {
+          fontSize: "42px", color: "#ff4444",
+          stroke: "#000000", strokeThickness: 6,
+        }).setOrigin(0.5).setScrollFactor(0).setDepth(300);
+        this.time.delayedCall(2000, () => {
+          banner.destroy();
+          playerHP = 3;
+          updateHUD();
+          player.clearTint();
+          player.setPosition(80, 540);
+          this.physics.resume();
+        });
+      }
+    });
+
+    // ── input ────────────────────────────────────────────────────────────────
     const cursors = this.input.keyboard!.createCursorKeys();
-    const wasd = this.input.keyboard!.addKeys("A,D,SPACE") as Record<
-      string,
-      Phaser.Input.Keyboard.Key
-    >;
+    const keys    = this.input.keyboard!.addKeys("A,D,SPACE") as Record<string, Phaser.Input.Keyboard.Key>;
     const pointer = this.input.activePointer;
     let wasRightDown = false;
     let lastAttackAt = 0;
-    const attackCooldownMs = 250;
+
+    cam.startFollow(player, true, 0.1, 0.1);
 
     const jump = () => {
       const body = player.body as Phaser.Physics.Arcade.Body;
       if (body.touching.down || body.blocked.down) {
-        player.setVelocityY(-330);
+        player.setVelocityY(-380);
       }
     };
 
     const attack = () => {
-      const now = this.time.now;
-      if (now - lastAttackAt < attackCooldownMs) return;
-      lastAttackAt = now;
+      if (this.time.now - lastAttackAt < ATTACK_COOLDOWN) return;
+      lastAttackAt = this.time.now;
 
-      const facingDirection = player.flipX ? -1 : 1;
-      const slash = this.add.image(
-        player.x + facingDirection * 32,
-        player.y - 6,
-        "slash",
-      );
-      slash.setDepth(140);
-      slash.setScale(0.9);
-      slash.setAlpha(0.95);
-      slash.setFlipX(facingDirection < 0);
+      const dir = player.flipX ? -1 : 1;
 
+      // slash VFX
+      const slash = this.add.image(player.x + dir * 32, player.y - 6, "slash");
+      slash.setDepth(140).setScale(0.9).setAlpha(0.95).setFlipX(dir < 0);
       this.tweens.add({
-        targets: slash,
-        alpha: 0,
-        scaleX: 1.2,
-        scaleY: 1.2,
-        y: slash.y - 4,
-        duration: 110,
-        ease: "Quad.Out",
-        onComplete: () => slash.destroy(),
+        targets: slash, alpha: 0, scaleX: 1.25, scaleY: 1.25, y: slash.y - 4,
+        duration: 110, ease: "Quad.Out", onComplete: () => slash.destroy(),
       });
 
       player.setTint(0xffd166);
-      this.time.delayedCall(90, () => {
-        if (player.active) player.clearTint();
-      });
+      this.time.delayedCall(90, () => { if (player.active) player.clearTint(); });
 
-      bombs.children.iterate((child) => {
-        const bomb = child as Phaser.Physics.Arcade.Image;
-        if (!bomb.active) return true;
+      // damage enemies in range
+      enemies.children.iterate((child) => {
+        const enemy = child as Phaser.Physics.Arcade.Sprite;
+        if (!enemy.active) return true;
 
-        const distance = Phaser.Math.Distance.Between(player.x, player.y, bomb.x, bomb.y);
-        if (distance <= 120) {
-          const direction = bomb.x >= player.x ? 1 : -1;
-          bomb.setVelocity(280 * direction, -140);
+        const dist = Phaser.Math.Distance.Between(player.x, player.y, enemy.x, enemy.y);
+        if (dist > ATTACK_RANGE) return true;
+
+        const state = enemy.getData("state") as EnemyState;
+        if (this.time.now - state.hitTimer < 280) return true;
+        state.hitTimer = this.time.now;
+        state.hp--;
+
+        enemy.setTint(0xffffff);
+        const kbDir = enemy.x >= player.x ? 1 : -1;
+        enemy.setVelocity(220 * kbDir, -130);
+        this.time.delayedCall(130, () => { if (enemy.active) enemy.clearTint(); });
+
+        if (state.hp <= 0) {
+          // drop a key at enemy position
+          const dropped = keyGroup.create(enemy.x, enemy.y - 8, "key") as Phaser.Physics.Arcade.Image;
+          dropped.setDisplaySize(20, 20).refreshBody();
+          enemy.destroy();
         }
-
         return true;
       });
     };
 
-    this.events.on("update", () => {
+    // ── update loop ──────────────────────────────────────────────────────────
+    this.events.on("update", (_t: number, delta: number) => {
       player.x = Math.round(player.x);
       player.y = Math.round(player.y);
 
-      const movingLeft = cursors.left.isDown || wasd.A.isDown;
-      const movingRight = cursors.right.isDown || wasd.D.isDown;
-      const jumpRequested = Phaser.Input.Keyboard.JustDown(wasd.SPACE);
-      const rightDown = pointer.rightButtonDown();
-      const attackRequested = rightDown && !wasRightDown;
-      wasRightDown = rightDown;
+      // movement
+      const goLeft  = cursors.left.isDown  || keys.A.isDown;
+      const goRight = cursors.right.isDown || keys.D.isDown;
+      if (goLeft)       { player.setVelocityX(-165); player.setFlipX(true); }
+      else if (goRight) { player.setVelocityX(165);  player.setFlipX(false); }
+      else              { player.setVelocityX(0); }
 
-      if (movingLeft) {
-        player.setVelocityX(-160);
-        player.setFlipX(true);
-      } else if (movingRight) {
-        player.setVelocityX(160);
-        player.setFlipX(false);
-      } else {
-        player.setVelocityX(0);
-      }
+      if (Phaser.Input.Keyboard.JustDown(keys.SPACE)) jump();
 
-      if (jumpRequested) jump();
-      if (attackRequested) attack();
+      const rightNow = pointer.rightButtonDown();
+      if (rightNow && !wasRightDown) attack();
+      wasRightDown = rightNow;
+
+      // enemy AI (patrol / chase)
+      enemies.children.iterate((child) => {
+        const enemy = child as Phaser.Physics.Arcade.Sprite;
+        if (!enemy.active) return true;
+
+        const state = enemy.getData("state") as EnemyState;
+        const dist  = Phaser.Math.Distance.Between(enemy.x, enemy.y, player.x, player.y);
+        const body  = enemy.body as Phaser.Physics.Arcade.Body;
+
+        if (dist < ENEMY_CHASE_DIST) {
+          const chaseDir = player.x < enemy.x ? -1 : 1;
+          body.setVelocityX(90 * chaseDir);
+          enemy.setFlipX(chaseDir < 0);
+        } else {
+          state.patrolTimer -= delta;
+          if (state.patrolTimer <= 0) {
+            state.patrolDir  *= -1;
+            state.patrolTimer = Phaser.Math.Between(1200, 2800);
+          }
+          body.setVelocityX(40 * state.patrolDir);
+          enemy.setFlipX(state.patrolDir < 0);
+        }
+        return true;
+      });
     });
   }
 }
