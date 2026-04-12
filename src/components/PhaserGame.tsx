@@ -10,77 +10,118 @@ class MainScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.tilemapTiledJSON("level1", "/maps/level1.json");
-    this.load.image("tiles", "/tiles/tiles.png");
+    this.load.pack("public-pack", "/phaser-pack.json");
+    this.load.image("sky", "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-altar-holy-light-divine-healing-golden_20260217_223403.png");
+    this.load.image("ground", "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-stone-floor-tile-bloody-stained-dark_20260217_213627.png");
+    this.load.image("star", "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-key-golden-boss-door-master-ornate_20260217_220007.png");
+    this.load.image("bomb", "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-bat-flying-swarm-dark-wings-small_20260217_222556.png");
+    this.load.image("player", "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/warrior-knight-with-sword-021.png");
   }
 
   create() {
     const cam = this.cameras.main;
     cam.setRoundPixels(true);
 
-    const map = this.make.tilemap({ key: "level1" });
-    const tileset = map.addTilesetImage("tiles", "tiles");
-    if (!tileset) {
-      throw new Error("Tileset not found: check Tileset name in Tiled (Map > Tilesets).");
-    }
+    const worldWidth = 1600;
+    const worldHeight = 1200;
+    this.physics.world.setBounds(0, 0, worldWidth, worldHeight);
+    cam.setBounds(0, 0, worldWidth, worldHeight);
 
-    const bg = map.createLayer("Background", tileset, 0, 0);
-    const floor = map.createLayer("Floor", tileset, 0, 0);
-    const solids = map.createLayer("Solids", tileset, 0, 0);
-    const deco = map.createLayer("Deco", tileset, 0, 0);
+    this.add.image(400, 300, "sky").setScrollFactor(0).setDepth(-20);
 
-    bg?.setDepth(0);
-    floor?.setDepth(10);
-    solids?.setDepth(20);
-    deco?.setDepth(30);
+    const platforms = this.physics.add.staticGroup();
+    platforms.create(400, 568, "ground").setScale(2).refreshBody();
+    platforms.create(600, 400, "ground");
+    platforms.create(50, 250, "ground");
+    platforms.create(750, 220, "ground");
+    platforms.create(1100, 520, "ground");
+    platforms.create(1400, 380, "ground");
 
-    if (solids) {
-      solids.setCollisionByExclusion([-1]);
-    }
+    const stars = this.physics.add.group({
+      key: "star",
+      repeat: 11,
+      setXY: { x: 12, y: 0, stepX: 120 },
+    });
 
-    if (solids) {
-      const shadow = this.add.graphics().setDepth(19);
-      shadow.fillStyle(0x000000, 0.28);
+    const bombs = this.physics.add.group();
 
-      solids.forEachTile((t) => {
-        if (!t || t.index === -1) return;
-        const below = solids.getTileAt(t.x, t.y + 1);
-        if (!below || below.index === -1) {
-          shadow.fillRect(t.getLeft(), t.getBottom() - 1, map.tileWidth, 2);
-        }
-      });
-    }
+    stars.children.iterate((child) => {
+      const star = child as Phaser.Physics.Arcade.Image;
+      star.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+      star.setDisplaySize(28, 28);
+      return true;
+    });
 
-    this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-    cam.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-
-    const g = this.add.graphics();
-    g.fillStyle(0xffcc66, 1);
-    g.fillRect(0, 0, 12, 16);
-    g.generateTexture("player", 12, 16);
-    g.destroy();
-
-    const player = this.physics.add.sprite(32, 32, "player");
+    const player = this.physics.add.sprite(100, 450, "player");
+    player.setBounce(0.2);
     player.setCollideWorldBounds(true);
+    player.setDisplaySize(40, 40);
+    player.setDepth(100);
+    (player.body as Phaser.Physics.Arcade.Body).setGravityY(300);
 
-    if (solids) this.physics.add.collider(player, solids);
+    const collectStar = (_playerObj: any, starObj: any) => {
+      const star = starObj as Phaser.Physics.Arcade.Image;
+      star.disableBody(true, true);
+
+      if (stars.countActive(true) === 0) {
+        stars.children.iterate((child) => {
+          const resetStar = child as Phaser.Physics.Arcade.Image;
+          resetStar.enableBody(true, resetStar.x, 0, true, true);
+          return true;
+        });
+
+        const bombX = player.x < 800 ? Phaser.Math.Between(800, 1560) : Phaser.Math.Between(20, 760);
+        const bomb = bombs.create(bombX, 16, "bomb") as Phaser.Physics.Arcade.Image;
+        bomb.setBounce(1);
+        bomb.setCollideWorldBounds(true);
+        bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+        bomb.setDisplaySize(34, 34);
+        const bombBody = bomb.body as Phaser.Physics.Arcade.Body;
+        bombBody.setAllowGravity(false);
+      }
+    };
+
+    const hitBomb = (playerObj: any, _bombObj: any) => {
+      this.physics.pause();
+      const hitPlayer = playerObj as Phaser.Physics.Arcade.Sprite;
+      hitPlayer.setTint(0xff0000);
+      hitPlayer.setVelocity(0, 0);
+    };
+
+    this.physics.add.collider(player, platforms);
+    this.physics.add.collider(stars, platforms);
+    this.physics.add.collider(bombs, platforms);
+    this.physics.add.overlap(player, stars, collectStar, undefined, this);
+    this.physics.add.collider(player, bombs, hitBomb, undefined, this);
 
     cam.startFollow(player, true, 0.12, 0.12);
 
     const cursors = this.input.keyboard!.createCursorKeys();
-    const SPEED = 140;
-    const JUMP = 300;
+    const wasd = this.input.keyboard!.addKeys("W,A,S,D,SPACE") as Record<
+      string,
+      Phaser.Input.Keyboard.Key
+    >;
 
     this.events.on("update", () => {
       player.x = Math.round(player.x);
       player.y = Math.round(player.y);
 
-      if (cursors.left.isDown) player.setVelocityX(-SPEED);
-      else if (cursors.right.isDown) player.setVelocityX(SPEED);
-      else player.setVelocityX(0);
+      const movingLeft = cursors.left.isDown || wasd.A.isDown;
+      const movingRight = cursors.right.isDown || wasd.D.isDown;
+      const jumping = cursors.up.isDown || wasd.W.isDown || wasd.SPACE.isDown;
+
+      if (movingLeft) {
+        player.setVelocityX(-160);
+        player.setFlipX(true);
+      } else if (movingRight) {
+        player.setVelocityX(160);
+        player.setFlipX(false);
+      } else {
+        player.setVelocityX(0);
+      }
 
       const body = player.body as Phaser.Physics.Arcade.Body;
-      if (cursors.up.isDown && body.blocked.down) player.setVelocityY(-JUMP);
+      if (jumping && body.touching.down) player.setVelocityY(-330);
     });
   }
 }
@@ -95,14 +136,14 @@ export default function PhaserGame() {
     const game = new Phaser.Game({
       type: Phaser.AUTO,
       parent: hostRef.current,
-      width: 480,
-      height: 270,
+      width: 800,
+      height: 600,
       backgroundColor: "#0b1220",
       pixelArt: true,
       render: { antialias: false, roundPixels: true },
       physics: {
         default: "arcade",
-        arcade: { gravity: { x: 0, y: 700 }, debug: false },
+        arcade: { gravity: { x: 0, y: 300 }, debug: false },
       },
       scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH },
       scene: [MainScene],
