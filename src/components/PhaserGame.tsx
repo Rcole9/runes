@@ -10,6 +10,7 @@ import { spawnCollectibles, wireAutoPickup } from "@/game/collectibles";
 
 // ── game constants ────────────────────────────────────────────────────────────
 const KEYS_TO_UNLOCK  = 5;
+const BOSS_ROUND = 3;
 const ENEMY_CHASE_DIST = 220;
 const ATTACK_RANGE    = 110;
 const ATTACK_COOLDOWN = 300;
@@ -75,50 +76,27 @@ class MainScene extends Phaser.Scene {
       .setImmovable(true);
     (doorZoneBody.body as Phaser.Physics.Arcade.Body).setAllowGravity(false);
 
-    // ── keys scattered in the world (plus extras dropped by enemies) ─────────
+    // ── progression state ─────────────────────────────────────────────────────
+    let round = 1;
     let keysCollected = 0;
-    const keyGroup = spawnCollectibles(this, [
-      { kind: "loot", x: 260,  y: 430, texture: "key", scale: 0.1 },
-      { kind: "loot", x: 560,  y: 350, texture: "key", scale: 0.1 },
-      { kind: "loot", x: 860,  y: 430, texture: "key", scale: 0.1 },
-      { kind: "loot", x: 1160, y: 270, texture: "key", scale: 0.1 },
-      { kind: "loot", x: 1460, y: 430, texture: "key", scale: 0.1 },
-      { kind: "loot", x: 1760, y: 350, texture: "key", scale: 0.1 },
-      { kind: "loot", x: 2060, y: 430, texture: "key", scale: 0.1 },
-    ]);
+    let keysRequired = KEYS_TO_UNLOCK;
+    let inTransition = false;
+    let bossDefeated = false;
+    let chestOpened = false;
+    let roundKeys: Phaser.Physics.Arcade.StaticGroup | null = null;
+    let roundKeyOverlap: Phaser.Physics.Arcade.Collider | null = null;
+    let chestZone: Phaser.Physics.Arcade.Image | null = null;
+    let chestOverlap: Phaser.Physics.Arcade.Collider | null = null;
+    let chestArt: Phaser.GameObjects.Image | null = null;
 
     // ── enemies ──────────────────────────────────────────────────────────────
     const enemies = this.physics.add.group();
 
-    const spawnEnemy = (x: number, y: number, tex: "orc" | "slime") => {
-      const e = enemies.create(x, y, tex) as Phaser.Physics.Arcade.Sprite;
-      e.setDisplaySize(tex === "orc" ? 38 : 30, tex === "orc" ? 38 : 28);
-      (e.body as Phaser.Physics.Arcade.Body).setSize(
-        tex === "orc" ? 26 : 22,
-        tex === "orc" ? 32 : 24,
-      );
-      e.setBounce(0.05).setCollideWorldBounds(true).setDepth(90);
-      e.setData("state", {
-        hp: tex === "orc" ? 3 : 2,
-        patrolDir: Phaser.Math.Between(0, 1) ? 1 : -1,
-        patrolTimer: Phaser.Math.Between(1000, 2500),
-        hitTimer: 0,
-      } satisfies EnemyState);
-      return e;
-    };
-
-    spawnEnemy(380,  548, "slime");
-    spawnEnemy(650,  548, "orc");
-    spawnEnemy(950,  548, "slime");
-    spawnEnemy(1250, 548, "orc");
-    spawnEnemy(1550, 548, "slime");
-    spawnEnemy(1850, 548, "orc");
-    spawnEnemy(2150, 548, "slime");
-
     this.physics.add.collider(enemies, platforms);
 
     // ── player ───────────────────────────────────────────────────────────────
-    let playerHP = 3;
+    gameStore.resetHp();
+    let playerHP = gameStore.getState().hp;
     let playerHitCooldown = 0;
     const player = this.physics.add.sprite(80, 540, "player");
     player.setBounce(0.1).setCollideWorldBounds(true)
@@ -134,30 +112,94 @@ class MainScene extends Phaser.Scene {
     };
     const hpText  = this.add.text(12,  12, "HP: 3 / 3",            hudStyle).setScrollFactor(0).setDepth(200);
     const keyText = this.add.text(12, 32, `Keys: 0 / ${KEYS_TO_UNLOCK} (unlock door)`, hudStyle).setScrollFactor(0).setDepth(200);
+    const roundText = this.add.text(12, 52, "Area: 1", hudStyle).setScrollFactor(0).setDepth(200);
+    const objectiveText = this.add.text(12, 72, "Objective: Collect keys", hudStyle).setScrollFactor(0).setDepth(200);
 
     const updateHUD = () => {
+      playerHP = gameStore.getState().hp;
       hpText.setText(`HP: ${playerHP} / 3`);
-      const locked = keysCollected < KEYS_TO_UNLOCK ? " (unlock door)" : " ✓ DOOR OPEN";
-      keyText.setText(`Keys: ${keysCollected} / ${KEYS_TO_UNLOCK}${locked}`);
+      roundText.setText(`Area: ${round}`);
+      if (round >= BOSS_ROUND) {
+        keyText.setText("Keys: N/A (boss area)");
+        objectiveText.setText(bossDefeated ? "Objective: Open chest for reward" : "Objective: Defeat the boss");
+      } else {
+        const locked = keysCollected < keysRequired ? " (unlock door)" : " ✓ DOOR OPEN";
+        keyText.setText(`Keys: ${keysCollected} / ${keysRequired}${locked}`);
+        objectiveText.setText("Objective: Collect keys and open the door");
+      }
     };
 
-    // ── key collection ───────────────────────────────────────────────────────
-    // ── key collection (via collectibles module) ─────────────────────────────
-    wireAutoPickup(this, player, keyGroup, {
-      onPotion: () => { /* no potions in this group */ },
-      onLoot: () => {
+    const setDoorLockedVisual = () => {
+      door.clearTint();
+      doorGlow.setFillStyle(0xff2222, 0.4);
+      this.tweens.killTweensOf(doorGlow);
+    };
+
+    const setDoorOpenVisual = () => {
+      door.setTint(0x88ffcc);
+      doorGlow.setFillStyle(0x00ff99, 0.5);
+      this.tweens.killTweensOf(doorGlow);
+      this.tweens.add({
+        targets: doorGlow,
+        alpha: { from: 0.45, to: 1 },
+        yoyo: true,
+        repeat: -1,
+        duration: 500,
+      });
+    };
+
+    const clearRoundKeys = () => {
+      if (roundKeyOverlap) {
+        roundKeyOverlap.destroy();
+        roundKeyOverlap = null;
+      }
+      if (roundKeys) {
+        roundKeys.clear(true, true);
+        roundKeys = null;
+      }
+      keysCollected = 0;
+    };
+
+    const createRoundKeys = () => {
+      clearRoundKeys();
+      if (round >= BOSS_ROUND) return;
+
+      const offset = (round - 1) * 16;
+      roundKeys = spawnCollectibles(this, [
+        { kind: "loot", x: 260 + offset,  y: 430, texture: "key", scale: 0.1 },
+        { kind: "loot", x: 560 + offset,  y: 350, texture: "key", scale: 0.1 },
+        { kind: "loot", x: 860 + offset,  y: 430, texture: "key", scale: 0.1 },
+        { kind: "loot", x: 1160, y: 270, texture: "key", scale: 0.1 },
+        { kind: "loot", x: 1460 - offset, y: 430, texture: "key", scale: 0.1 },
+        { kind: "loot", x: 1760 - offset, y: 350, texture: "key", scale: 0.1 },
+      ]);
+
+      roundKeyOverlap = this.physics.add.overlap(player, roundKeys, (_p, obj) => {
+        const item = obj as Phaser.Physics.Arcade.Image;
+        if (!item?.active) return;
+        item.disableBody(true, true);
         keysCollected++;
+        if (keysCollected >= keysRequired) setDoorOpenVisual();
         updateHUD();
-        if (keysCollected >= KEYS_TO_UNLOCK) {
-          doorGlow.setFillStyle(0x00ff99, 0.5);
-          door.setTint(0x88ffcc);
-          this.tweens.add({
-            targets: doorGlow, alpha: { from: 0.5, to: 1 },
-            yoyo: true, repeat: -1, duration: 500,
-          });
-        }
-      },
-    });
+      });
+    };
+
+    const clearChest = () => {
+      if (chestOverlap) {
+        chestOverlap.destroy();
+        chestOverlap = null;
+      }
+      if (chestZone) {
+        chestZone.destroy();
+        chestZone = null;
+      }
+      if (chestArt) {
+        chestArt.destroy();
+        chestArt = null;
+      }
+      chestOpened = false;
+      bossDefeated = false;
+    };
 
     // --- Collectibles (auto-pickup) ---
     const pickups = spawnCollectibles(this, [
@@ -178,29 +220,113 @@ class MainScene extends Phaser.Scene {
       },
     });
 
+    const spawnEnemy = (x: number, y: number, tex: "orc" | "slime", isBoss = false) => {
+      const e = enemies.create(x, y, tex) as Phaser.Physics.Arcade.Sprite;
+      const width = isBoss ? 76 : tex === "orc" ? 38 : 30;
+      const height = isBoss ? 76 : tex === "orc" ? 38 : 28;
+      e.setDisplaySize(width, height);
+      (e.body as Phaser.Physics.Arcade.Body).setSize(isBoss ? 56 : tex === "orc" ? 26 : 22, isBoss ? 66 : tex === "orc" ? 32 : 24);
+      e.setBounce(0.05).setCollideWorldBounds(true).setDepth(isBoss ? 96 : 90);
+      e.setData("isBoss", isBoss);
+      e.setData("state", {
+        hp: isBoss ? 18 : tex === "orc" ? 3 : 2,
+        patrolDir: Phaser.Math.Between(0, 1) ? 1 : -1,
+        patrolTimer: Phaser.Math.Between(1000, 2500),
+        hitTimer: 0,
+      } satisfies EnemyState);
+      return e;
+    };
+
+    const spawnChestReward = () => {
+      clearChest();
+      chestArt = this.add.image(2200, 548, "key").setDisplaySize(44, 44).setDepth(100).setTint(0xffd166);
+      chestZone = this.physics.add.image(2200, 548, "key").setDisplaySize(56, 56).setAlpha(0).setImmovable(true);
+      (chestZone.body as Phaser.Physics.Arcade.Body).setAllowGravity(false);
+
+      chestOverlap = this.physics.add.overlap(player, chestZone, () => {
+        if (!bossDefeated || chestOpened) return;
+        chestOpened = true;
+        chestArt?.setTint(0x99ffcc);
+        const rng = mulberry32(hashSeed(`boss-${Date.now()}`));
+        const reward = generateLoot(rng, gameStore.getState().dungeonTier + 2);
+        gameStore.grantLoot(reward);
+        const cx = this.cameras.main.midPoint.x;
+        const cy = this.cameras.main.midPoint.y;
+        const banner = this.add.text(cx, cy, `BOSS REWARD: ${reward.name}`, {
+          fontSize: "26px",
+          color: "#f6dc9a",
+          stroke: "#000000",
+          strokeThickness: 5,
+        }).setOrigin(0.5).setScrollFactor(0).setDepth(300);
+
+        this.time.delayedCall(2600, () => {
+          banner.destroy();
+          round = 1;
+          keysRequired = KEYS_TO_UNLOCK;
+          gameStore.resetHp();
+          player.setPosition(80, 540);
+          setDoorLockedVisual();
+          clearChest();
+          createRoundKeys();
+          enemies.clear(true, true);
+          spawnEnemy(380, 548, "slime");
+          spawnEnemy(650, 548, "orc");
+          spawnEnemy(950, 548, "slime");
+          spawnEnemy(1250, 548, "orc");
+          spawnEnemy(1550, 548, "slime");
+          spawnEnemy(1850, 548, "orc");
+          spawnEnemy(2150, 548, "slime");
+          updateHUD();
+        });
+      });
+    };
+
+    const spawnRoundEnemies = () => {
+      enemies.clear(true, true);
+      if (round >= BOSS_ROUND) {
+        spawnEnemy(2000, 534, "orc", true);
+        setDoorLockedVisual();
+      } else {
+        spawnEnemy(380, 548, "slime");
+        spawnEnemy(650, 548, "orc");
+        spawnEnemy(950, 548, "slime");
+        spawnEnemy(1250, 548, "orc");
+        spawnEnemy(1550, 548, "slime");
+        spawnEnemy(1850, 548, "orc");
+        spawnEnemy(2150, 548, "slime");
+        setDoorLockedVisual();
+      }
+    };
+
+    createRoundKeys();
+    spawnRoundEnemies();
+    updateHUD();
+
     // ── door: advance area when unlocked ─────────────────────────────────────
-    let areaCleared = false;
     this.physics.add.overlap(player, doorZoneBody, () => {
-      if (keysCollected < KEYS_TO_UNLOCK || areaCleared) return;
-      areaCleared = true;
+      if (round >= BOSS_ROUND || keysCollected < keysRequired || inTransition) return;
+      inTransition = true;
       this.physics.pause();
       const cx = this.cameras.main.midPoint.x;
       const cy = this.cameras.main.midPoint.y;
-      const banner = this.add.text(cx, cy, "✨  AREA CLEARED!  ✨", {
+      const banner = this.add.text(cx, cy, `AREA ${round} CLEARED`, {
         fontSize: "34px", color: "#ffd166",
         stroke: "#000000", strokeThickness: 5,
       }).setOrigin(0.5).setScrollFactor(0).setDepth(300);
       this.time.delayedCall(2600, () => {
         banner.destroy();
-        areaCleared = false;
+        round += 1;
+        keysRequired = KEYS_TO_UNLOCK;
         keysCollected = 0;
-        updateHUD();
+        clearChest();
+        createRoundKeys();
+        spawnRoundEnemies();
+        gameStore.resetHp();
         player.clearTint();
         player.setPosition(80, 540);
-        door.clearTint();
-        doorGlow.setFillStyle(0xff2222, 0.4);
-        this.tweens.killTweensOf(doorGlow);
+        updateHUD();
         this.physics.resume();
+        inTransition = false;
       });
     });
 
@@ -208,7 +334,8 @@ class MainScene extends Phaser.Scene {
     this.physics.add.overlap(player, enemies, () => {
       if (this.time.now < playerHitCooldown) return;
       playerHitCooldown = this.time.now + 900;
-      playerHP = Math.max(0, playerHP - 1);
+      gameStore.takeDamage(1);
+      playerHP = gameStore.getState().hp;
       updateHUD();
       player.setTint(0xff5555);
       this.time.delayedCall(300, () => { if (player.active) player.clearTint(); });
@@ -223,7 +350,8 @@ class MainScene extends Phaser.Scene {
         }).setOrigin(0.5).setScrollFactor(0).setDepth(300);
         this.time.delayedCall(2000, () => {
           banner.destroy();
-          playerHP = 3;
+          gameStore.resetHp();
+          playerHP = gameStore.getState().hp;
           updateHUD();
           player.clearTint();
           player.setPosition(80, 540);
@@ -293,25 +421,25 @@ class MainScene extends Phaser.Scene {
       for (const enemy of toKill) {
         const ex = enemy.x;
         const ey = enemy.y - 8;
+        const isBoss = enemy.getData("isBoss") === true;
         enemy.destroy();
-        const dropped = spawnCollectibles(this, [
-          { kind: "loot", x: ex, y: ey, texture: "key", scale: 0.1 },
-        ]);
-        wireAutoPickup(this, player, dropped, {
-          onPotion: () => {},
-          onLoot: () => {
-            keysCollected++;
-            updateHUD();
-            if (keysCollected >= KEYS_TO_UNLOCK) {
-              doorGlow.setFillStyle(0x00ff99, 0.5);
-              door.setTint(0x88ffcc);
-              this.tweens.add({
-                targets: doorGlow, alpha: { from: 0.5, to: 1 },
-                yoyo: true, repeat: -1, duration: 500,
-              });
-            }
-          },
-        });
+        if (isBoss) {
+          bossDefeated = true;
+          spawnChestReward();
+          updateHUD();
+        } else if (round < BOSS_ROUND) {
+          const dropped = spawnCollectibles(this, [
+            { kind: "loot", x: ex, y: ey, texture: "key", scale: 0.1 },
+          ]);
+          wireAutoPickup(this, player, dropped, {
+            onPotion: () => {},
+            onLoot: () => {
+              keysCollected++;
+              if (keysCollected >= keysRequired) setDoorOpenVisual();
+              updateHUD();
+            },
+          });
+        }
       }
     };
 
@@ -342,9 +470,14 @@ class MainScene extends Phaser.Scene {
         const dist  = Phaser.Math.Distance.Between(enemy.x, enemy.y, player.x, player.y);
         const body  = enemy.body as Phaser.Physics.Arcade.Body;
 
-        if (dist < ENEMY_CHASE_DIST) {
+        const isBoss = enemy.getData("isBoss") === true;
+        const chaseThreshold = isBoss ? 9999 : ENEMY_CHASE_DIST;
+        const speed = isBoss ? 125 : 90;
+        const patrolSpeed = isBoss ? 80 : 40;
+
+        if (dist < chaseThreshold) {
           const chaseDir = player.x < enemy.x ? -1 : 1;
-          body.setVelocityX(90 * chaseDir);
+          body.setVelocityX(speed * chaseDir);
           enemy.setFlipX(chaseDir < 0);
         } else {
           state.patrolTimer -= delta;
@@ -352,7 +485,7 @@ class MainScene extends Phaser.Scene {
             state.patrolDir  *= -1;
             state.patrolTimer = Phaser.Math.Between(1200, 2800);
           }
-          body.setVelocityX(40 * state.patrolDir);
+          body.setVelocityX(patrolSpeed * state.patrolDir);
           enemy.setFlipX(state.patrolDir < 0);
         }
         return true;
