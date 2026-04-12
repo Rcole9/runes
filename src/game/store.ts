@@ -194,6 +194,11 @@ export const gameStore = {
       state.hp = Math.min(state.maxHp, state.hp + Math.round(state.maxHp * 0.35));
     });
   },
+  addPotions(amount: number): void {
+    commit(() => {
+      state.potions = Math.max(0, state.potions + amount);
+    });
+  },
   refillPotions(): void {
     commit(() => {
       state.potions = DEFAULT_STARTER_POTIONS;

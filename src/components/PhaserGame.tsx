@@ -3,6 +3,10 @@
 import { useEffect, useRef } from "react";
 import * as Phaser from "phaser";
 import { initializeStore } from "@/game/store";
+import { gameStore } from "@/game/store";
+import { generateLoot } from "@/game/loot";
+import { hashSeed, mulberry32 } from "@/game/rng";
+import { spawnCollectibles, wireAutoPickup } from "@/game/collectibles";
 
 // ── game constants ────────────────────────────────────────────────────────────
 const KEYS_TO_UNLOCK  = 5;
@@ -73,15 +77,15 @@ class MainScene extends Phaser.Scene {
 
     // ── keys scattered in the world (plus extras dropped by enemies) ─────────
     let keysCollected = 0;
-    const keyGroup = this.physics.add.staticGroup();
-    const keySpots: [number, number][] = [
-      [260, 430], [560, 350], [860, 430],
-      [1160, 270], [1460, 430], [1760, 350], [2060, 430],
-    ];
-    for (const [kx, ky] of keySpots) {
-      const k = keyGroup.create(kx, ky, "key") as Phaser.Physics.Arcade.Image;
-      k.setDisplaySize(20, 20).refreshBody();
-    }
+    const keyGroup = spawnCollectibles(this, [
+      { kind: "loot", x: 260,  y: 430, texture: "key", scale: 0.1 },
+      { kind: "loot", x: 560,  y: 350, texture: "key", scale: 0.1 },
+      { kind: "loot", x: 860,  y: 430, texture: "key", scale: 0.1 },
+      { kind: "loot", x: 1160, y: 270, texture: "key", scale: 0.1 },
+      { kind: "loot", x: 1460, y: 430, texture: "key", scale: 0.1 },
+      { kind: "loot", x: 1760, y: 350, texture: "key", scale: 0.1 },
+      { kind: "loot", x: 2060, y: 430, texture: "key", scale: 0.1 },
+    ]);
 
     // ── enemies ──────────────────────────────────────────────────────────────
     const enemies = this.physics.add.group();
@@ -138,21 +142,40 @@ class MainScene extends Phaser.Scene {
     };
 
     // ── key collection ───────────────────────────────────────────────────────
-    this.physics.add.overlap(player, keyGroup, (_p, kObj) => {
-      if (!(kObj instanceof Phaser.Physics.Arcade.Image)) return;
-      // disableBody is safe inside an overlap callback; destroy() corrupts the
-      // static group's internal body list and breaks all future overlaps.
-      kObj.disableBody(true, true);
-      keysCollected++;
-      updateHUD();
-      if (keysCollected >= KEYS_TO_UNLOCK) {
-        doorGlow.setFillStyle(0x00ff99, 0.5);
-        door.setTint(0x88ffcc);
-        this.tweens.add({
-          targets: doorGlow, alpha: { from: 0.5, to: 1 },
-          yoyo: true, repeat: -1, duration: 500,
-        });
-      }
+    // ── key collection (via collectibles module) ─────────────────────────────
+    wireAutoPickup(this, player, keyGroup, {
+      onPotion: () => { /* no potions in this group */ },
+      onLoot: () => {
+        keysCollected++;
+        updateHUD();
+        if (keysCollected >= KEYS_TO_UNLOCK) {
+          doorGlow.setFillStyle(0x00ff99, 0.5);
+          door.setTint(0x88ffcc);
+          this.tweens.add({
+            targets: doorGlow, alpha: { from: 0.5, to: 1 },
+            yoyo: true, repeat: -1, duration: 500,
+          });
+        }
+      },
+    });
+
+    // --- Collectibles (auto-pickup) ---
+    const pickups = spawnCollectibles(this, [
+      { kind: "potion", x: 560,  y: 340, texture: "key", scale: 0.9, value: 1 },
+      { kind: "potion", x: 1460, y: 420, texture: "key", scale: 0.9, value: 1 },
+      { kind: "loot",   x: 1160, y: 260, texture: "slash", scale: 0.7, value: 1 },
+    ]);
+
+    wireAutoPickup(this, player, pickups, {
+      onPotion: (amount) => {
+        gameStore.addPotions(amount);
+      },
+      onLoot: () => {
+        // deterministic-ish loot for MVP
+        const rng = mulberry32(hashSeed(String(Date.now())));
+        const item = generateLoot(rng, gameStore.getState().dungeonTier);
+        gameStore.grantLoot(item);
+      },
     });
 
     // ── door: advance area when unlocked ─────────────────────────────────────
@@ -268,9 +291,27 @@ class MainScene extends Phaser.Scene {
       });
 
       for (const enemy of toKill) {
-        const dropped = keyGroup.create(enemy.x, enemy.y - 8, "key") as Phaser.Physics.Arcade.Image;
-        dropped.setDisplaySize(20, 20).refreshBody();
+        const ex = enemy.x;
+        const ey = enemy.y - 8;
         enemy.destroy();
+        const dropped = spawnCollectibles(this, [
+          { kind: "loot", x: ex, y: ey, texture: "key", scale: 0.1 },
+        ]);
+        wireAutoPickup(this, player, dropped, {
+          onPotion: () => {},
+          onLoot: () => {
+            keysCollected++;
+            updateHUD();
+            if (keysCollected >= KEYS_TO_UNLOCK) {
+              doorGlow.setFillStyle(0x00ff99, 0.5);
+              door.setTint(0x88ffcc);
+              this.tweens.add({
+                targets: doorGlow, alpha: { from: 0.5, to: 1 },
+                yoyo: true, repeat: -1, duration: 500,
+              });
+            }
+          },
+        });
       }
     };
 
