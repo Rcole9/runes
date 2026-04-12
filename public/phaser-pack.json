@@ -1,0 +1,2585 @@
+{
+  "meta": {
+    "generatedAt": "2026-04-12T15:46:45.492Z",
+    "source": "public/"
+  },
+  "all": {
+    "files": [
+      {
+        "type": "json",
+        "key": "public__assets_kenney_manifest_json",
+        "url": "/assets/kenney/manifest.json"
+      },
+      {
+        "type": "binary",
+        "key": "public__assets_sprites_free_pixel_art_dungeon_crawler_mini_pack_90_sprites_assets_zip",
+        "url": "/assets/sprites/free-pixel-art-dungeon-crawler-mini-pack-90-sprites-assets.zip"
+      },
+      {
+        "type": "binary",
+        "key": "public__assets_sprites_free_pixel_art_treasure_chests_475_game_assets_assets_zip",
+        "url": "/assets/sprites/free-pixel-art-treasure-chests-475-game-assets-assets.zip"
+      },
+      {
+        "type": "binary",
+        "key": "public__assets_sprites_free_rpg_characters_companions_pixel_art_240_sprites_assets_zip",
+        "url": "/assets/sprites/free-rpg-characters-companions-pixel-art-240-sprites-assets.zip"
+      },
+      {
+        "type": "binary",
+        "key": "public__assets_sprites_free_rpg_enemies_bosses_pixel_art_200_sprites_assets_zip",
+        "url": "/assets/sprites/free-rpg-enemies-bosses-pixel-art-200-sprites-assets.zip"
+      },
+      {
+        "type": "binary",
+        "key": "public__assets_sprites_free_rpg_weapons_armor_pixel_art_160_sprites_assets_zip",
+        "url": "/assets/sprites/free-rpg-weapons-armor-pixel-art-160-sprites-assets.zip"
+      },
+      {
+        "type": "text",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_readme_txt",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/README.txt"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_alchemist_potion_maker_npc_008_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/alchemist-potion-maker-npc-008.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_alchemist_potion_maker_npc_018_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/alchemist-potion-maker-npc-018-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_alchemist_potion_maker_npc_028_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/alchemist-potion-maker-npc-028-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_archer_ranger_with_bow_004_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/archer-ranger-with-bow-004.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_archer_ranger_with_bow_014_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/archer-ranger-with-bow-014-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_archer_ranger_with_bow_014_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/archer-ranger-with-bow-014.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_archer_ranger_with_bow_024_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/archer-ranger-with-bow-024-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_archer_ranger_with_bow_024_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/archer-ranger-with-bow-024.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_archer_ranger_with_bow_034_v4_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/archer-ranger-with-bow-034-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_archer_ranger_with_bow_034_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/archer-ranger-with-bow-034.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_baby_dragon_companion_small_007_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/baby-dragon-companion-small-007.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_baby_dragon_companion_small_017_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/baby-dragon-companion-small-017-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_baby_dragon_companion_small_027_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/baby-dragon-companion-small-027-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_baby_dragon_companion_small_037_v4_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/baby-dragon-companion-small-037-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_baby_dragon_companion_small_047_v5_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/baby-dragon-companion-small-047-v5.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_barbarian_berserker_muscular_dual_006_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/barbarian-berserker-muscular-dual-006.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_barbarian_berserker_muscular_dual_016_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/barbarian-berserker-muscular-dual-016-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_barbarian_berserker_muscular_dual_016_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/barbarian-berserker-muscular-dual-016.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_barbarian_berserker_muscular_dual_026_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/barbarian-berserker-muscular-dual-026-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_barbarian_berserker_muscular_dual_026_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/barbarian-berserker-muscular-dual-026.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_barbarian_berserker_muscular_dual_036_v4_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/barbarian-berserker-muscular-dual-036-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_barbarian_berserker_muscular_dual_036_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/barbarian-berserker-muscular-dual-036.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_bard_musician_npc_lute_009_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/bard-musician-npc-lute-009.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_bard_musician_npc_lute_019_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/bard-musician-npc-lute-019-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_bard_musician_npc_lute_029_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/bard-musician-npc-lute-029-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_bear_mount_large_bear_007_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/bear-mount-large-bear-007.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_bear_mount_large_bear_017_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/bear-mount-large-bear-017-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_bear_mount_large_bear_027_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/bear-mount-large-bear-027-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_bear_mount_large_bear_037_v4_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/bear-mount-large-bear-037-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_bear_mount_large_bear_047_v5_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/bear-mount-large-bear-047-v5.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_black_horse_mount_dark_013_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/black-horse-mount-dark-013-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_black_horse_mount_dark_023_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/black-horse-mount-dark-023-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_black_horse_mount_dark_033_v4_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/black-horse-mount-dark-033-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_blacksmith_npc_muscular_apron_001_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/blacksmith-npc-muscular-apron-001.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_blacksmith_npc_muscular_apron_011_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/blacksmith-npc-muscular-apron-011-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_blacksmith_npc_muscular_apron_021_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/blacksmith-npc-muscular-apron-021-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_camel_mount_desert_rider_hump_009_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/camel-mount-desert-rider-hump-009.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_camel_mount_desert_rider_hump_019_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/camel-mount-desert-rider-hump-019.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_camel_mount_desert_rider_hump_029_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/camel-mount-desert-rider-hump-029.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_camel_mount_desert_rider_hump_039_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/camel-mount-desert-rider-hump-039.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_camel_mount_desert_rider_hump_049_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/camel-mount-desert-rider-hump-049.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_cat_pet_companion_small_001_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/cat-pet-companion-small-001.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_cat_pet_companion_small_011_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/cat-pet-companion-small-011-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_cat_pet_companion_small_021_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/cat-pet-companion-small-021-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_cat_pet_companion_small_031_v4_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/cat-pet-companion-small-031-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_cat_pet_companion_small_041_v5_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/cat-pet-companion-small-041-v5.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_cleric_priest_healer_white_007_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/cleric-priest-healer-white-007.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_cleric_priest_healer_white_017_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/cleric-priest-healer-white-017-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_cleric_priest_healer_white_017_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/cleric-priest-healer-white-017.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_cleric_priest_healer_white_027_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/cleric-priest-healer-white-027-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_cleric_priest_healer_white_027_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/cleric-priest-healer-white-027.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_cleric_priest_healer_white_037_v4_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/cleric-priest-healer-white-037-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_cleric_priest_healer_white_037_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/cleric-priest-healer-white-037.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_dire_wolf_mount_giant_wolf_006_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/dire-wolf-mount-giant-wolf-006.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_dire_wolf_mount_giant_wolf_016_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/dire-wolf-mount-giant-wolf-016.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_dire_wolf_mount_giant_wolf_026_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/dire-wolf-mount-giant-wolf-026.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_dire_wolf_mount_giant_wolf_036_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/dire-wolf-mount-giant-wolf-036.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_dire_wolf_mount_giant_wolf_046_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/dire-wolf-mount-giant-wolf-046.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_dog_pet_companion_loyal_002_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/dog-pet-companion-loyal-002.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_dog_pet_companion_loyal_012_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/dog-pet-companion-loyal-012-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_dog_pet_companion_loyal_022_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/dog-pet-companion-loyal-022-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_dog_pet_companion_loyal_032_v4_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/dog-pet-companion-loyal-032-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_dog_pet_companion_loyal_042_v5_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/dog-pet-companion-loyal-042-v5.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_dragon_mount_flying_dragon_005_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/dragon-mount-flying-dragon-005.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_dragon_mount_flying_dragon_015_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/dragon-mount-flying-dragon-015-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_dragon_mount_flying_dragon_025_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/dragon-mount-flying-dragon-025-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_dragon_mount_flying_dragon_035_v4_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/dragon-mount-flying-dragon-035-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_dragon_mount_flying_dragon_045_v5_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/dragon-mount-flying-dragon-045-v5.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_elephant_mount_war_elephant_armored_008_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/elephant-mount-war-elephant-armored-008.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_elephant_mount_war_elephant_armored_018_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/elephant-mount-war-elephant-armored-018.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_elephant_mount_war_elephant_armored_028_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/elephant-mount-war-elephant-armored-028.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_elephant_mount_war_elephant_armored_038_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/elephant-mount-war-elephant-armored-038.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_elephant_mount_war_elephant_armored_048_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/elephant-mount-war-elephant-armored-048.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_fairy_companion_tiny_winged_004_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/fairy-companion-tiny-winged-004.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_fairy_companion_tiny_winged_014_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/fairy-companion-tiny-winged-014-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_fairy_companion_tiny_winged_024_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/fairy-companion-tiny-winged-024-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_fairy_companion_tiny_winged_034_v4_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/fairy-companion-tiny-winged-034-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_fairy_companion_tiny_winged_044_v5_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/fairy-companion-tiny-winged-044-v5.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_farmer_villager_npc_simple_007_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/farmer-villager-npc-simple-007.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_farmer_villager_npc_simple_017_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/farmer-villager-npc-simple-017-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_farmer_villager_npc_simple_027_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/farmer-villager-npc-simple-027-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_female_mage_wizard_with_002_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/female-mage-wizard-with-002.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_female_mage_wizard_with_012_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/female-mage-wizard-with-012-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_female_mage_wizard_with_012_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/female-mage-wizard-with-012.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_female_mage_wizard_with_022_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/female-mage-wizard-with-022-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_female_mage_wizard_with_022_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/female-mage-wizard-with-022.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_female_mage_wizard_with_032_v4_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/female-mage-wizard-with-032-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_female_mage_wizard_with_032_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/female-mage-wizard-with-032.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_fortune_teller_npc_crystal_010_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/fortune-teller-npc-crystal-010.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_fortune_teller_npc_crystal_020_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/fortune-teller-npc-crystal-020-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_fortune_teller_npc_crystal_030_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/fortune-teller-npc-crystal-030-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_ghost_companion_friendly_spirit_008_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/ghost-companion-friendly-spirit-008.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_ghost_companion_friendly_spirit_018_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/ghost-companion-friendly-spirit-018-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_ghost_companion_friendly_spirit_028_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/ghost-companion-friendly-spirit-028-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_ghost_companion_friendly_spirit_038_v4_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/ghost-companion-friendly-spirit-038-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_ghost_companion_friendly_spirit_048_v5_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/ghost-companion-friendly-spirit-048-v5.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_giant_spider_mount_eight_legs_007_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/giant-spider-mount-eight-legs-007.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_giant_spider_mount_eight_legs_017_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/giant-spider-mount-eight-legs-017.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_giant_spider_mount_eight_legs_027_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/giant-spider-mount-eight-legs-027.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_giant_spider_mount_eight_legs_037_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/giant-spider-mount-eight-legs-037.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_giant_spider_mount_eight_legs_047_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/giant-spider-mount-eight-legs-047.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_golem_companion_small_rock_009_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/golem-companion-small-rock-009.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_golem_companion_small_rock_019_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/golem-companion-small-rock-019-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_golem_companion_small_rock_029_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/golem-companion-small-rock-029-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_golem_companion_small_rock_039_v4_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/golem-companion-small-rock-039-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_golem_companion_small_rock_049_v5_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/golem-companion-small-rock-049-v5.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_griffin_mount_lion_eagle_008_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/griffin-mount-lion-eagle-008.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_griffin_mount_lion_eagle_018_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/griffin-mount-lion-eagle-018-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_griffin_mount_lion_eagle_028_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/griffin-mount-lion-eagle-028-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_griffin_mount_lion_eagle_038_v4_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/griffin-mount-lion-eagle-038-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_griffin_mount_lion_eagle_048_v5_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/griffin-mount-lion-eagle-048-v5.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_guard_soldier_npc_town_006_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/guard-soldier-npc-town-006.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_guard_soldier_npc_town_016_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/guard-soldier-npc-town-016-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_guard_soldier_npc_town_026_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/guard-soldier-npc-town-026-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_horse_mount_brown_stallion_saddle_001_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/horse-mount-brown-stallion-saddle-001.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_horse_mount_brown_stallion_saddle_011_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/horse-mount-brown-stallion-saddle-011.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_horse_mount_brown_stallion_saddle_021_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/horse-mount-brown-stallion-saddle-021.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_horse_mount_brown_stallion_saddle_031_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/horse-mount-brown-stallion-saddle-031.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_horse_mount_brown_stallion_saddle_041_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/horse-mount-brown-stallion-saddle-041.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_horse_mount_brown_steed_001_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/horse-mount-brown-steed-001.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_horse_mount_brown_steed_011_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/horse-mount-brown-steed-011-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_horse_mount_brown_steed_021_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/horse-mount-brown-steed-021-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_horse_mount_brown_steed_031_v4_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/horse-mount-brown-steed-031-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_horse_mount_brown_steed_041_v5_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/horse-mount-brown-steed-041-v5.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_imp_familiar_small_demon_005_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/imp-familiar-small-demon-005.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_imp_familiar_small_demon_015_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/imp-familiar-small-demon-015-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_imp_familiar_small_demon_025_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/imp-familiar-small-demon-025-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_imp_familiar_small_demon_035_v4_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/imp-familiar-small-demon-035-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_imp_familiar_small_demon_045_v5_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/imp-familiar-small-demon-045-v5.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_innkeeper_npc_welcoming_pose_003_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/innkeeper-npc-welcoming-pose-003.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_innkeeper_npc_welcoming_pose_013_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/innkeeper-npc-welcoming-pose-013-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_innkeeper_npc_welcoming_pose_023_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/innkeeper-npc-welcoming-pose-023-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_mechanical_mount_steampunk_vehicle_010_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/mechanical-mount-steampunk-vehicle-010.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_mechanical_mount_steampunk_vehicle_020_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/mechanical-mount-steampunk-vehicle-020-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_mechanical_mount_steampunk_vehicle_030_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/mechanical-mount-steampunk-vehicle-030-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_mechanical_mount_steampunk_vehicle_040_v4_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/mechanical-mount-steampunk-vehicle-040-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_mechanical_mount_steampunk_vehicle_050_v5_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/mechanical-mount-steampunk-vehicle-050-v5.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_merchant_shopkeeper_npc_friendly_002_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/merchant-shopkeeper-npc-friendly-002.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_merchant_shopkeeper_npc_friendly_012_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/merchant-shopkeeper-npc-friendly-012-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_merchant_shopkeeper_npc_friendly_022_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/merchant-shopkeeper-npc-friendly-022-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_monk_martial_artist_fighting_010_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/monk-martial-artist-fighting-010.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_monk_martial_artist_fighting_020_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/monk-martial-artist-fighting-020-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_monk_martial_artist_fighting_020_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/monk-martial-artist-fighting-020.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_monk_martial_artist_fighting_030_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/monk-martial-artist-fighting-030-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_monk_martial_artist_fighting_030_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/monk-martial-artist-fighting-030.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_monk_martial_artist_fighting_040_v4_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/monk-martial-artist-fighting-040-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_monk_martial_artist_fighting_040_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/monk-martial-artist-fighting-040.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_necromancer_dark_mage_skull_008_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/necromancer-dark-mage-skull-008.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_necromancer_dark_mage_skull_018_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/necromancer-dark-mage-skull-018-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_necromancer_dark_mage_skull_018_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/necromancer-dark-mage-skull-018.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_necromancer_dark_mage_skull_028_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/necromancer-dark-mage-skull-028-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_necromancer_dark_mage_skull_038_v4_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/necromancer-dark-mage-skull-038-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_necromancer_dark_mage_skull_038_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/necromancer-dark-mage-skull-038.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_nightmare_horse_black_fire_mane_004_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/nightmare-horse-black-fire-mane-004.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_nightmare_horse_black_fire_mane_014_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/nightmare-horse-black-fire-mane-014.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_nightmare_horse_black_fire_mane_024_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/nightmare-horse-black-fire-mane-024.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_nightmare_horse_black_fire_mane_034_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/nightmare-horse-black-fire-mane-034.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_nightmare_horse_black_fire_mane_044_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/nightmare-horse-black-fire-mane-044.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_ostrich_mount_large_bird_rider_010_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/ostrich-mount-large-bird-rider-010.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_ostrich_mount_large_bird_rider_020_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/ostrich-mount-large-bird-rider-020.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_ostrich_mount_large_bird_rider_030_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/ostrich-mount-large-bird-rider-030.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_ostrich_mount_large_bird_rider_040_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/ostrich-mount-large-bird-rider-040.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_ostrich_mount_large_bird_rider_050_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/ostrich-mount-large-bird-rider-050.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_owl_pet_companion_wise_003_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/owl-pet-companion-wise-003.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_owl_pet_companion_wise_013_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/owl-pet-companion-wise-013-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_owl_pet_companion_wise_023_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/owl-pet-companion-wise-023-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_owl_pet_companion_wise_033_v4_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/owl-pet-companion-wise-033-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_owl_pet_companion_wise_043_v5_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/owl-pet-companion-wise-043-v5.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_paladin_holy_knight_golden_005_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/paladin-holy-knight-golden-005.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_paladin_holy_knight_golden_015_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/paladin-holy-knight-golden-015-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_paladin_holy_knight_golden_015_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/paladin-holy-knight-golden-015.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_paladin_holy_knight_golden_025_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/paladin-holy-knight-golden-025-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_paladin_holy_knight_golden_025_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/paladin-holy-knight-golden-025.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_paladin_holy_knight_golden_035_v4_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/paladin-holy-knight-golden-035-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_paladin_holy_knight_golden_035_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/paladin-holy-knight-golden-035.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_pegasus_mount_white_winged_horse_005_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/pegasus-mount-white-winged-horse-005.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_pegasus_mount_white_winged_horse_015_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/pegasus-mount-white-winged-horse-015.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_pegasus_mount_white_winged_horse_025_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/pegasus-mount-white-winged-horse-025.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_pegasus_mount_white_winged_horse_035_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/pegasus-mount-white-winged-horse-035.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_pegasus_mount_white_winged_horse_045_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/pegasus-mount-white-winged-horse-045.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_pegasus_mount_winged_horse_019_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/pegasus-mount-winged-horse-019-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_pegasus_mount_winged_horse_029_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/pegasus-mount-winged-horse-029-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_pegasus_mount_winged_horse_039_v4_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/pegasus-mount-winged-horse-039-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_pegasus_mount_winged_horse_049_v5_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/pegasus-mount-winged-horse-049-v5.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_princess_royal_npc_elegant_005_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/princess-royal-npc-elegant-005.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_princess_royal_npc_elegant_015_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/princess-royal-npc-elegant-015-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_princess_royal_npc_elegant_025_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/princess-royal-npc-elegant-025-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_rogue_assassin_with_daggers_003_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/rogue-assassin-with-daggers-003.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_rogue_assassin_with_daggers_013_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/rogue-assassin-with-daggers-013-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_rogue_assassin_with_daggers_013_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/rogue-assassin-with-daggers-013.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_rogue_assassin_with_daggers_023_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/rogue-assassin-with-daggers-023-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_rogue_assassin_with_daggers_023_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/rogue-assassin-with-daggers-023.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_rogue_assassin_with_daggers_033_v4_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/rogue-assassin-with-daggers-033-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_rogue_assassin_with_daggers_033_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/rogue-assassin-with-daggers-033.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_samurai_warrior_katana_traditional_009_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/samurai-warrior-katana-traditional-009.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_samurai_warrior_katana_traditional_019_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/samurai-warrior-katana-traditional-019-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_samurai_warrior_katana_traditional_019_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/samurai-warrior-katana-traditional-019.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_samurai_warrior_katana_traditional_029_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/samurai-warrior-katana-traditional-029-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_samurai_warrior_katana_traditional_029_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/samurai-warrior-katana-traditional-029.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_samurai_warrior_katana_traditional_039_v4_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/samurai-warrior-katana-traditional-039-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_samurai_warrior_katana_traditional_039_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/samurai-warrior-katana-traditional-039.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_slime_pet_cute_blob_006_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/slime-pet-cute-blob-006.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_slime_pet_cute_blob_016_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/slime-pet-cute-blob-016-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_slime_pet_cute_blob_026_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/slime-pet-cute-blob-026-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_slime_pet_cute_blob_036_v4_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/slime-pet-cute-blob-036-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_slime_pet_cute_blob_046_v5_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/slime-pet-cute-blob-046-v5.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_sprite_companion_nature_spirit_010_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/sprite-companion-nature-spirit-010.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_sprite_companion_nature_spirit_020_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/sprite-companion-nature-spirit-020-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_sprite_companion_nature_spirit_030_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/sprite-companion-nature-spirit-030-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_sprite_companion_nature_spirit_040_v4_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/sprite-companion-nature-spirit-040-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_sprite_companion_nature_spirit_050_v5_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/sprite-companion-nature-spirit-050-v5.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_unicorn_mount_magical_horse_004_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/unicorn-mount-magical-horse-004.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_unicorn_mount_magical_horse_014_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/unicorn-mount-magical-horse-014-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_unicorn_mount_magical_horse_024_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/unicorn-mount-magical-horse-024-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_unicorn_mount_magical_horse_034_v4_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/unicorn-mount-magical-horse-034-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_unicorn_mount_white_magical_horse_003_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/unicorn-mount-white-magical-horse-003.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_unicorn_mount_white_magical_horse_013_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/unicorn-mount-white-magical-horse-013.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_unicorn_mount_white_magical_horse_023_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/unicorn-mount-white-magical-horse-023.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_unicorn_mount_white_magical_horse_033_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/unicorn-mount-white-magical-horse-033.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_unicorn_mount_white_magical_horse_043_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/unicorn-mount-white-magical-horse-043.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_vehicle_war_horse_armored_steed_battle_002_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/vehicle-war-horse-armored-steed-battle-002.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_vehicle_war_horse_armored_steed_battle_012_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/vehicle-war-horse-armored-steed-battle-012-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_vehicle_war_horse_armored_steed_battle_022_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/vehicle-war-horse-armored-steed-battle-022-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_vehicle_war_horse_armored_steed_battle_032_v4_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/vehicle-war-horse-armored-steed-battle-032-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_vehicle_war_horse_armored_steed_battle_042_v5_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/vehicle-war-horse-armored-steed-battle-042-v5.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_warrior_knight_with_sword_001_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/warrior-knight-with-sword-001.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_warrior_knight_with_sword_011_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/warrior-knight-with-sword-011-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_warrior_knight_with_sword_011_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/warrior-knight-with-sword-011.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_warrior_knight_with_sword_021_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/warrior-knight-with-sword-021-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_warrior_knight_with_sword_021_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/warrior-knight-with-sword-021.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_warrior_knight_with_sword_031_v4_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/warrior-knight-with-sword-031-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_warrior_knight_with_sword_031_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/warrior-knight-with-sword-031.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_white_horse_mount_noble_002_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/white-horse-mount-noble-002.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_white_horse_mount_noble_012_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/white-horse-mount-noble-012-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_white_horse_mount_noble_022_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/white-horse-mount-noble-022-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_white_horse_mount_noble_032_v4_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/white-horse-mount-noble-032-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_white_horse_mount_noble_042_v5_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/white-horse-mount-noble-042-v5.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_wise_old_sage_npc_004_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/wise-old-sage-npc-004.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_wise_old_sage_npc_014_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/wise-old-sage-npc-014-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_wise_old_sage_npc_024_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/wise-old-sage-npc-024-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_wolf_mount_large_wolf_006_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/wolf-mount-large-wolf-006.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_wolf_mount_large_wolf_016_v2_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/wolf-mount-large-wolf-016-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_wolf_mount_large_wolf_026_v3_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/wolf-mount-large-wolf-026-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_wolf_mount_large_wolf_036_v4_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/wolf-mount-large-wolf-036-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_characters_freepixel_rpg_characters_companions_wolf_mount_large_wolf_046_v5_png",
+        "url": "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/wolf-mount-large-wolf-046-v5.png"
+      },
+      {
+        "type": "text",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_readme_txt",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/README.txt"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_altar_holy_light_divine_healing_golden_20260217_223403_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-altar-holy-light-divine-healing-golden_20260217_223403.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_altar_stone_blood_sacrifice_dark_ritual_20260217_223349_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-altar-stone-blood-sacrifice-dark-ritual_20260217_223349.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_archway_stone_carved_entrance_passage_20260217_215831_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-archway-stone-carved-entrance-passage_20260217_215831.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_barred_gate_iron_locked_chain_padlock_20260217_215855_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-barred-gate-iron-locked-chain-padlock_20260217_215855.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_barrel_wooden_storage_hidden_items_20260217_220923_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-barrel-wooden-storage-hidden-items_20260217_220923.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_bat_flying_swarm_dark_wings_small_20260217_222556_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-bat-flying-swarm-dark-wings-small_20260217_222556.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_bone_floor_tile_scattered_remains_grim_20260217_214920_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-bone-floor-tile-scattered-remains-grim_20260217_214920.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_bookshelf_dusty_scrolls_tomes_hidden_20260217_221141_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-bookshelf-dusty-scrolls-tomes-hidden_20260217_221141.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_boss_demon_lord_wings_horns_throne_20260217_223230_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-boss-demon-lord-wings-horns-throne_20260217_223230.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_boss_dragon_large_fire_throne_room_20260217_223143_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-boss-dragon-large-fire-throne-room_20260217_223143.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_boss_hydra_multi_headed_serpent_poison_20260217_223254_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-boss-hydra-multi-headed-serpent-poison_20260217_223254.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_boss_lich_crown_phylactery_dark_magic_20260217_223206_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-boss-lich-crown-phylactery-dark-magic_20260217_223206.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_brazier_iron_fire_bowl_standing_warm_20260217_220220_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-brazier-iron-fire-bowl-standing-warm_20260217_220220.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_bridge_tile_stone_narrow_crossing_gap_20260217_215214_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-bridge-tile-stone-narrow-crossing-gap_20260217_215214.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_candle_cluster_group_three_wax_lit_20260217_220342_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-candle-cluster-group-three-wax-lit_20260217_220342.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_candle_single_wax_melting_dripping_dim_20260217_220311_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-candle-single-wax-melting-dripping-dim_20260217_220311.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_carpet_tile_red_ornate_royal_corridor_20260217_215252_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-carpet-tile-red-ornate-royal-corridor_20260217_215252.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_chandelier_iron_candles_chain_hanging_20260217_220239_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-chandelier-iron-candles-chain-hanging_20260217_220239.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_chest_large_ornate_golden_locked_boss_20260217_220826_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-chest-large-ornate-golden-locked-boss_20260217_220826.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_chest_mimic_monster_teeth_tongue_trap_20260217_220845_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-chest-mimic-monster-teeth-tongue-trap_20260217_220845.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_chest_wooden_open_gold_coins_items_20260217_220733_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-chest-wooden-open-gold-coins-items_20260217_220733.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_chest_wooden_small_basic_loot_closed_20260217_220713_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-chest-wooden-small-basic-loot-closed_20260217_220713.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_cobblestone_floor_tile_uneven_rough_20260217_214245_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-cobblestone-floor-tile-uneven-rough_20260217_214245.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_crate_wooden_breakable_loot_supply_20260217_220946_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-crate-wooden-breakable-loot-supply_20260217_220946.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_crystal_floor_tile_glowing_purple_vein_20260217_215416_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-crystal-floor-tile-glowing-purple-vein_20260217_215416.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_crystal_light_glowing_blue_mounted_wall_20260217_220503_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-crystal-light-glowing-blue-mounted-wall_20260217_220503.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_dark_knight_armored_black_sword_shield_20260217_223005_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-dark-knight-armored-black-sword-shield_20260217_223005.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_dirt_floor_tile_brown_natural_cave_20260217_215318_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-dirt-floor-tile-brown-natural-cave_20260217_215318.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_door_boss_ornate_large_menacing_skull_20260217_215806_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-door-boss-ornate-large-menacing-skull_20260217_215806.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_door_iron_reinforced_heavy_sealed_20260217_215546_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-door-iron-reinforced-heavy-sealed_20260217_215546.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_door_magic_sealed_glowing_runes_blue_20260217_215612_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-door-magic-sealed-glowing-runes-blue_20260217_215612.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_door_wooden_iron_bands_locked_closed_20260217_215454_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-door-wooden-iron-bands-locked-closed_20260217_215454.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_door_wooden_open_dark_beyond_entry_20260217_215531_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-door-wooden-open-dark-beyond-entry_20260217_215531.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_fountain_water_magical_healing_glowing_20260217_223427_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-fountain-water-magical-healing-glowing_20260217_223427.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_gate_bone_skull_decorative_dark_evil_20260217_215724_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-gate-bone-skull-decorative-dark-evil_20260217_215724.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_gate_portcullis_iron_raised_entry_arch_20260217_215636_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-gate-portcullis-iron-raised-entry-arch_20260217_215636.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_glowing_mushroom_bioluminescent_floor_blue_20260217_220551_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-glowing-mushroom-bioluminescent-floor-blue_20260217_220551.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_goblin_small_green_dagger_sneaky_crude_20260217_222708_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-goblin-small-green-dagger-sneaky-crude_20260217_222708.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_golem_stone_large_slow_powerful_rocky_20260217_222947_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-golem-stone-large-slow-powerful-rocky_20260217_222947.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_ice_floor_tile_frozen_slippery_blue_20260217_215033_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-ice-floor-tile-frozen-slippery-blue_20260217_215033.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_key_brass_small_standard_door_unlock_20260217_215915_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-key-brass-small-standard-door-unlock_20260217_215915.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_key_golden_boss_door_master_ornate_20260217_220007_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-key-golden-boss-door-master-ornate_20260217_220007.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_key_silver_ornate_chest_specialized_20260217_215928_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-key-silver-ornate-chest-specialized_20260217_215928.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_key_skeleton_bone_carved_dark_20260217_220034_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-key-skeleton-bone-carved-dark_20260217_220034.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_keyring_multiple_keys_iron_ring_chain_20260217_220053_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-keyring-multiple-keys-iron-ring-chain_20260217_220053.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_lantern_iron_hanging_chain_wall_glow_20260217_220405_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-lantern-iron-hanging-chain-wall-glow_20260217_220405.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_lava_floor_tile_molten_orange_hot_20260217_215014_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-lava-floor-tile-molten-orange-hot_20260217_215014.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_magic_orb_floating_light_source_hovering_20260217_220642_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-magic-orb-floating-light-source-hovering_20260217_220642.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_minotaur_large_bull_head_axe_maze_20260217_223110_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-minotaur-large-bull-head-axe-maze_20260217_223110.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_necromancer_robes_skull_staff_summon_20260217_223031_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-necromancer-robes-skull-staff-summon_20260217_223031.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_orc_large_green_axe_warrior_brute_20260217_222727_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-orc-large-green-axe-warrior-brute_20260217_222727.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_pile_gold_coins_scattered_treasure_heap_20260217_221113_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-pile-gold-coins-scattered-treasure-heap_20260217_221113.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_pit_floor_tile_dark_bottomless_void_20260217_215103_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-pit-floor-tile-dark-bottomless-void_20260217_215103.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_portal_swirling_purple_teleport_gateway_20260217_223517_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-portal-swirling-purple-teleport-gateway_20260217_223517.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_potion_health_red_glass_bottle_cork_20260217_221732_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-potion-health-red-glass-bottle-cork_20260217_221732.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_potion_invisibility_clear_shimmer_bottle_20260217_221917_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-potion-invisibility-clear-shimmer-bottle_20260217_221917.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_potion_mana_blue_glass_bottle_swirl_20260217_221757_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-potion-mana-blue-glass-bottle-swirl_20260217_221757.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_potion_poison_green_bubbling_bottle_skull_20260217_221809_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-potion-poison-green-bubbling-bottle-skull_20260217_221809.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_potion_strength_orange_glowing_bottle_20260217_221858_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-potion-strength-orange-glowing-bottle_20260217_221858.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_rat_giant_red_eyes_diseased_aggressive_20260217_222421_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-rat-giant-red-eyes-diseased-aggressive_20260217_222421.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_rune_stone_carved_glowing_symbol_magic_20260217_222217_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-rune-stone-carved-glowing-symbol-magic_20260217_222217.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_sarcophagus_stone_carved_lidded_ancient_20260217_221044_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-sarcophagus-stone-carved-lidded-ancient_20260217_221044.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_scroll_map_ancient_ink_drawn_directions_20260217_222042_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-scroll-map-ancient-ink-drawn-directions_20260217_222042.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_scroll_spell_parchment_rolled_seal_magic_20260217_221945_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-scroll-spell-parchment-rolled-seal-magic_20260217_221945.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_secret_door_stone_wall_hidden_crack_20260217_215744_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-secret-door-stone-wall-hidden-crack_20260217_215744.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_shrine_statue_offering_candles_prayer_20260217_223452_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-shrine-statue-offering-candles-prayer_20260217_223452.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_skeleton_archer_bow_arrow_crouching_20260217_222254_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-skeleton-archer-bow-arrow-crouching_20260217_222254.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_skeleton_mage_robes_staff_dark_magic_20260217_222323_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-skeleton-mage-robes-staff-dark-magic_20260217_222323.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_skeleton_warrior_sword_shield_bones_20260217_222241_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-skeleton-warrior-sword-shield-bones_20260217_222241.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_slime_green_blob_bouncing_acidic_basic_20260217_222643_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-slime-green-blob-bouncing-acidic-basic_20260217_222643.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_spellbook_open_glowing_runes_pages_thick_20260217_222120_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-spellbook-open-glowing-runes-pages-thick_20260217_222120.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_spider_large_hairy_fangs_web_dark_20260217_222508_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-spider-large-hairy-fangs-web-dark_20260217_222508.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_stairs_tile_stone_ascending_upward_20260217_215150_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-stairs-tile-stone-ascending-upward_20260217_215150.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_stairs_tile_stone_descending_deeper_20260217_215133_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-stairs-tile-stone-descending-deeper_20260217_215133.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_stone_floor_tile_bloody_stained_dark_20260217_213627_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-stone-floor-tile-bloody-stained-dark_20260217_213627.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_stone_floor_tile_gray_cracked_worn_20260217_213539_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-stone-floor-tile-gray-cracked-worn_20260217_213539.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_stone_floor_tile_mossy_green_damp_20260217_213612_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-stone-floor-tile-mossy-green-damp_20260217_213612.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_stone_wall_tile_cracked_damaged_old_20260217_214150_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-stone-wall-tile-cracked-damaged-old_20260217_214150.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_stone_wall_tile_gray_brick_pattern_20260217_213642_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-stone-wall-tile-gray-brick-pattern_20260217_213642.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_stone_wall_tile_mossy_vine_growth_20260217_214218_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-stone-wall-tile-mossy-vine-growth_20260217_214218.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_stone_wall_tile_torch_bracket_shadow_20260217_213709_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-stone-wall-tile-torch-bracket-shadow_20260217_213709.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_tome_dark_leather_ancient_forbidden_20260217_222144_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-tome-dark-leather-ancient-forbidden_20260217_222144.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_torch_standing_floor_pole_flame_tall_20260217_220202_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-torch-standing-floor-pole-flame-tall_20260217_220202.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_torch_wall_mounted_flame_iron_bracket_20260217_220142_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-torch-wall-mounted-flame-iron-bracket_20260217_220142.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_trap_arrow_wall_mounted_trigger_hidden_20260217_221221_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-trap-arrow-wall-mounted-trigger-hidden_20260217_221221.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_trap_boulder_rolling_triggered_corridor_20260217_221440_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-trap-boulder-rolling-triggered-corridor_20260217_221440.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_trap_electric_floor_panel_shocking_blue_20260217_221644_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-trap-electric-floor-panel-shocking-blue_20260217_221644.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_trap_fire_floor_vent_gout_flame_20260217_221337_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-trap-fire-floor-vent-gout-flame_20260217_221337.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_trap_floor_tile_crumbling_unstable_20260217_221552_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-trap-floor-tile-crumbling-unstable_20260217_221552.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_trap_gas_poison_cloud_green_release_20260217_221612_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-trap-gas-poison-cloud-green-release_20260217_221612.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_trap_pendulum_blade_swinging_ceiling_20260217_221532_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-trap-pendulum-blade-swinging-ceiling_20260217_221532.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_trap_pit_covered_falling_deep_dark_20260217_221246_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-trap-pit-covered-falling-deep-dark_20260217_221246.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_trap_poison_dart_wall_blowgun_small_20260217_221411_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-trap-poison-dart-wall-blowgun-small_20260217_221411.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_trap_spike_floor_pressure_plate_iron_20260217_221206_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-trap-spike-floor-pressure-plate-iron_20260217_221206.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_urn_ceramic_ancient_sealed_treasure_20260217_221020_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-urn-ceramic-ancient-sealed-treasure_20260217_221020.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_water_floor_tile_shallow_puddle_dark_20260217_214946_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-water-floor-tile-shallow-puddle-dark_20260217_214946.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_wraith_ghostly_dark_floating_scythe_20260217_222853_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-wraith-ghostly-dark-floating-scythe_20260217_222853.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_enemies_freepixel_theme_dungeon_crawler_dungeon_zombie_shambling_arms_reaching_undead_20260217_222358_png",
+        "url": "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-zombie-shambling-arms-reaching-undead_20260217_222358.png"
+      },
+      {
+        "type": "text",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_readme_txt",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/README.txt"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_battle_axe_weapon_double_004_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/battle-axe-weapon-double-004.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_battle_axe_weapon_double_014_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/battle-axe-weapon-double-014-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_battle_axe_weapon_double_024_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/battle-axe-weapon-double-024-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_battle_axe_weapon_double_034_v4_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/battle-axe-weapon-double-034-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_battle_axe_weapon_double_044_v5_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/battle-axe-weapon-double-044-v5.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_boomerang_throwing_weapon_curved_009_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/boomerang-throwing-weapon-curved-009.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_boomerang_throwing_weapon_curved_029_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/boomerang-throwing-weapon-curved-029-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_buckler_small_shield_quick_010_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/buckler-small-shield-quick-010.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_buckler_small_shield_quick_020_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/buckler-small-shield-quick-020-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_chainmail_armor_metal_rings_002_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/chainmail-armor-metal-rings-002.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_chainmail_armor_metal_rings_012_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/chainmail-armor-metal-rings-012-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_chainmail_armor_metal_rings_022_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/chainmail-armor-metal-rings-022-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_chainmail_armor_metal_rings_032_v4_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/chainmail-armor-metal-rings-032-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_chakram_throwing_disc_circular_010_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/chakram-throwing-disc-circular-010.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_chakram_throwing_disc_circular_020_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/chakram-throwing-disc-circular-020-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_chakram_throwing_disc_circular_030_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/chakram-throwing-disc-circular-030-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_circlet_tiara_elegant_magical_007_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/circlet-tiara-elegant-magical-007.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_circlet_tiara_elegant_magical_017_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/circlet-tiara-elegant-magical-017-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_circlet_tiara_elegant_magical_027_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/circlet-tiara-elegant-magical-027-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_crossbow_mechanical_bolt_loaded_003_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/crossbow-mechanical-bolt-loaded-003.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_crossbow_mechanical_bolt_loaded_013_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/crossbow-mechanical-bolt-loaded-013-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_crossbow_mechanical_bolt_loaded_023_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/crossbow-mechanical-bolt-loaded-023-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_crown_royal_headpiece_golden_005_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/crown-royal-headpiece-golden-005.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_crown_royal_headpiece_golden_015_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/crown-royal-headpiece-golden-015-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_crown_royal_headpiece_golden_025_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/crown-royal-headpiece-golden-025-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_crystal_shield_transparent_magical_008_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/crystal-shield-transparent-magical-008.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_crystal_shield_transparent_magical_018_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/crystal-shield-transparent-magical-018-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_dagger_knife_weapon_short_006_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/dagger-knife-weapon-short-006.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_dagger_knife_weapon_short_026_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/dagger-knife-weapon-short-026-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_dagger_knife_weapon_short_036_v4_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/dagger-knife-weapon-short-036-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_dagger_knife_weapon_short_046_v5_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/dagger-knife-weapon-short-046-v5.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_dark_knight_armor_black_009_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/dark-knight-armor-black-009.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_dark_knight_armor_black_019_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/dark-knight-armor-black-019-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_dark_knight_armor_black_029_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/dark-knight-armor-black-029-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_dark_knight_armor_black_039_v4_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/dark-knight-armor-black-039-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_dragon_scale_armor_red_007_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/dragon-scale-armor-red-007.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_dragon_scale_armor_red_017_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/dragon-scale-armor-red-017-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_dragon_scale_armor_red_027_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/dragon-scale-armor-red-027-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_dragon_scale_armor_red_037_v4_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/dragon-scale-armor-red-037-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_dragon_shield_scale_pattern_009_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/dragon-shield-scale-pattern-009.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_dragon_shield_scale_pattern_019_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/dragon-shield-scale-pattern-019-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_feathered_cap_archer_hat_009_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/feathered-cap-archer-hat-009.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_feathered_cap_archer_hat_019_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/feathered-cap-archer-hat-019-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_feathered_cap_archer_hat_029_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/feathered-cap-archer-hat-029-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_fire_staff_weapon_flame_006_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/fire-staff-weapon-flame-006.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_fire_staff_weapon_flame_016_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/fire-staff-weapon-flame-016-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_fire_staff_weapon_flame_026_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/fire-staff-weapon-flame-026-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_flaming_sword_fire_weapon_010_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/flaming-sword-fire-weapon-010.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_flaming_sword_fire_weapon_020_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/flaming-sword-fire-weapon-020-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_flaming_sword_fire_weapon_030_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/flaming-sword-fire-weapon-030-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_flaming_sword_fire_weapon_040_v4_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/flaming-sword-fire-weapon-040-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_flaming_sword_fire_weapon_050_v5_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/flaming-sword-fire-weapon-050-v5.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_golden_armor_legendary_ornate_006_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/golden-armor-legendary-ornate-006.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_golden_armor_legendary_ornate_016_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/golden-armor-legendary-ornate-016-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_golden_armor_legendary_ornate_026_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/golden-armor-legendary-ornate-026-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_golden_armor_legendary_ornate_036_v4_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/golden-armor-legendary-ornate-036-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_golden_legendary_sword_glowing_003_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/golden-legendary-sword-glowing-003.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_golden_legendary_sword_glowing_013_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/golden-legendary-sword-glowing-013-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_golden_legendary_sword_glowing_023_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/golden-legendary-sword-glowing-023-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_golden_legendary_sword_glowing_033_v4_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/golden-legendary-sword-glowing-033-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_golden_legendary_sword_glowing_043_v5_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/golden-legendary-sword-glowing-043-v5.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_golden_lion_shield_ornate_004_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/golden-lion-shield-ornate-004.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_golden_lion_shield_ornate_014_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/golden-lion-shield-ornate-014-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_golden_lion_shield_ornate_024_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/golden-lion-shield-ornate-024-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_holy_paladin_armor_white_008_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/holy-paladin-armor-white-008.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_holy_paladin_armor_white_018_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/holy-paladin-armor-white-018-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_holy_paladin_armor_white_028_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/holy-paladin-armor-white-028-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_holy_paladin_armor_white_038_v4_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/holy-paladin-armor-white-038-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_horned_viking_helmet_warrior_006_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/horned-viking-helmet-warrior-006.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_horned_viking_helmet_warrior_016_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/horned-viking-helmet-warrior-016-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_horned_viking_helmet_warrior_026_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/horned-viking-helmet-warrior-026-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_ice_staff_weapon_frozen_007_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/ice-staff-weapon-frozen-007.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_ice_staff_weapon_frozen_017_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/ice-staff-weapon-frozen-017-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_ice_staff_weapon_frozen_027_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/ice-staff-weapon-frozen-027-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_iron_helmet_armor_basic_001_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/iron-helmet-armor-basic-001.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_iron_helmet_armor_basic_011_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/iron-helmet-armor-basic-011-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_iron_helmet_armor_basic_021_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/iron-helmet-armor-basic-021-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_iron_kite_shield_pointed_002_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/iron-kite-shield-pointed-002.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_iron_kite_shield_pointed_012_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/iron-kite-shield-pointed-012-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_iron_kite_shield_pointed_022_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/iron-kite-shield-pointed-022-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_iron_sword_weapon_simple_011_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/iron-sword-weapon-simple-011-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_iron_sword_weapon_simple_021_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/iron-sword-weapon-simple-021-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_iron_sword_weapon_simple_031_v4_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/iron-sword-weapon-simple-031-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_iron_sword_weapon_simple_041_v5_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/iron-sword-weapon-simple-041-v5.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_katana_samurai_sword_curved_008_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/katana-samurai-sword-curved-008.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_katana_samurai_sword_curved_038_v4_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/katana-samurai-sword-curved-038-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_katana_samurai_sword_curved_048_v5_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/katana-samurai-sword-curved-048-v5.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_knight_helm_visor_full_002_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/knight-helm-visor-full-002.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_knight_helm_visor_full_012_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/knight-helm-visor-full-012-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_knight_helm_visor_full_022_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/knight-helm-visor-full-022-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_leather_armor_chest_basic_001_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/leather-armor-chest-basic-001.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_leather_armor_chest_basic_011_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/leather-armor-chest-basic-011-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_leather_armor_chest_basic_021_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/leather-armor-chest-basic-021-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_leather_armor_chest_basic_031_v4_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/leather-armor-chest-basic-031-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_leather_cap_hood_rogue_004_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/leather-cap-hood-rogue-004.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_leather_cap_hood_rogue_014_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/leather-cap-hood-rogue-014-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_leather_cap_hood_rogue_024_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/leather-cap-hood-rogue-024-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_longbow_elven_elegant_curved_022_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/longbow-elven-elegant-curved-022-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_magic_barrier_shield_glowing_006_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/magic-barrier-shield-glowing-006.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_magic_barrier_shield_glowing_016_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/magic-barrier-shield-glowing-016-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_magical_staff_wand_crystal_005_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/magical-staff-wand-crystal-005.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_magical_staff_wand_crystal_025_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/magical-staff-wand-crystal-025-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_nature_armor_leaves_druid_010_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/nature-armor-leaves-druid-010.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_nature_armor_leaves_druid_020_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/nature-armor-leaves-druid-020-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_nature_armor_leaves_druid_030_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/nature-armor-leaves-druid-030-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_nature_armor_leaves_druid_040_v4_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/nature-armor-leaves-druid-040-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_plate_armor_full_heavy_003_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/plate-armor-full-heavy-003.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_plate_armor_full_heavy_013_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/plate-armor-full-heavy-013-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_plate_armor_full_heavy_023_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/plate-armor-full-heavy-023-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_plate_armor_full_heavy_033_v4_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/plate-armor-full-heavy-033-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_rogue_leather_vest_dark_005_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/rogue-leather-vest-dark-005.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_rogue_leather_vest_dark_015_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/rogue-leather-vest-dark-015-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_rogue_leather_vest_dark_025_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/rogue-leather-vest-dark-025-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_rogue_leather_vest_dark_035_v4_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/rogue-leather-vest-dark-035-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_samurai_kabuto_helmet_ornate_010_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/samurai-kabuto-helmet-ornate-010.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_samurai_kabuto_helmet_ornate_020_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/samurai-kabuto-helmet-ornate-020-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_samurai_kabuto_helmet_ornate_030_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/samurai-kabuto-helmet-ornate-030-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_scythe_dark_weapon_curved_019_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/scythe-dark-weapon-curved-019-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_scythe_dark_weapon_curved_029_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/scythe-dark-weapon-curved-029-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_scythe_dark_weapon_curved_049_v5_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/scythe-dark-weapon-curved-049-v5.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_skull_helmet_dark_bone_008_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/skull-helmet-dark-bone-008.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_skull_helmet_dark_bone_018_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/skull-helmet-dark-bone-018-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_skull_helmet_dark_bone_028_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/skull-helmet-dark-bone-028-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_skull_shield_dark_bone_007_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/skull-shield-dark-bone-007.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_skull_shield_dark_bone_017_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/skull-shield-dark-bone-017-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_slingshot_weapon_simple_shape_008_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/slingshot-weapon-simple-shape-008.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_slingshot_weapon_simple_shape_018_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/slingshot-weapon-simple-shape-018-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_slingshot_weapon_simple_shape_028_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/slingshot-weapon-simple-shape-028-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_spear_polearm_weapon_long_007_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/spear-polearm-weapon-long-007.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_spear_polearm_weapon_long_037_v4_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/spear-polearm-weapon-long-037-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_spear_polearm_weapon_long_047_v5_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/spear-polearm-weapon-long-047-v5.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_spiked_shield_offensive_defense_005_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/spiked-shield-offensive-defense-005.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_spiked_shield_offensive_defense_015_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/spiked-shield-offensive-defense-015-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_spiked_shield_offensive_defense_025_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/spiked-shield-offensive-defense-025-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_steel_longsword_shiny_blade_002_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/steel-longsword-shiny-blade-002.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_steel_longsword_shiny_blade_012_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/steel-longsword-shiny-blade-012-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_steel_longsword_shiny_blade_022_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/steel-longsword-shiny-blade-022-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_steel_longsword_shiny_blade_032_v4_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/steel-longsword-shiny-blade-032-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_steel_longsword_shiny_blade_042_v5_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/steel-longsword-shiny-blade-042-v5.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_throwing_knives_set_multiple_004_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/throwing-knives-set-multiple-004.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_throwing_knives_set_multiple_014_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/throwing-knives-set-multiple-014-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_throwing_knives_set_multiple_024_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/throwing-knives-set-multiple-024-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_tower_shield_large_full_003_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/tower-shield-large-full-003.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_tower_shield_large_full_013_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/tower-shield-large-full-013-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_tower_shield_large_full_023_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/tower-shield-large-full-023-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_war_hammer_mace_heavy_005_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/war-hammer-mace-heavy-005.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_war_hammer_mace_heavy_015_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/war-hammer-mace-heavy-015-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_war_hammer_mace_heavy_025_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/war-hammer-mace-heavy-025-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_war_hammer_mace_heavy_035_v4_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/war-hammer-mace-heavy-035-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_war_hammer_mace_heavy_045_v5_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/war-hammer-mace-heavy-045-v5.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_wizard_hat_pointed_magical_003_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/wizard-hat-pointed-magical-003.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_wizard_hat_pointed_magical_013_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/wizard-hat-pointed-magical-013-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_wizard_hat_pointed_magical_023_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/wizard-hat-pointed-magical-023-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_wizard_robes_magical_cloth_004_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/wizard-robes-magical-cloth-004.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_wizard_robes_magical_cloth_014_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/wizard-robes-magical-cloth-014-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_wizard_robes_magical_cloth_024_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/wizard-robes-magical-cloth-024-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_wizard_robes_magical_cloth_034_v4_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/wizard-robes-magical-cloth-034-v4.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_wooden_bow_weapon_simple_001_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/wooden-bow-weapon-simple-001.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_wooden_bow_weapon_simple_021_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/wooden-bow-weapon-simple-021-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_wooden_shield_basic_round_001_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/wooden-shield-basic-round-001.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_wooden_shield_basic_round_011_v2_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/wooden-shield-basic-round-011-v2.png"
+      },
+      {
+        "type": "image",
+        "key": "public__assets_sprites_rpg_weapons_freepixel_rpg_weapons_armor_wooden_shield_basic_round_021_v3_png",
+        "url": "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/wooden-shield-basic-round-021-v3.png"
+      },
+      {
+        "type": "image",
+        "key": "public__tiles_tiles_png",
+        "url": "/tiles/tiles.png"
+      }
+    ]
+  }
+}
