@@ -240,7 +240,10 @@ class MainScene extends Phaser.Scene {
       player.setTint(0xffd166);
       this.time.delayedCall(90, () => { if (player.active) player.clearTint(); });
 
-      // damage enemies in range
+      // damage enemies in range — collect kills OUTSIDE iterate to avoid
+      // mutating the group while traversing it (causes freeze/crash in Phaser)
+      const toKill: Phaser.Physics.Arcade.Sprite[] = [];
+
       enemies.children.iterate((child) => {
         const enemy = child as Phaser.Physics.Arcade.Sprite;
         if (!enemy.active) return true;
@@ -258,14 +261,15 @@ class MainScene extends Phaser.Scene {
         enemy.setVelocity(220 * kbDir, -130);
         this.time.delayedCall(130, () => { if (enemy.active) enemy.clearTint(); });
 
-        if (state.hp <= 0) {
-          // drop a key at enemy position
-          const dropped = keyGroup.create(enemy.x, enemy.y - 8, "key") as Phaser.Physics.Arcade.Image;
-          dropped.setDisplaySize(20, 20).refreshBody();
-          enemy.destroy();
-        }
+        if (state.hp <= 0) toKill.push(enemy);
         return true;
       });
+
+      for (const enemy of toKill) {
+        const dropped = keyGroup.create(enemy.x, enemy.y - 8, "key") as Phaser.Physics.Arcade.Image;
+        dropped.setDisplaySize(20, 20).refreshBody();
+        enemy.destroy();
+      }
     };
 
     // ── update loop ──────────────────────────────────────────────────────────
