@@ -140,7 +140,9 @@ class MainScene extends Phaser.Scene {
     // ── key collection ───────────────────────────────────────────────────────
     this.physics.add.overlap(player, keyGroup, (_p, kObj) => {
       if (!(kObj instanceof Phaser.Physics.Arcade.Image)) return;
-      kObj.destroy();
+      // disableBody is safe inside an overlap callback; destroy() corrupts the
+      // static group's internal body list and breaks all future overlaps.
+      kObj.disableBody(true, true);
       keysCollected++;
       updateHUD();
       if (keysCollected >= KEYS_TO_UNLOCK) {
