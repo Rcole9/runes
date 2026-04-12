@@ -31,12 +31,25 @@ class MainScene extends Phaser.Scene {
     this.add.image(400, 300, "sky").setScrollFactor(0).setDepth(-20);
 
     const platforms = this.physics.add.staticGroup();
-    platforms.create(400, 568, "ground").setScale(2).refreshBody();
-    platforms.create(600, 400, "ground");
-    platforms.create(50, 250, "ground");
-    platforms.create(750, 220, "ground");
-    platforms.create(1100, 520, "ground");
-    platforms.create(1400, 380, "ground");
+
+    // Each platform tile is forced to a fixed display + body size so the
+    // 200×200 source texture does not create an oversized collision box.
+    const makePlatform = (x: number, y: number, w: number, h = 32) => {
+      const tile = platforms.create(x, y, "ground") as Phaser.Physics.Arcade.Image;
+      tile.setDisplaySize(w, h);
+      tile.refreshBody();
+      return tile;
+    };
+
+    // Ground floor – full world width, thin surface
+    makePlatform(800, 584, 1600, 32);
+
+    // Elevated platforms
+    makePlatform(600, 400, 160);
+    makePlatform(50,  250, 160);
+    makePlatform(750, 220, 160);
+    makePlatform(1100, 520, 160);
+    makePlatform(1400, 380, 160);
 
     const stars = this.physics.add.group({
       key: "star",
@@ -53,12 +66,17 @@ class MainScene extends Phaser.Scene {
       return true;
     });
 
-    const player = this.physics.add.sprite(100, 450, "player");
+    // Spawn player above the ground surface (ground top = 584 - 16 = 568)
+    const player = this.physics.add.sprite(100, 520, "player");
     player.setBounce(0.2);
     player.setCollideWorldBounds(true);
     player.setDisplaySize(40, 40);
     player.setDepth(100);
-    (player.body as Phaser.Physics.Arcade.Body).setGravityY(300);
+    // Explicitly size the body so it matches the 40×40 visual regardless of
+    // source texture dimensions.  Do NOT add extra gravity – world gravity
+    // (arcade.gravity.y = 300) is already applied.
+    const playerBody = player.body as Phaser.Physics.Arcade.Body;
+    playerBody.setSize(28, 38);
 
     const collectStar: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback = (
       _playerObj,
