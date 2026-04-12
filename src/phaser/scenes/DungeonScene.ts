@@ -4,6 +4,7 @@ import { PALETTE, hexToNumber } from "@/game/palette";
 import { gameStore } from "@/game/store";
 import { hashSeed, mulberry32 } from "@/game/rng";
 import { derivePlayerStats, enemyScaleFromDifficulty } from "@/game/stats";
+import { addLedgeShadows } from "../ledgeShadows";
 import { worldToScreen } from "../iso";
 
 type Enemy = {
@@ -130,7 +131,7 @@ export class DungeonScene extends Phaser.Scene {
         : current.classId === "healer"
           ? this.firstAvailable(["player-healer", "player"], "player")
           : this.firstAvailable(["player-dps", "player"], "player");
-
+    this.cameras.main.setRoundPixels(true);
     this.cameras.main.setBackgroundColor(0x090c13);
     this.mapOrigin = {
       x: this.cameras.main.centerX,
@@ -138,17 +139,43 @@ export class DungeonScene extends Phaser.Scene {
     };
     this.createBackdrop();
 
-    for (let gx = 0; gx < 16; gx += 1) {
-      for (let gy = 0; gy < 16; gy += 1) {
-        const texture = (gx + gy) % 4 === 0 ? "tile-dirt" : (gx * 2 + gy) % 7 === 0 ? "tile-water" : "tile";
-        const p = worldToScreen({ x: gx, y: gy });
-        const tile = this.add
-          .image(this.mapOrigin.x + p.x, this.mapOrigin.y + p.y, texture)
-          .setTint(hexToNumber(PALETTE.void.tealDeep));
-        tile.setDisplaySize(64, 32);
-        tile.setDepth(p.y);
+    const map = this.make.tilemap({
+      width: 16,
+      height: 16,
+      tileWidth: 64,
+      tileHeight: 32,
+    });
+    const tileset = map.addTilesetImage("tile", "tile", 64, 32, 0, 0);
+    if (!tileset) {
+      throw new Error("Missing tileset texture: tile");
+    }
+
+    const mapOffsetX = this.mapOrigin.x - (map.width * map.tileWidth) / 2;
+    const mapOffsetY = this.mapOrigin.y - map.tileHeight;
+    const bg = map.createBlankLayer("Background", tileset, mapOffsetX, mapOffsetY)?.setDepth(0);
+    const floor = map.createBlankLayer("Floor", tileset, mapOffsetX, mapOffsetY)?.setDepth(10);
+    const solids = map.createBlankLayer("Solids", tileset, mapOffsetX, mapOffsetY)?.setDepth(20);
+    const deco = map.createBlankLayer("Deco", tileset, mapOffsetX, mapOffsetY)?.setDepth(30);
+
+    if (!bg || !floor || !solids || !deco) {
+      throw new Error("Failed to create dungeon tilemap layers");
+    }
+
+    for (let gx = 0; gx < map.width; gx += 1) {
+      for (let gy = 0; gy < map.height; gy += 1) {
+        bg.putTileAt(0, gx, gy);
+        floor.putTileAt(0, gx, gy);
+
+        const border = gx === 0 || gy === 0 || gx === map.width - 1 || gy === map.height - 1;
+        const column = gx % 5 === 0 && gy > 2 && gy < map.height - 3;
+        if (border || column) {
+          solids.putTileAt(0, gx, gy);
+        }
       }
     }
+
+    if (solids) addLedgeShadows(this, solids, map);
+    solids.setCollisionByExclusion([-1]);
 
     const start = worldToScreen(this.playerWorld);
     this.player = this.add.image(
@@ -157,7 +184,13 @@ export class DungeonScene extends Phaser.Scene {
       classPlayerTexture,
     );
     this.player.setDisplaySize(24, 24);
-    this.player.setDepth(this.mapOrigin.y + start.y + 90);
+    this.player.setDepth(20);
+    this.physics.add.existing(this.player);
+    (this.player.body as Phaser.Physics.Arcade.Body).setAllowGravity(false);
+    this.physics.add.collider(
+      this.player as Phaser.Types.Physics.Arcade.GameObjectWithBody,
+      solids,
+    );
 
     this.keys = this.input.keyboard!.addKeys("W,A,S,D,SPACE,J,H") as Record<
       string,
@@ -263,8 +296,9 @@ export class DungeonScene extends Phaser.Scene {
         ),
       );
       sprite.setDisplaySize(20, 20);
-      sprite.setDepth(this.mapOrigin.y + p.y + 80);
+      sprite.setDepth(20);
       const hpBar = this.add.graphics();
+      hpBar.setDepth(30);
       const maxHp = scaled.hp;
       this.enemies.push({
         sprite,
@@ -295,8 +329,9 @@ export class DungeonScene extends Phaser.Scene {
       this.firstAvailable(["boss-1", "boss"], "boss"),
     );
     sprite.setDisplaySize(40, 40);
-    sprite.setDepth(this.mapOrigin.y + p.y + 100);
+    sprite.setDepth(20);
     const hpBar = this.add.graphics();
+    hpBar.setDepth(30);
     const maxHp = scaled.hp * 8;
     this.boss = {
       sprite,
@@ -317,7 +352,7 @@ export class DungeonScene extends Phaser.Scene {
 
   private playAttackEffect(x: number, y: number, didHit: boolean): void {
     const slash = this.add.image(x, y - 8, "slash");
-    slash.setDepth(y + 220);
+    slash.setDepth(35);
     slash.setScale(didHit ? 0.55 : 0.42);
     slash.setAlpha(0.9);
     slash.setAngle(Phaser.Math.Between(-18, 18));
@@ -490,7 +525,8 @@ export class DungeonScene extends Phaser.Scene {
       this.mapOrigin.x + pos.x,
       this.mapOrigin.y + pos.y - 14,
     );
-    this.player.setDepth(this.mapOrigin.y + pos.y + 90);
+    this.player.x = Math.round(this.player.x);
+    this.player.y = Math.round(this.player.y);
 
     this.attackCooldown -= dt;
     if (Phaser.Input.Keyboard.JustDown(this.keys.H)) {
@@ -561,8 +597,9 @@ export class DungeonScene extends Phaser.Scene {
           this.firstAvailable(["add-1", "add"], "add"),
         );
         sprite.setDisplaySize(16, 16);
-        sprite.setDepth(this.mapOrigin.y + p.y + 80);
+        sprite.setDepth(20);
         const hpBar = this.add.graphics();
+        hpBar.setDepth(30);
         const maxHp = 25 + this.difficulty * 6;
         this.enemies.push({
           sprite,

@@ -6,6 +6,7 @@ import {
   dungeonLevelLabel,
   dungeonSeedForLevel,
 } from "@/game/progression";
+import { addLedgeShadows } from "../ledgeShadows";
 import { worldToScreen } from "../iso";
 
 export class OverworldScene extends Phaser.Scene {
@@ -99,7 +100,7 @@ export class OverworldScene extends Phaser.Scene {
         : current.classId === "healer"
           ? this.firstAvailable(["player-healer", "player"], "player")
           : this.firstAvailable(["player-dps", "player"], "player");
-
+    this.cameras.main.setRoundPixels(true);
     this.cameras.main.setBackgroundColor(0x182734);
     this.mapOrigin = {
       x: this.cameras.main.centerX,
@@ -107,19 +108,42 @@ export class OverworldScene extends Phaser.Scene {
     };
     this.createBackdrop();
 
-    for (let gx = 0; gx < 14; gx += 1) {
-      for (let gy = 0; gy < 14; gy += 1) {
-        const p = worldToScreen({ x: gx, y: gy });
-        const texture = (gx + gy) % 5 === 0 ? "tile-path" : (gx * 3 + gy) % 7 === 0 ? "tile-dirt" : "tile";
-        const tile = this.add.image(
-          this.mapOrigin.x + p.x,
-          this.mapOrigin.y + p.y,
-          texture,
-        );
-        tile.setDisplaySize(64, 32);
-        tile.setDepth(p.y);
+    const map = this.make.tilemap({
+      width: 14,
+      height: 14,
+      tileWidth: 64,
+      tileHeight: 32,
+    });
+    const tileset = map.addTilesetImage("tile", "tile", 64, 32, 0, 0);
+    if (!tileset) {
+      throw new Error("Missing tileset texture: tile");
+    }
+
+    const mapOffsetX = this.mapOrigin.x - (map.width * map.tileWidth) / 2;
+    const mapOffsetY = this.mapOrigin.y - map.tileHeight;
+    const bg = map.createBlankLayer("Background", tileset, mapOffsetX, mapOffsetY)?.setDepth(0);
+    const floor = map.createBlankLayer("Floor", tileset, mapOffsetX, mapOffsetY)?.setDepth(10);
+    const solids = map.createBlankLayer("Solids", tileset, mapOffsetX, mapOffsetY)?.setDepth(20);
+    const deco = map.createBlankLayer("Deco", tileset, mapOffsetX, mapOffsetY)?.setDepth(30);
+
+    if (!bg || !floor || !solids || !deco) {
+      throw new Error("Failed to create overworld tilemap layers");
+    }
+
+    for (let gx = 0; gx < map.width; gx += 1) {
+      for (let gy = 0; gy < map.height; gy += 1) {
+        bg.putTileAt(0, gx, gy);
+        floor.putTileAt(0, gx, gy);
+
+        // Keep map mostly traversable; border acts as collision solids.
+        if (gx === 0 || gy === 0 || gx === map.width - 1 || gy === map.height - 1) {
+          solids.putTileAt(0, gx, gy);
+        }
       }
     }
+
+    if (solids) addLedgeShadows(this, solids, map);
+    solids.setCollisionByExclusion([-1]);
 
     const npcPos = worldToScreen({ x: 4, y: 9 });
     this.npc = this.add.image(
@@ -128,7 +152,7 @@ export class OverworldScene extends Phaser.Scene {
       this.firstAvailable(["npc-merchant", "npc-guard", "npc"], "npc"),
     );
     this.npc.setDisplaySize(20, 28);
-    this.npc.setDepth(this.mapOrigin.y + npcPos.y + 100);
+    this.npc.setDepth(20);
     this.npc.setInteractive({ cursor: "pointer" });
     this.npc.on("pointerdown", () => {
       this.setMoveTarget({ x: 4, y: 9 }, "npc");
@@ -141,7 +165,7 @@ export class OverworldScene extends Phaser.Scene {
       "portal",
     );
     this.portal.setDisplaySize(36, 52);
-    this.portal.setDepth(this.mapOrigin.y + portalPos.y + 120);
+    this.portal.setDepth(30);
     this.portal.setInteractive({ cursor: "pointer" });
     this.portal.on("pointerdown", () => {
       this.setMoveTarget(this.portalWorld, "portal");
@@ -154,7 +178,13 @@ export class OverworldScene extends Phaser.Scene {
       classPlayerTexture,
     );
     this.player.setDisplaySize(24, 24);
-    this.player.setDepth(this.mapOrigin.y + start.y + 90);
+    this.player.setDepth(20);
+    this.physics.add.existing(this.player);
+    (this.player.body as Phaser.Physics.Arcade.Body).setAllowGravity(false);
+    this.physics.add.collider(
+      this.player as Phaser.Types.Physics.Arcade.GameObjectWithBody,
+      solids,
+    );
 
     this.cameras.main.startFollow(this.player, true, 0.09, 0.09);
     this.cameras.main.setDeadzone(180, 120);
@@ -207,7 +237,8 @@ export class OverworldScene extends Phaser.Scene {
       this.mapOrigin.x + pos.x,
       this.mapOrigin.y + pos.y - 14,
     );
-    this.player.setDepth(this.mapOrigin.y + pos.y + 90);
+    this.player.x = Math.round(this.player.x);
+    this.player.y = Math.round(this.player.y);
 
     const portalDist = Phaser.Math.Distance.Between(
       this.playerWorld.x,

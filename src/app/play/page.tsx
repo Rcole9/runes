@@ -1,5 +1,5 @@
-import GamePlayClient from "@/components/GamePlayClient";
+import GameCanvas from "./GameCanvas";
 
-export default function PlayPage() {
-  return <GamePlayClient />;
+export default function GamePage() {
+  return <GameCanvas />;
 }
