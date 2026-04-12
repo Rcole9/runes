@@ -16,6 +16,7 @@ class MainScene extends Phaser.Scene {
     this.load.image("star", "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-key-golden-boss-door-master-ornate_20260217_220007.png");
     this.load.image("bomb", "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-bat-flying-swarm-dark-wings-small_20260217_222556.png");
     this.load.image("player", "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/warrior-knight-with-sword-021.png");
+    this.load.image("slash", "/assets/kenney/slash.png");
   }
 
   create() {
@@ -110,10 +111,67 @@ class MainScene extends Phaser.Scene {
     cam.startFollow(player, true, 0.12, 0.12);
 
     const cursors = this.input.keyboard!.createCursorKeys();
-    const wasd = this.input.keyboard!.addKeys("W,A,S,D,SPACE") as Record<
+    const wasd = this.input.keyboard!.addKeys("A,D,SPACE") as Record<
       string,
       Phaser.Input.Keyboard.Key
     >;
+    const pointer = this.input.activePointer;
+    let wasRightDown = false;
+    let lastAttackAt = 0;
+    const attackCooldownMs = 250;
+
+    const jump = () => {
+      const body = player.body as Phaser.Physics.Arcade.Body;
+      if (body.touching.down || body.blocked.down) {
+        player.setVelocityY(-330);
+      }
+    };
+
+    const attack = () => {
+      const now = this.time.now;
+      if (now - lastAttackAt < attackCooldownMs) return;
+      lastAttackAt = now;
+
+      const facingDirection = player.flipX ? -1 : 1;
+      const slash = this.add.image(
+        player.x + facingDirection * 32,
+        player.y - 6,
+        "slash",
+      );
+      slash.setDepth(140);
+      slash.setScale(0.9);
+      slash.setAlpha(0.95);
+      slash.setFlipX(facingDirection < 0);
+
+      this.tweens.add({
+        targets: slash,
+        alpha: 0,
+        scaleX: 1.2,
+        scaleY: 1.2,
+        y: slash.y - 4,
+        duration: 110,
+        ease: "Quad.Out",
+        onComplete: () => slash.destroy(),
+      });
+
+      player.setTint(0xffd166);
+      this.time.delayedCall(90, () => {
+        if (player.active) player.clearTint();
+      });
+
+      bombs.children.iterate((child) => {
+        const bomb = child as Phaser.Physics.Arcade.Image;
+        if (!bomb.active) return true;
+
+        const distance = Phaser.Math.Distance.Between(player.x, player.y, bomb.x, bomb.y);
+        if (distance <= 120) {
+          const direction = bomb.x >= player.x ? 1 : -1;
+          bomb.setVelocity(280 * direction, -140);
+        }
+
+        return true;
+      });
+    };
 
     this.events.on("update", () => {
       player.x = Math.round(player.x);
@@ -121,7 +179,10 @@ class MainScene extends Phaser.Scene {
 
       const movingLeft = cursors.left.isDown || wasd.A.isDown;
       const movingRight = cursors.right.isDown || wasd.D.isDown;
-      const jumping = cursors.up.isDown || wasd.W.isDown || wasd.SPACE.isDown;
+      const jumpRequested = Phaser.Input.Keyboard.JustDown(wasd.SPACE);
+      const rightDown = pointer.rightButtonDown();
+      const attackRequested = rightDown && !wasRightDown;
+      wasRightDown = rightDown;
 
       if (movingLeft) {
         player.setVelocityX(-160);
@@ -133,8 +194,8 @@ class MainScene extends Phaser.Scene {
         player.setVelocityX(0);
       }
 
-      const body = player.body as Phaser.Physics.Arcade.Body;
-      if (jumping && body.touching.down) player.setVelocityY(-330);
+      if (jumpRequested) jump();
+      if (attackRequested) attack();
     });
   }
 }
@@ -145,6 +206,8 @@ export default function PhaserGame() {
   useEffect(() => {
     if (!hostRef.current) return;
     initializeStore();
+    const preventContextMenu = (event: MouseEvent) => event.preventDefault();
+    hostRef.current.addEventListener("contextmenu", preventContextMenu);
 
     const game = new Phaser.Game({
       type: Phaser.AUTO,
@@ -162,7 +225,10 @@ export default function PhaserGame() {
       scene: [MainScene],
     });
 
-    return () => game.destroy(true);
+    return () => {
+      hostRef.current?.removeEventListener("contextmenu", preventContextMenu);
+      game.destroy(true);
+    };
   }, []);
 
   return <div ref={hostRef} style={{ width: "100vw", height: "100vh" }} />;
