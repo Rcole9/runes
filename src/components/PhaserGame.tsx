@@ -59,8 +59,12 @@ class MainScene extends Phaser.Scene {
     player.setDepth(100);
     (player.body as Phaser.Physics.Arcade.Body).setGravityY(300);
 
-    const collectStar = (_playerObj: any, starObj: any) => {
-      const star = starObj as Phaser.Physics.Arcade.Image;
+    const collectStar: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback = (
+      _playerObj,
+      starObj,
+    ) => {
+      if (!(starObj instanceof Phaser.Physics.Arcade.Image)) return;
+      const star = starObj;
       star.disableBody(true, true);
 
       if (stars.countActive(true) === 0) {
@@ -81,11 +85,20 @@ class MainScene extends Phaser.Scene {
       }
     };
 
-    const hitBomb = (playerObj: any, _bombObj: any) => {
+    const hitBomb: Phaser.Types.Physics.Arcade.ArcadePhysicsCallback = (
+      playerObj,
+      bombObj,
+    ) => {
       this.physics.pause();
-      const hitPlayer = playerObj as Phaser.Physics.Arcade.Sprite;
+
+      if (!(playerObj instanceof Phaser.Physics.Arcade.Sprite)) return;
+      const hitPlayer = playerObj;
       hitPlayer.setTint(0xff0000);
       hitPlayer.setVelocity(0, 0);
+
+      if (bombObj instanceof Phaser.Physics.Arcade.Image) {
+        bombObj.setTint(0xaa1111);
+      }
     };
 
     this.physics.add.collider(player, platforms);
