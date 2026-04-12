@@ -21,6 +21,8 @@ type Enemy = {
 
 export class DungeonScene extends Phaser.Scene {
   private playerWorld = { x: 8, y: 8 };
+  private moveTarget: { x: number; y: number } | null = null;
+  private attackTarget: Enemy | null = null;
   private player!: Phaser.GameObjects.Image;
   private mapOrigin = { x: 0, y: 140 };
   private keys!: Record<string, Phaser.Input.Keyboard.Key>;
@@ -46,6 +48,66 @@ export class DungeonScene extends Phaser.Scene {
       if (this.textures.exists(key)) return key;
     }
     return fallback;
+  }
+
+  private screenToWorld(screenX: number, screenY: number): { x: number; y: number } {
+    const localX = screenX - this.mapOrigin.x;
+    const localY = screenY - this.mapOrigin.y;
+    const halfTileW = 32;
+    const halfTileH = 16;
+
+    return {
+      x: (localX / halfTileW + localY / halfTileH) / 2,
+      y: (localY / halfTileH - localX / halfTileW) / 2,
+    };
+  }
+
+  private setMoveTarget(world: { x: number; y: number }): void {
+    this.moveTarget = {
+      x: Phaser.Math.Clamp(world.x, 1, 14),
+      y: Phaser.Math.Clamp(world.y, 1, 14),
+    };
+  }
+
+  private moveTowardTarget(speed: number): void {
+    if (!this.moveTarget) return;
+
+    const dx = this.moveTarget.x - this.playerWorld.x;
+    const dy = this.moveTarget.y - this.playerWorld.y;
+    const distance = Math.hypot(dx, dy);
+
+    if (distance <= speed || distance < 0.08) {
+      this.playerWorld.x = this.moveTarget.x;
+      this.playerWorld.y = this.moveTarget.y;
+      this.moveTarget = null;
+      return;
+    }
+
+    this.playerWorld.x += (dx / distance) * speed;
+    this.playerWorld.y += (dy / distance) * speed;
+  }
+
+  private trackAttackTarget(): void {
+    if (!this.attackTarget || !this.attackTarget.sprite.active) {
+      this.attackTarget = null;
+      return;
+    }
+
+    const targetWorld = this.screenToWorld(
+      this.attackTarget.sprite.x,
+      this.attackTarget.sprite.y + 10,
+    );
+    this.setMoveTarget(targetWorld);
+  }
+
+  private bindEnemyPointer(sprite: Phaser.GameObjects.Image, enemy: Enemy): void {
+    sprite.setInteractive({ cursor: "pointer" });
+    sprite.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
+      pointer.event.stopPropagation();
+      this.attackTarget = enemy;
+      this.trackAttackTarget();
+      this.attackQueued = true;
+    });
   }
 
   private createBackdrop(): void {
@@ -107,12 +169,17 @@ export class DungeonScene extends Phaser.Scene {
       Phaser.Input.Keyboard.KeyCodes.H,
     ]);
 
-    this.input.on("pointerdown", () => {
-      this.attackQueued = true;
-    });
+    this.input.on(
+      "pointerdown",
+      (pointer: Phaser.Input.Pointer, currentlyOver: Phaser.GameObjects.GameObject[]) => {
+        if (currentlyOver.length > 0) return;
+        this.attackTarget = null;
+        this.setMoveTarget(this.screenToWorld(pointer.worldX, pointer.worldY));
+      },
+    );
 
     this.statusText = this.add
-      .text(16, 16, "Clear waves to summon the boss | Space/J/click attack | H potion", {
+      .text(16, 16, "Click ground move | Click enemies attack | H potion", {
         color: PALETTE.neutrals.paperLight,
         fontSize: "14px",
       })
@@ -142,6 +209,10 @@ export class DungeonScene extends Phaser.Scene {
   }
 
   private removeEnemy(enemy: Enemy): void {
+    if (this.attackTarget === enemy) {
+      this.attackTarget = null;
+      this.moveTarget = null;
+    }
     enemy.hpBar.destroy();
     enemy.sprite.destroy();
   }
@@ -208,10 +279,11 @@ export class DungeonScene extends Phaser.Scene {
         regenDelayRemaining: 0,
       });
 
+      this.bindEnemyPointer(sprite, this.enemies[this.enemies.length - 1]);
       this.updateEnemyHealthBar(this.enemies[this.enemies.length - 1]);
     }
 
-    this.statusText.setText(`Dungeon wave ${this.wave}`);
+    this.statusText.setText(`Dungeon wave ${this.wave} | Click ground move | Click enemies attack`);
   }
 
   private spawnBoss(): void {
@@ -238,8 +310,9 @@ export class DungeonScene extends Phaser.Scene {
       regenDelayMs: 1900,
       regenDelayRemaining: 0,
     };
+    this.bindEnemyPointer(sprite, this.boss);
     this.updateEnemyHealthBar(this.boss);
-    this.statusText.setText("Boss phase 1: watch telegraphs");
+    this.statusText.setText("Boss phase 1: click boss to attack, keep moving");
   }
 
   private playAttackEffect(x: number, y: number, didHit: boolean): void {
@@ -393,10 +466,22 @@ export class DungeonScene extends Phaser.Scene {
 
   update(_time: number, dt: number): void {
     const speed = dt * 0.0043;
+    const keyboardMoving =
+      this.keys.W.isDown || this.keys.S.isDown || this.keys.A.isDown || this.keys.D.isDown;
+
+    if (keyboardMoving) {
+      this.moveTarget = null;
+      this.attackTarget = null;
+    }
+
     if (this.keys.W.isDown) this.playerWorld.y -= speed;
     if (this.keys.S.isDown) this.playerWorld.y += speed;
     if (this.keys.A.isDown) this.playerWorld.x -= speed;
     if (this.keys.D.isDown) this.playerWorld.x += speed;
+    if (!keyboardMoving) {
+      this.trackAttackTarget();
+      this.moveTowardTarget(speed);
+    }
 
     this.playerWorld.x = Phaser.Math.Clamp(this.playerWorld.x, 1, 14);
     this.playerWorld.y = Phaser.Math.Clamp(this.playerWorld.y, 1, 14);
@@ -418,6 +503,20 @@ export class DungeonScene extends Phaser.Scene {
       this.attackQueued;
     if (attackPressed) {
       this.playerAttack();
+    }
+    if (this.attackTarget) {
+      const playerScreen = worldToScreen(this.playerWorld);
+      const playerX = this.mapOrigin.x + playerScreen.x;
+      const playerY = this.mapOrigin.y + playerScreen.y;
+      const targetDistance = Phaser.Math.Distance.Between(
+        this.attackTarget.sprite.x,
+        this.attackTarget.sprite.y,
+        playerX,
+        playerY,
+      );
+      if (targetDistance < 86 && this.attackCooldown <= 0) {
+        this.playerAttack();
+      }
     }
     this.attackQueued = false;
 
@@ -477,6 +576,7 @@ export class DungeonScene extends Phaser.Scene {
           regenDelayMs: 1200,
           regenDelayRemaining: 0,
         });
+        this.bindEnemyPointer(sprite, this.enemies[this.enemies.length - 1]);
         this.updateEnemyHealthBar(this.enemies[this.enemies.length - 1]);
       }
     }
