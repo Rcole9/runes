@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 
-export type CollectibleKind = "potion" | "loot";
+export type CollectibleKind = "potion" | "loot" | "powerup";
 
 export type CollectibleSpec = {
   kind: CollectibleKind;
@@ -70,5 +70,6 @@ export function wireAutoPickup(
 
     if (kind === "potion") handlers.onPotion(value);
     if (kind === "loot") handlers.onLoot();
+    if (kind === "powerup" && handlers.onPowerup) handlers.onPowerup();
   });
 }

@@ -330,12 +330,12 @@ class MainScene extends Phaser.Scene {
       const offset = (floor - 1) * 18;
       // Keys hover just above the current one-way jump route.
       roundKeys = spawnCollectibles(this, [
-        { kind: "loot", x: 240  + offset, y: 416, texture: "key-brass", scale: 0.48 },
-        { kind: "loot", x: 620  + offset, y: 296, texture: "key-brass", scale: 0.48 },
-        { kind: "loot", x: 1020 + offset, y: 331, texture: "key-brass", scale: 0.48 },
-        { kind: "loot", x: 1210,          y: 266, texture: "key-brass", scale: 0.48 },
-        { kind: "loot", x: 1600 - offset, y: 316, texture: "key-brass", scale: 0.48 },
-        { kind: "loot", x: 2170 - offset, y: 311, texture: "key-brass", scale: 0.48 },
+        { kind: "loot", x: 240  + offset, y: 416, texture: "key-brass", scale: 0.34 },
+        { kind: "loot", x: 620  + offset, y: 296, texture: "key-brass", scale: 0.34 },
+        { kind: "loot", x: 1020 + offset, y: 331, texture: "key-brass", scale: 0.34 },
+        { kind: "loot", x: 1210,          y: 266, texture: "key-brass", scale: 0.34 },
+        { kind: "loot", x: 1600 - offset, y: 316, texture: "key-brass", scale: 0.34 },
+        { kind: "loot", x: 2170 - offset, y: 311, texture: "key-brass", scale: 0.34 },
       ]);
 
       roundKeyOverlap = this.physics.add.overlap(player, roundKeys, (_p, obj) => {
@@ -366,21 +366,35 @@ class MainScene extends Phaser.Scene {
     };
 
     // --- Collectibles (auto-pickup) --- positioned on new platform tiers
+    // Power-ups are rare and scattered
     const pickups = spawnCollectibles(this, [
-      { kind: "potion", x: 430,  y: 356, texture: "potion-health", scale: 0.52, value: 1 },
-      { kind: "potion", x: 1420, y: 376, texture: "potion-health", scale: 0.52, value: 1 },
-      { kind: "loot",   x: 1790, y: 256, texture: "cave-orb",      scale: 0.4,  value: 1 },
+      { kind: "potion", x: 430,  y: 356, texture: "potion-health", scale: 0.42, value: 1 },
+      { kind: "potion", x: 1420, y: 376, texture: "potion-health", scale: 0.42, value: 1 },
+      { kind: "powerup", x: 1790, y: 256, texture: "cave-orb", scale: 0.28, value: 1 },
+      { kind: "powerup", x: 900, y: 180, texture: "cave-crystal", scale: 0.22, value: 1 },
+      { kind: "powerup", x: 200, y: 300, texture: "cave-crystal", scale: 0.22, value: 1 },
     ]);
 
     wireAutoPickup(this, player, pickups, {
       onPotion: (amount) => {
         gameStore.addPotions(amount);
       },
-      onLoot: () => {
-        // deterministic-ish loot for MVP
-        const rng = mulberry32(hashSeed(String(Date.now())));
-        const item = generateLoot(rng, gameStore.getState().dungeonTier);
-        gameStore.grantLoot(item);
+      onLoot: () => {}, // keys are handled elsewhere
+      onPowerup: () => {
+        // Grant a random stat boost as a power-up
+        const statTypes = ["attack", "defense", "maxHp", "healingPower"];
+        const stat = statTypes[Math.floor(Math.random() * statTypes.length)];
+        // You can expand this logic for more interesting effects
+        // For now, just show a banner
+        const cx = this.cameras.main.midPoint.x;
+        const cy = this.cameras.main.midPoint.y;
+        const banner = this.add.text(cx, cy, `POWER UP! +${stat.toUpperCase()}`, {
+          fontSize: "28px",
+          color: "#ffe066",
+          stroke: "#000000",
+          strokeThickness: 6,
+        }).setOrigin(0.5).setScrollFactor(0).setDepth(350);
+        this.time.delayedCall(1200, () => banner.destroy());
       },
     });
 
@@ -403,6 +417,7 @@ class MainScene extends Phaser.Scene {
       return e;
     };
 
+    // Chest reward logic: Only allow looting after boss defeat, and only progress after chest is opened
     const spawnChestReward = () => {
       clearChest();
       chestArt = this.add.image(2200, 548, "chest-boss").setDisplaySize(58, 52).setDepth(100).setTint(0xffd166);
@@ -425,7 +440,8 @@ class MainScene extends Phaser.Scene {
           strokeThickness: 5,
         }).setOrigin(0.5).setScrollFactor(0).setDepth(300);
 
-        this.time.delayedCall(2600, () => {
+        // After looting, progress to next level
+        this.time.delayedCall(1800, () => {
           banner.destroy();
           level += 1;
           floor = 1;
@@ -444,7 +460,7 @@ class MainScene extends Phaser.Scene {
             strokeThickness: 6,
           }).setOrigin(0.5).setScrollFactor(0).setDepth(320);
 
-          this.time.delayedCall(1400, () => {
+          this.time.delayedCall(1200, () => {
             levelBanner.destroy();
           });
         });

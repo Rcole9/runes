@@ -90,6 +90,8 @@ function commit(mutator: () => void): void {
 
 export function initializeStore(): void {
   const loaded = loadGame();
+  // Always start with empty inventory except starter gear
+  state.inventory = [];
   if (loaded) {
     state = {
       ...state,
@@ -99,7 +101,7 @@ export function initializeStore(): void {
       dungeonLevel: loaded.progress.dungeonLevel ?? "medium",
       potions: loaded.progress.potions ?? DEFAULT_STARTER_POTIONS,
       equipment: loaded.equipment,
-      inventory: loaded.inventory,
+      inventory: [], // clear inventory on load
       hp: 9999,
       latestLoot: null,
       classLabel: "DPS",
@@ -167,6 +169,19 @@ export const gameStore = {
   takeDamage(amount: number): void {
     commit(() => {
       state.hp = Math.max(0, state.hp - amount);
+      if (state.hp <= 0) {
+        // On death, clear inventory except starter gear
+        const starterWeapon = getStarterWeapon(state.classId);
+        const starterArmor = getStarterArmor(state.classId);
+        state.inventory = [];
+        state.inventory = ensureInventoryHasItem(state.inventory, starterWeapon);
+        state.inventory = ensureInventoryHasItem(state.inventory, starterArmor);
+        state.equipment = {
+          ...state.equipment,
+          weapon: starterWeapon,
+          armor: starterArmor,
+        };
+      }
     });
   },
   heal(amount: number): void {
