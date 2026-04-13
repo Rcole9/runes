@@ -7,7 +7,6 @@ import { gameStore } from "@/game/store";
 import { generateLoot } from "@/game/loot";
 import { hashSeed, mulberry32 } from "@/game/rng";
 import { spawnCollectibles, wireAutoPickup, AutoPickupHandlers } from "@/game/collectibles";
-import { getStarterWeapon, getStarterArmor } from "@/game/classes";
 import { addPlatform, createPlatformKit } from "@/phaser/platforms";
 import {
   addOneWayCollider,
@@ -367,10 +366,16 @@ class MainScene extends Phaser.Scene {
     };
 
     // --- Collectibles (auto-pickup) --- positioned on new platform tiers
-    // Only potions as pickups, no purple block loot
+    // Smaller, more scattered loot
     const pickups = spawnCollectibles(this, [
       { kind: "potion", x: 430,  y: 356, texture: "potion-health", scale: 0.34, value: 1 },
       { kind: "potion", x: 1420, y: 376, texture: "potion-health", scale: 0.34, value: 1 },
+      { kind: "loot", x: 320, y: 420, texture: "cave-crystal", scale: 0.34 },
+      { kind: "loot", x: 700, y: 310, texture: "cave-crystal", scale: 0.34 },
+      { kind: "loot", x: 1100, y: 340, texture: "cave-crystal", scale: 0.34 },
+      { kind: "loot", x: 1350, y: 270, texture: "cave-crystal", scale: 0.34 },
+      { kind: "loot", x: 1700, y: 320, texture: "cave-crystal", scale: 0.34 },
+      { kind: "loot", x: 2000, y: 400, texture: "cave-crystal", scale: 0.34 },
     ]);
 
     wireAutoPickup(this, player, pickups, {
@@ -622,23 +627,14 @@ class MainScene extends Phaser.Scene {
           spawnChestReward();
           updateHUD();
         } else if (!isBossFloor()) {
-          // Drop weapon or armor for the player's class
-          const classId = gameStore.getState().classId;
-          const isWeapon = Math.random() < 0.5;
-          const loot = isWeapon
-            ? getStarterWeapon(classId)
-            : getStarterArmor(classId);
           const dropped = spawnCollectibles(this, [
-            { kind: "loot", x: ex, y: ey, texture: "key-brass", scale: 0.34 },
+            { kind: "loot", x: ex, y: ey, texture: "cave-crystal", scale: 0.42 },
           ]);
           const handlers = {
             onPotion: (amount: number) => {
               gameStore.addPotions(amount);
             },
-            onLoot: () => {
-              // Grant the class-appropriate loot
-              gameStore.grantLoot(loot);
-            },
+            onLoot: () => {}, // keys are handled elsewhere
           };
           wireAutoPickup(this, player, dropped, handlers);
         }
@@ -696,7 +692,6 @@ class MainScene extends Phaser.Scene {
       });
     });
     // --- End main update loop ---
-  }
   }
 }
 
