@@ -54,7 +54,14 @@ class MainScene extends Phaser.Scene {
       const tile = platforms.create(x, y, "ground") as Phaser.Physics.Arcade.Image;
       tile.setDisplaySize(w, h).refreshBody();
     };
-    makePlatform(1200, 592, 2400, 32); // ground
+    // Ground floor – tileSprite repeats the texture instead of stretching it
+    this.add.tileSprite(0, 576, worldWidth, worldHeight - 576, "ground")
+      .setOrigin(0, 0)
+      .setDepth(5);
+    // Invisible physics body used only for collision
+    const groundBody = platforms.create(1200, 592, "ground") as Phaser.Physics.Arcade.Image;
+    groundBody.setDisplaySize(worldWidth, 32).setAlpha(0).refreshBody();
+
     makePlatform(260,  460, 180);
     makePlatform(560,  380, 180);
     makePlatform(860,  460, 180);
