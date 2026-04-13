@@ -10,7 +10,7 @@ import { spawnCollectibles, wireAutoPickup } from "@/game/collectibles";
 
 // ── game constants ────────────────────────────────────────────────────────────
 const KEYS_TO_UNLOCK  = 5;
-const BOSS_ROUND = 3;
+const FLOORS_PER_LEVEL = 3;
 const ENEMY_CHASE_DIST = 220;
 const ATTACK_RANGE    = 110;
 const ATTACK_COOLDOWN = 300;
@@ -77,7 +77,8 @@ class MainScene extends Phaser.Scene {
     (doorZoneBody.body as Phaser.Physics.Arcade.Body).setAllowGravity(false);
 
     // ── progression state ─────────────────────────────────────────────────────
-    let round = 1;
+    let level = 1;
+    let floor = 1;
     let keysCollected = 0;
     let keysRequired = KEYS_TO_UNLOCK;
     let inTransition = false;
@@ -112,14 +113,16 @@ class MainScene extends Phaser.Scene {
     };
     const hpText  = this.add.text(12,  12, "HP: 3 / 3",            hudStyle).setScrollFactor(0).setDepth(200);
     const keyText = this.add.text(12, 32, `Keys: 0 / ${KEYS_TO_UNLOCK} (unlock door)`, hudStyle).setScrollFactor(0).setDepth(200);
-    const roundText = this.add.text(12, 52, "Area: 1", hudStyle).setScrollFactor(0).setDepth(200);
+    const roundText = this.add.text(12, 52, "Level 1 - Floor 1", hudStyle).setScrollFactor(0).setDepth(200);
     const objectiveText = this.add.text(12, 72, "Objective: Collect keys", hudStyle).setScrollFactor(0).setDepth(200);
+
+    const isBossFloor = () => floor === FLOORS_PER_LEVEL;
 
     const updateHUD = () => {
       playerHP = gameStore.getState().hp;
       hpText.setText(`HP: ${playerHP} / 3`);
-      roundText.setText(`Area: ${round}`);
-      if (round >= BOSS_ROUND) {
+      roundText.setText(`Level ${level} - Floor ${floor}`);
+      if (isBossFloor()) {
         keyText.setText("Keys: N/A (boss area)");
         objectiveText.setText(bossDefeated ? "Objective: Open chest for reward" : "Objective: Defeat the boss");
       } else {
@@ -162,9 +165,9 @@ class MainScene extends Phaser.Scene {
 
     const createRoundKeys = () => {
       clearRoundKeys();
-      if (round >= BOSS_ROUND) return;
+      if (isBossFloor()) return;
 
-      const offset = (round - 1) * 16;
+      const offset = (floor - 1) * 16;
       roundKeys = spawnCollectibles(this, [
         { kind: "loot", x: 260 + offset,  y: 430, texture: "key", scale: 0.1 },
         { kind: "loot", x: 560 + offset,  y: 350, texture: "key", scale: 0.1 },
@@ -261,29 +264,33 @@ class MainScene extends Phaser.Scene {
 
         this.time.delayedCall(2600, () => {
           banner.destroy();
-          round = 1;
+          level += 1;
+          floor = 1;
           keysRequired = KEYS_TO_UNLOCK;
           gameStore.resetHp();
           player.setPosition(80, 540);
-          setDoorLockedVisual();
           clearChest();
           createRoundKeys();
-          enemies.clear(true, true);
-          spawnEnemy(380, 548, "slime");
-          spawnEnemy(650, 548, "orc");
-          spawnEnemy(950, 548, "slime");
-          spawnEnemy(1250, 548, "orc");
-          spawnEnemy(1550, 548, "slime");
-          spawnEnemy(1850, 548, "orc");
-          spawnEnemy(2150, 548, "slime");
+          spawnRoundEnemies();
           updateHUD();
+
+          const levelBanner = this.add.text(cx, cy, `LEVEL ${level} BEGINS`, {
+            fontSize: "40px",
+            color: "#9af6dc",
+            stroke: "#000000",
+            strokeThickness: 6,
+          }).setOrigin(0.5).setScrollFactor(0).setDepth(320);
+
+          this.time.delayedCall(1400, () => {
+            levelBanner.destroy();
+          });
         });
       });
     };
 
     const spawnRoundEnemies = () => {
       enemies.clear(true, true);
-      if (round >= BOSS_ROUND) {
+      if (isBossFloor()) {
         spawnEnemy(2000, 534, "orc", true);
         setDoorLockedVisual();
       } else {
@@ -304,18 +311,18 @@ class MainScene extends Phaser.Scene {
 
     // ── door: advance area when unlocked ─────────────────────────────────────
     this.physics.add.overlap(player, doorZoneBody, () => {
-      if (round >= BOSS_ROUND || keysCollected < keysRequired || inTransition) return;
+      if (isBossFloor() || keysCollected < keysRequired || inTransition) return;
       inTransition = true;
       this.physics.pause();
       const cx = this.cameras.main.midPoint.x;
       const cy = this.cameras.main.midPoint.y;
-      const banner = this.add.text(cx, cy, `AREA ${round} CLEARED`, {
+      const banner = this.add.text(cx, cy, `FLOOR ${floor} CLEARED`, {
         fontSize: "34px", color: "#ffd166",
         stroke: "#000000", strokeThickness: 5,
       }).setOrigin(0.5).setScrollFactor(0).setDepth(300);
       this.time.delayedCall(2600, () => {
         banner.destroy();
-        round += 1;
+        floor += 1;
         keysRequired = KEYS_TO_UNLOCK;
         keysCollected = 0;
         clearChest();
@@ -441,7 +448,7 @@ class MainScene extends Phaser.Scene {
           bossDefeated = true;
           spawnChestReward();
           updateHUD();
-        } else if (round < BOSS_ROUND) {
+        } else if (!isBossFloor()) {
           const dropped = spawnCollectibles(this, [
             { kind: "loot", x: ex, y: ey, texture: "key", scale: 0.1 },
           ]);
@@ -463,8 +470,8 @@ class MainScene extends Phaser.Scene {
       player.y = Math.round(player.y);
 
       // movement
-      const goLeft  = cursors.left.isDown  || keys.A.isDown;
-      const goRight = cursors.right.isDown || keys.D.isDown;
+      const goLeft  = cursors.left.isDown  || keys.D.isDown;
+      const goRight = cursors.right.isDown || keys.A.isDown;
       if (goLeft)       { player.setVelocityX(-165); player.setFlipX(true); }
       else if (goRight) { player.setVelocityX(165);  player.setFlipX(false); }
       else              { player.setVelocityX(0); }
