@@ -366,9 +366,16 @@ class MainScene extends Phaser.Scene {
     };
 
     // --- Collectibles (auto-pickup) --- positioned on new platform tiers
+    // Smaller, more scattered loot
     const pickups = spawnCollectibles(this, [
-      { kind: "potion", x: 430,  y: 356, texture: "potion-health", scale: 0.42, value: 1 },
-      { kind: "potion", x: 1420, y: 376, texture: "potion-health", scale: 0.42, value: 1 },
+      { kind: "potion", x: 430,  y: 356, texture: "potion-health", scale: 0.34, value: 1 },
+      { kind: "potion", x: 1420, y: 376, texture: "potion-health", scale: 0.34, value: 1 },
+      { kind: "loot", x: 320, y: 420, texture: "cave-crystal", scale: 0.34 },
+      { kind: "loot", x: 700, y: 310, texture: "cave-crystal", scale: 0.34 },
+      { kind: "loot", x: 1100, y: 340, texture: "cave-crystal", scale: 0.34 },
+      { kind: "loot", x: 1350, y: 270, texture: "cave-crystal", scale: 0.34 },
+      { kind: "loot", x: 1700, y: 320, texture: "cave-crystal", scale: 0.34 },
+      { kind: "loot", x: 2000, y: 400, texture: "cave-crystal", scale: 0.34 },
     ]);
 
     wireAutoPickup(this, player, pickups, {
@@ -536,7 +543,11 @@ class MainScene extends Phaser.Scene {
 
     // ── input ────────────────────────────────────────────────────────────────
     const cursors = this.input.keyboard!.createCursorKeys();
-    const keys    = this.input.keyboard!.addKeys("A,D,SPACE") as Record<string, Phaser.Input.Keyboard.Key>;
+    const keys = this.input.keyboard!.addKeys({
+      left: Phaser.Input.Keyboard.KeyCodes.A,
+      right: Phaser.Input.Keyboard.KeyCodes.D,
+      space: Phaser.Input.Keyboard.KeyCodes.SPACE,
+    }) as Record<string, Phaser.Input.Keyboard.Key>;
     const pointer = this.input.activePointer;
     let wasRightDown = false;
     let lastAttackAt = 0;
@@ -635,8 +646,15 @@ class MainScene extends Phaser.Scene {
     this.events.on('update', (time: number, delta: number) => {
       const body = player.body as Phaser.Physics.Arcade.Body;
       if (body.touching.down || body.blocked.down) lastGroundedAt = this.time.now;
-      if (Phaser.Input.Keyboard.JustDown(keys.SPACE)) jump();
+      if (Phaser.Input.Keyboard.JustDown(keys.space)) jump();
       tryConsumeJump();
+
+      // Movement: A/D or arrows
+      let move = 0;
+      if (cursors.left.isDown || keys.left.isDown) move -= 1;
+      if (cursors.right.isDown || keys.right.isDown) move += 1;
+      player.setVelocityX(move * 180);
+      player.setFlipX(move < 0);
 
       const rightNow = pointer.rightButtonDown();
       if (rightNow && !wasRightDown) attack();
@@ -674,8 +692,8 @@ class MainScene extends Phaser.Scene {
       });
     });
     // --- End main update loop ---
-  } // End of create()
-} // End of MainScene class
+  }
+}
 
 export default function PhaserGame() {
   const hostRef = useRef<HTMLDivElement | null>(null);
