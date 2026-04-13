@@ -99,7 +99,7 @@ export function initializeStore(): void {
       level: loaded.progress.level,
       dungeonTier: loaded.progress.dungeonTier,
       dungeonLevel: loaded.progress.dungeonLevel ?? "medium",
-      potions: loaded.progress.potions ?? DEFAULT_STARTER_POTIONS,
+      potions: DEFAULT_STARTER_POTIONS,
       equipment: loaded.equipment,
       inventory: [], // clear inventory on load
       hp: 9999,
@@ -108,6 +108,8 @@ export function initializeStore(): void {
       powerLevel: loaded.progress.powerLevel,
       maxHp: 140,
     };
+  } else {
+    state.potions = DEFAULT_STARTER_POTIONS;
   }
 
   const starterWeapon = getStarterWeapon(state.classId);
@@ -129,6 +131,7 @@ export function initializeStore(): void {
 
   recalcState();
   state.hp = state.maxHp;
+  state.potions = DEFAULT_STARTER_POTIONS;
   state = {
     ...state,
     equipment: { ...state.equipment },
@@ -170,7 +173,7 @@ export const gameStore = {
     commit(() => {
       state.hp = Math.max(0, state.hp - amount);
       if (state.hp <= 0) {
-        // On death, clear inventory except starter gear
+        // On death, clear inventory except starter gear and reset potions
         const starterWeapon = getStarterWeapon(state.classId);
         const starterArmor = getStarterArmor(state.classId);
         state.inventory = [];
@@ -181,6 +184,7 @@ export const gameStore = {
           weapon: starterWeapon,
           armor: starterArmor,
         };
+        state.potions = DEFAULT_STARTER_POTIONS;
       }
     });
   },
