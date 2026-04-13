@@ -114,11 +114,17 @@ class MainScene extends Phaser.Scene {
       { key: "cave-props-1", cropX: 624, cropY: 366, cropW: 156, cropH: 84, topInset: 8 },
     ] as const;
 
-    const drawFloatingPlatform = (x: number, y: number, w: number, h = 24, variant = 0) => {
+    const drawFloatingPlatform = (x: number, y: number, w: number, h = 34, variant = 0) => {
       const art = platformArt[variant % platformArt.length];
-      const scale = Math.max(0.72, w / art.cropW);
+      const scale = Math.max(1, w / art.cropW);
       const artWidth = art.cropW * scale;
       const left = x - artWidth / 2;
+
+      const slab = this.add.graphics().setDepth(10);
+      slab.fillStyle(0x2a1f20, 0.95);
+      slab.fillRoundedRect(x - w / 2, y + 4, w, h - 7, 6);
+      slab.fillStyle(0x5f4844, 0.75);
+      slab.fillRoundedRect(x - w / 2 + 4, y + 6, w - 8, 6, 4);
 
       const shadow = this.add.ellipse(x, y + h + 11, Math.max(34, w * 0.64), 11, 0x090708, 0.34)
         .setDepth(8);
@@ -140,7 +146,7 @@ class MainScene extends Phaser.Scene {
       lip.fillStyle(0xc6a08d, 0.22);
       lip.fillRect(x - w / 2 + 10, y + 1, w - 20, 2);
 
-      return [shadow, artDeco, lip] as Phaser.GameObjects.GameObject[];
+      return [shadow, slab, artDeco, lip] as Phaser.GameObjects.GameObject[];
     };
 
     // Background set dressing from the full cave PNG sheets.
@@ -208,28 +214,28 @@ class MainScene extends Phaser.Scene {
     const bossOneWays = createOneWayGroup(this);
 
     // One-way ledges
-    drawFloatingPlatform(240, 450, 150, 24, 0);
-    addOneWayPlatform(this, oneWays, { x: 240, y: 450, w: 150 });
-    drawFloatingPlatform(430, 390, 120, 24, 1);
-    addOneWayPlatform(this, oneWays, { x: 430, y: 390, w: 120 });
-    drawFloatingPlatform(620, 330, 150, 24, 2);
-    addOneWayPlatform(this, oneWays, { x: 620, y: 330, w: 150 });
-    drawFloatingPlatform(820, 435, 130, 24, 3);
-    addOneWayPlatform(this, oneWays, { x: 820, y: 435, w: 130 });
-    drawFloatingPlatform(1020, 365, 140, 24, 0);
-    addOneWayPlatform(this, oneWays, { x: 1020, y: 365, w: 140 });
-    drawFloatingPlatform(1210, 300, 160, 24, 1);
-    addOneWayPlatform(this, oneWays, { x: 1210, y: 300, w: 160 });
-    drawFloatingPlatform(1420, 410, 130, 24, 2);
-    addOneWayPlatform(this, oneWays, { x: 1420, y: 410, w: 130 });
-    drawFloatingPlatform(1600, 350, 140, 24, 3);
-    addOneWayPlatform(this, oneWays, { x: 1600, y: 350, w: 140 });
-    drawFloatingPlatform(1790, 290, 150, 24, 0);
-    addOneWayPlatform(this, oneWays, { x: 1790, y: 290, w: 150 });
-    drawFloatingPlatform(1980, 405, 130, 24, 1);
-    addOneWayPlatform(this, oneWays, { x: 1980, y: 405, w: 130 });
-    drawFloatingPlatform(2170, 345, 120, 24, 2);
-    addOneWayPlatform(this, oneWays, { x: 2170, y: 345, w: 120 });
+    drawFloatingPlatform(240, 450, 230, 34, 0);
+    addOneWayPlatform(this, oneWays, { x: 240, y: 450, w: 230, thickness: 30 });
+    drawFloatingPlatform(430, 390, 210, 34, 1);
+    addOneWayPlatform(this, oneWays, { x: 430, y: 390, w: 210, thickness: 30 });
+    drawFloatingPlatform(620, 330, 240, 34, 2);
+    addOneWayPlatform(this, oneWays, { x: 620, y: 330, w: 240, thickness: 30 });
+    drawFloatingPlatform(820, 435, 220, 34, 3);
+    addOneWayPlatform(this, oneWays, { x: 820, y: 435, w: 220, thickness: 30 });
+    drawFloatingPlatform(1020, 365, 230, 34, 0);
+    addOneWayPlatform(this, oneWays, { x: 1020, y: 365, w: 230, thickness: 30 });
+    drawFloatingPlatform(1210, 300, 260, 34, 1);
+    addOneWayPlatform(this, oneWays, { x: 1210, y: 300, w: 260, thickness: 30 });
+    drawFloatingPlatform(1420, 410, 220, 34, 2);
+    addOneWayPlatform(this, oneWays, { x: 1420, y: 410, w: 220, thickness: 30 });
+    drawFloatingPlatform(1600, 350, 230, 34, 3);
+    addOneWayPlatform(this, oneWays, { x: 1600, y: 350, w: 230, thickness: 30 });
+    drawFloatingPlatform(1790, 290, 250, 34, 0);
+    addOneWayPlatform(this, oneWays, { x: 1790, y: 290, w: 250, thickness: 30 });
+    drawFloatingPlatform(1980, 405, 220, 34, 1);
+    addOneWayPlatform(this, oneWays, { x: 1980, y: 405, w: 220, thickness: 30 });
+    drawFloatingPlatform(2170, 345, 210, 34, 2);
+    addOneWayPlatform(this, oneWays, { x: 2170, y: 345, w: 210, thickness: 30 });
 
     addOneWayCollider(this, player, oneWays);
     addOneWayCollider(this, player, bossOneWays);
@@ -247,17 +253,17 @@ class MainScene extends Phaser.Scene {
     const buildBossLayout = () => {
       if (bossLedgeBodies.length > 0) return;
       const addBossLedge = (x: number, y: number, w: number, variant: number) => {
-        bossLedgeArt.push(...drawFloatingPlatform(x, y, w, 24, variant));
-        const body = addOneWayPlatform(this, bossOneWays, { x, y, w });
+        bossLedgeArt.push(...drawFloatingPlatform(x, y, w, 34, variant));
+        const body = addOneWayPlatform(this, bossOneWays, { x, y, w, thickness: 30 });
         bossLedgeBodies.push(body);
       };
 
       // Distinct floor-3 arena near the boss door.
-      addBossLedge(1500, 470, 180, 1);
-      addBossLedge(1700, 410, 160, 2);
-      addBossLedge(1880, 350, 170, 3);
-      addBossLedge(2050, 300, 150, 0);
-      addBossLedge(2220, 360, 140, 2);
+      addBossLedge(1500, 470, 240, 1);
+      addBossLedge(1700, 410, 220, 2);
+      addBossLedge(1880, 350, 230, 3);
+      addBossLedge(2050, 300, 210, 0);
+      addBossLedge(2220, 360, 200, 2);
     };
 
     // ── HUD ──────────────────────────────────────────────────────────────────
