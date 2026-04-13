@@ -25,10 +25,11 @@ class MainScene extends Phaser.Scene {
 
   preload() {
     this.load.pack("public-pack", "/phaser-pack.json");
-    this.load.image("sky",         "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-altar-holy-light-divine-healing-golden_20260217_223403.png");
-    this.load.image("ground",     "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-stone-floor-tile-bloody-stained-dark_20260217_213627.png");
-    this.load.image("plat-stone",  "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-stone-wall-tile-gray-brick-pattern_20260217_213642.png");
-    this.load.image("plat-cobble", "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-cobblestone-floor-tile-uneven-rough_20260217_214245.png");
+    this.load.image("sky",    "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-altar-holy-light-divine-healing-golden_20260217_223403.png");
+    this.load.image("ground", "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-stone-floor-tile-bloody-stained-dark_20260217_213627.png");
+    this.load.spritesheet("dts", "/tiles/2D Dungeon Platformer Tileset/dungeontileset.png", {
+      frameWidth: 16, frameHeight: 16,
+    });
     this.load.image("key",    "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-key-golden-boss-door-master-ornate_20260217_220007.png");
     this.load.image("orc",    "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-orc-large-green-axe-warrior-brute_20260217_222727.png");
     this.load.image("slime",  "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-slime-green-blob-bouncing-acidic-basic_20260217_222643.png");
@@ -52,54 +53,77 @@ class MainScene extends Phaser.Scene {
 
     // ── platforms ────────────────────────────────────────────────────────────
     const platforms = this.physics.add.staticGroup();
-    const PLAT_H = 22;
+    const TILE = 16;
+    const PLAT_VH = TILE * 2; // 32px visual: top row + body row
 
-    // Tiled platform helper — visual tileSprite + invisible physics body
-    const makeP = (x: number, y: number, w: number, tex = "ground") => {
-      this.add.tileSprite(x, y, w, PLAT_H, tex).setOrigin(0, 0).setDepth(10);
-      const body = platforms.create(x + w / 2, y + PLAT_H / 2, tex) as Phaser.Physics.Arcade.Image;
-      body.setDisplaySize(w, PLAT_H).setAlpha(0).refreshBody();
+    // Per-tier top-row frame triplets [left-cap, mid, right-cap]
+    // Row 0 frames (0-2): platform surface tiles
+    // Row 1 frames (12-14): stone body tiles
+    const TIER_TINT: Record<number, number> = { 1: 0xffffff, 2: 0xffeedd, 3: 0xddeeff };
+
+    const makeP = (px: number, py: number, w: number, tier: 1 | 2 | 3) => {
+      const cols = Math.max(2, Math.round(w / TILE));
+      const rw   = cols * TILE;
+      const rt   = this.add.renderTexture(px, py, rw, PLAT_VH).setOrigin(0, 0).setDepth(10);
+      const tint = TIER_TINT[tier];
+      for (let c = 0; c < cols; c++) {
+        const left  = c === 0;
+        const right = c === cols - 1;
+        // top surface row (row 0 of tileset)
+        rt.drawFrame("dts", left ? 0 : right ? 2 : 1,    c * TILE,      0, 1, tint);
+        // stone body row (row 1 of tileset)
+        rt.drawFrame("dts", left ? 12 : right ? 14 : 13, c * TILE, TILE, 1, tint);
+      }
+      // Physics body covers only the top TILE px (player lands on surface)
+      const body = platforms.create(px + rw / 2, py + TILE / 2, "ground") as Phaser.Physics.Arcade.Image;
+      body.setDisplaySize(rw, TILE).setAlpha(0).refreshBody();
     };
 
-    // Ground floor
+    // Ground floor tileSprite ("ground" texture is POT-safe)
     this.add.tileSprite(0, 576, worldWidth, worldHeight - 576, "ground")
       .setOrigin(0, 0).setDepth(5);
     const groundBody = platforms.create(1200, 592, "ground") as Phaser.Physics.Arcade.Image;
     groundBody.setDisplaySize(worldWidth, 32).setAlpha(0).refreshBody();
 
     // ── Metroid-style multi-tier layout ──────────────────────────────────────
-    //  F3 y=308  ··[========]·········[========]···[=========]··[======]··[========]
-    //  F2 y=404  ···[======]···[======]···[====]··[======]·····[=========]···[======]
-    //  F1 y=500  [========]··[====]···[====]···[======]···[====]···[=======]
-    //  GND y=576 ═══════════════════════════════════════════════════════════════════
+    //  F3 y=308  high cobble shelves  (cool blue tint)
+    //  F2 y=404  mid stone platforms  (warm torch tint)
+    //  F1 y=500  low stone ledges     (natural grey)
+    //  GND y=576 ════════════════════════════════════
 
-    // F1 — low stone ledges
-    makeP(60,   500, 220, "ground");
-    makeP(540,  500, 140, "ground");
-    makeP(900,  500, 120, "ground");
-    makeP(1160, 500, 160, "ground");
-    makeP(1560, 500, 120, "ground");
-    makeP(1840, 500, 200, "ground");
+    // F1 — low ledges
+    makeP(60,   500, 224, 1);
+    makeP(544,  500, 144, 1);
+    makeP(896,  500, 128, 1);
+    makeP(1152, 500, 160, 1);
+    makeP(1552, 500, 128, 1);
+    makeP(1840, 500, 208, 1);
 
-    // F2 — mid stone platforms
-    makeP(220,  404, 200, "plat-stone");
-    makeP(640,  404, 200, "plat-stone");
-    makeP(1020, 404, 160, "plat-stone");
-    makeP(1420, 404, 180, "plat-stone");
-    makeP(1700, 404, 260, "plat-stone");
-    makeP(2020, 404, 200, "plat-stone");
+    // F2 — mid platforms
+    makeP(224,  404, 208, 2);
+    makeP(640,  404, 208, 2);
+    makeP(1024, 404, 160, 2);
+    makeP(1424, 404, 176, 2);
+    makeP(1696, 404, 256, 2);
+    makeP(2016, 404, 208, 2);
 
-    // F3 — high cobblestone shelves
-    makeP(380,  308, 200, "plat-cobble");
-    makeP(780,  308, 200, "plat-cobble");
-    makeP(1160, 308, 240, "plat-cobble");
-    makeP(1580, 308, 180, "plat-cobble");
-    makeP(1900, 308, 220, "plat-cobble");
+    // F3 — high shelves
+    makeP(384,  308, 208, 3);
+    makeP(784,  308, 208, 3);
+    makeP(1152, 308, 240, 3);
+    makeP(1584, 308, 176, 3);
+    makeP(1904, 308, 224, 3);
 
-    // Decorative vertical stone columns (atmosphere, no physics)
-    [480, 860, 1360, 1760, 2120].forEach(cx => {
-      this.add.tileSprite(cx - 8, 180, 16, 396, "plat-stone")
-        .setOrigin(0, 0).setDepth(3).setAlpha(0.45);
+    // Decorative stone columns (tileset body tiles tiled vertically)
+    [480, 864, 1360, 1760, 2128].forEach(cx => {
+      const colH = 368;
+      const colCols = 1;
+      const colRt = this.add.renderTexture(cx - 8, 208, colCols * TILE, colH)
+        .setOrigin(0, 0).setDepth(3).setAlpha(0.5);
+      const rows = Math.ceil(colH / TILE);
+      for (let r = 0; r < rows; r++) {
+        colRt.drawFrame("dts", r === 0 ? 0 : 12, 0, r * TILE, 1, 0x9aacbf);
+      }
     });
 
     // ── door (locked until KEYS_TO_UNLOCK keys are collected) ────────────────
