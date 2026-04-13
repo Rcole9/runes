@@ -470,8 +470,8 @@ class MainScene extends Phaser.Scene {
       player.y = Math.round(player.y);
 
       // movement
-      const goLeft  = cursors.left.isDown  || keys.D.isDown;
-      const goRight = cursors.right.isDown || keys.A.isDown;
+      const goLeft  = cursors.left.isDown  || keys.A.isDown;
+      const goRight = cursors.right.isDown || keys.D.isDown;
       if (goLeft)       { player.setVelocityX(-165); player.setFlipX(true); }
       else if (goRight) { player.setVelocityX(165);  player.setFlipX(false); }
       else              { player.setVelocityX(0); }
