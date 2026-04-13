@@ -34,9 +34,20 @@ class MainScene extends Phaser.Scene {
     this.load.image("sky",    "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-altar-holy-light-divine-healing-golden_20260217_223403.png");
     this.load.image("ground", "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-stone-floor-tile-bloody-stained-dark_20260217_213627.png");
     this.load.image("cave-bg-1", "/assets/tiles/pixel-fantasy-caves/backgrounds/background1.png");
+    this.load.image("cave-bg-2", "/assets/tiles/pixel-fantasy-caves/backgrounds/background2.png");
     this.load.image("cave-bg-3", "/assets/tiles/pixel-fantasy-caves/backgrounds/background3.png");
     this.load.image("cave-bg-4", "/assets/tiles/pixel-fantasy-caves/backgrounds/background4a.png");
+    this.load.image("cave-bg-4b", "/assets/tiles/pixel-fantasy-caves/backgrounds/background4b.png");
+    this.load.image("cave-main", "/assets/tiles/pixel-fantasy-caves/tilesets/mainlev_build.png");
+    this.load.image("cave-props-1", "/assets/tiles/pixel-fantasy-caves/props/props1.png");
+    this.load.image("cave-props-2", "/assets/tiles/pixel-fantasy-caves/props/props2.png");
     this.load.image("key",    "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-key-golden-boss-door-master-ornate_20260217_220007.png");
+    this.load.image("key-brass", "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-key-brass-small-standard-door-unlock_20260217_215915.png");
+    this.load.image("potion-health", "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-potion-health-red-glass-bottle-cork_20260217_221732.png");
+    this.load.image("cave-orb", "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-magic-orb-floating-light-source-hovering_20260217_220642.png");
+    this.load.image("cave-crystal", "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-crystal-floor-tile-glowing-purple-vein_20260217_215416.png");
+    this.load.image("chest-small", "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-chest-wooden-small-basic-loot-closed_20260217_220713.png");
+    this.load.image("chest-boss", "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-chest-large-ornate-golden-locked-boss_20260217_220826.png");
     this.load.image("orc",    "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-orc-large-green-axe-warrior-brute_20260217_222727.png");
     this.load.image("slime",  "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-slime-green-blob-bouncing-acidic-basic_20260217_222643.png");
     this.load.image("door",   "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-door-boss-ornate-large-menacing-skull_20260217_215806.png");
@@ -67,31 +78,81 @@ class MainScene extends Phaser.Scene {
     };
 
     stampLayer("cave-bg-1", 0, -40, 1);
+    stampLayer("cave-bg-2", 0, -36, 0.72);
     stampLayer("cave-bg-3", 0, -30, 0.95);
     stampLayer("cave-bg-4", 140, -20, 0.92);
+    stampLayer("cave-bg-4b", 150, -16, 0.62);
 
     // ── platforms ────────────────────────────────────────────────────────────
     const kit = createPlatformKit(this);
 
-    const drawFloatingPlatform = (x: number, y: number, w: number, h = 24) => {
-      const left = x - w / 2;
-      const face = 0x5e4744;
-      const edge = 0x2b2023;
-      const shine = 0x9d7d76;
-      const shadow = 0x120f12;
-      const g = this.add.graphics().setDepth(10);
-      g.fillStyle(shadow, 0.4); g.fillRect(left + 10, y + h - 1, w - 20, 6);
-      g.fillStyle(shine, 0.55); g.fillRect(left, y, w, 3);
-      g.fillStyle(face, 1); g.fillRect(left, y + 3, w, h - 6);
-      g.fillStyle(edge, 1); g.fillRect(left, y + h - 3, w, 3);
-      g.fillStyle(edge, 0.7);
-      g.fillRect(left, y + 3, 2, h - 6);
-      g.fillRect(left + w - 2, y + 3, 2, h - 6);
-      g.lineStyle(1, edge, 0.45);
-      for (let bx = left + 32; bx < left + w - 4; bx += 32) {
-        g.lineBetween(bx, y + 3, bx, y + h - 4);
-      }
+    const placeSheetDeco = (
+      key: string,
+      cropX: number,
+      cropY: number,
+      cropW: number,
+      cropH: number,
+      x: number,
+      y: number,
+      depth: number,
+      alpha: number,
+      scale = 1,
+    ) => {
+      const deco = this.add.image(x, y, key)
+        .setOrigin(0, 0)
+        .setDepth(depth)
+        .setAlpha(alpha);
+      deco.setCrop(cropX, cropY, cropW, cropH);
+      deco.setDisplaySize(cropW * scale, cropH * scale);
+      return deco;
     };
+
+    const platformArt = [
+      { key: "cave-props-1", cropX: 176, cropY: 32, cropW: 160, cropH: 88, topInset: 9 },
+      { key: "cave-props-1", cropX: 914, cropY: 34, cropW: 194, cropH: 90, topInset: 10 },
+      { key: "cave-props-1", cropX: 796, cropY: 368, cropW: 188, cropH: 86, topInset: 9 },
+      { key: "cave-props-1", cropX: 624, cropY: 366, cropW: 156, cropH: 84, topInset: 8 },
+    ] as const;
+
+    const drawFloatingPlatform = (x: number, y: number, w: number, h = 24, variant = 0) => {
+      const art = platformArt[variant % platformArt.length];
+      const scale = Math.max(0.72, w / art.cropW);
+      const artWidth = art.cropW * scale;
+      const left = x - artWidth / 2;
+
+      const shadow = this.add.ellipse(x, y + h + 11, Math.max(34, w * 0.64), 11, 0x090708, 0.34)
+        .setDepth(8);
+
+      const artDeco = placeSheetDeco(
+        art.key,
+        art.cropX,
+        art.cropY,
+        art.cropW,
+        art.cropH,
+        left,
+        y - art.topInset * scale,
+        11,
+        0.98,
+        scale,
+      );
+
+      const lip = this.add.graphics().setDepth(12);
+      lip.fillStyle(0xc6a08d, 0.22);
+      lip.fillRect(x - w / 2 + 10, y + 1, w - 20, 2);
+
+      return [shadow, artDeco, lip] as Phaser.GameObjects.GameObject[];
+    };
+
+    // Background set dressing from the full cave PNG sheets.
+    placeSheetDeco("cave-main", 12, 20, 690, 520, 20, 80, -24, 0.2, 0.95);
+    placeSheetDeco("cave-main", 14, 574, 464, 436, 500, 368, -22, 0.24, 0.92);
+    placeSheetDeco("cave-main", 494, 658, 438, 218, 1780, 404, -22, 0.28, 0.92);
+    placeSheetDeco("cave-props-1", 20, 178, 124, 320, 60, 10, -14, 0.4, 0.92);
+    placeSheetDeco("cave-props-1", 1110, 304, 120, 292, 2200, 18, -14, 0.42, 0.92);
+    placeSheetDeco("cave-props-1", 550, 600, 300, 108, 1030, 180, -12, 0.32, 0.9);
+    placeSheetDeco("cave-props-2", 34, 500, 330, 242, 120, 382, 7, 0.72, 0.9);
+    placeSheetDeco("cave-props-2", 604, 438, 308, 174, 1470, 432, 7, 0.72, 0.94);
+    placeSheetDeco("cave-props-2", 0, 864, 370, 142, 1830, 470, 7, 0.82, 0.95);
 
     // Ground (one big floor)
     const caveFloor = this.add.graphics().setDepth(4);
@@ -144,14 +205,60 @@ class MainScene extends Phaser.Scene {
     this.physics.add.collider(player, kit.solids);
 
     const oneWays = createOneWayGroup(this);
+    const bossOneWays = createOneWayGroup(this);
 
-    // Example one-way ledges
-    drawFloatingPlatform(560, 330, 140);
-    addOneWayPlatform(this, oneWays, { x: 560, y: 330, w: 140 });
-    drawFloatingPlatform(1460, 410, 140);
-    addOneWayPlatform(this, oneWays, { x: 1460, y: 410, w: 140 });
+    // One-way ledges
+    drawFloatingPlatform(240, 450, 150, 24, 0);
+    addOneWayPlatform(this, oneWays, { x: 240, y: 450, w: 150 });
+    drawFloatingPlatform(430, 390, 120, 24, 1);
+    addOneWayPlatform(this, oneWays, { x: 430, y: 390, w: 120 });
+    drawFloatingPlatform(620, 330, 150, 24, 2);
+    addOneWayPlatform(this, oneWays, { x: 620, y: 330, w: 150 });
+    drawFloatingPlatform(820, 435, 130, 24, 3);
+    addOneWayPlatform(this, oneWays, { x: 820, y: 435, w: 130 });
+    drawFloatingPlatform(1020, 365, 140, 24, 0);
+    addOneWayPlatform(this, oneWays, { x: 1020, y: 365, w: 140 });
+    drawFloatingPlatform(1210, 300, 160, 24, 1);
+    addOneWayPlatform(this, oneWays, { x: 1210, y: 300, w: 160 });
+    drawFloatingPlatform(1420, 410, 130, 24, 2);
+    addOneWayPlatform(this, oneWays, { x: 1420, y: 410, w: 130 });
+    drawFloatingPlatform(1600, 350, 140, 24, 3);
+    addOneWayPlatform(this, oneWays, { x: 1600, y: 350, w: 140 });
+    drawFloatingPlatform(1790, 290, 150, 24, 0);
+    addOneWayPlatform(this, oneWays, { x: 1790, y: 290, w: 150 });
+    drawFloatingPlatform(1980, 405, 130, 24, 1);
+    addOneWayPlatform(this, oneWays, { x: 1980, y: 405, w: 130 });
+    drawFloatingPlatform(2170, 345, 120, 24, 2);
+    addOneWayPlatform(this, oneWays, { x: 2170, y: 345, w: 120 });
 
     addOneWayCollider(this, player, oneWays);
+    addOneWayCollider(this, player, bossOneWays);
+
+    let bossLedgeArt: Phaser.GameObjects.GameObject[] = [];
+    let bossLedgeBodies: Phaser.Physics.Arcade.Image[] = [];
+
+    const clearBossLayout = () => {
+      for (const deco of bossLedgeArt) deco.destroy();
+      for (const body of bossLedgeBodies) body.destroy();
+      bossLedgeArt = [];
+      bossLedgeBodies = [];
+    };
+
+    const buildBossLayout = () => {
+      if (bossLedgeBodies.length > 0) return;
+      const addBossLedge = (x: number, y: number, w: number, variant: number) => {
+        bossLedgeArt.push(...drawFloatingPlatform(x, y, w, 24, variant));
+        const body = addOneWayPlatform(this, bossOneWays, { x, y, w });
+        bossLedgeBodies.push(body);
+      };
+
+      // Distinct floor-3 arena near the boss door.
+      addBossLedge(1500, 470, 180, 1);
+      addBossLedge(1700, 410, 160, 2);
+      addBossLedge(1880, 350, 170, 3);
+      addBossLedge(2050, 300, 150, 0);
+      addBossLedge(2220, 360, 140, 2);
+    };
 
     // ── HUD ──────────────────────────────────────────────────────────────────
     const hudStyle = {
@@ -214,16 +321,15 @@ class MainScene extends Phaser.Scene {
       clearRoundKeys();
       if (isBossFloor()) return;
 
-      const offset = (floor - 1) * 16;
-      // Keys hover 30px above their platform surface
-      // F1 top=500 → y=468 | F2 top=404 → y=372 | F3 top=308 → y=276
+      const offset = (floor - 1) * 18;
+      // Keys hover just above the current one-way jump route.
       roundKeys = spawnCollectibles(this, [
-        { kind: "loot", x: 160  + offset, y: 468, texture: "key", scale: 0.1 }, // F1 left
-        { kind: "loot", x: 716  + offset, y: 372, texture: "key", scale: 0.1 }, // F2 mid-left
-        { kind: "loot", x: 876  + offset, y: 276, texture: "key", scale: 0.1 }, // F3 climb zone
-        { kind: "loot", x: 1240,          y: 276, texture: "key", scale: 0.1 }, // F3 mid
-        { kind: "loot", x: 1494 - offset, y: 372, texture: "key", scale: 0.1 }, // F2 section 4
-        { kind: "loot", x: 1930 - offset, y: 276, texture: "key", scale: 0.1 }, // F3 right
+        { kind: "loot", x: 240  + offset, y: 416, texture: "key-brass", scale: 0.48 },
+        { kind: "loot", x: 620  + offset, y: 296, texture: "key-brass", scale: 0.48 },
+        { kind: "loot", x: 1020 + offset, y: 331, texture: "key-brass", scale: 0.48 },
+        { kind: "loot", x: 1210,          y: 266, texture: "key-brass", scale: 0.48 },
+        { kind: "loot", x: 1600 - offset, y: 316, texture: "key-brass", scale: 0.48 },
+        { kind: "loot", x: 2170 - offset, y: 311, texture: "key-brass", scale: 0.48 },
       ]);
 
       roundKeyOverlap = this.physics.add.overlap(player, roundKeys, (_p, obj) => {
@@ -255,9 +361,9 @@ class MainScene extends Phaser.Scene {
 
     // --- Collectibles (auto-pickup) --- positioned on new platform tiers
     const pickups = spawnCollectibles(this, [
-      { kind: "potion", x: 380,  y: 372, texture: "key",   scale: 0.9, value: 1 }, // F2 left
-      { kind: "potion", x: 1490, y: 372, texture: "key",   scale: 0.9, value: 1 }, // F2 sect-4
-      { kind: "loot",   x: 1640, y: 276, texture: "slash", scale: 0.7, value: 1 }, // F3 right
+      { kind: "potion", x: 430,  y: 356, texture: "potion-health", scale: 0.52, value: 1 },
+      { kind: "potion", x: 1420, y: 376, texture: "potion-health", scale: 0.52, value: 1 },
+      { kind: "loot",   x: 1790, y: 256, texture: "cave-orb",      scale: 0.4,  value: 1 },
     ]);
 
     wireAutoPickup(this, player, pickups, {
@@ -286,13 +392,15 @@ class MainScene extends Phaser.Scene {
         patrolTimer: Phaser.Math.Between(1000, 2500),
         hitTimer: 0,
       } satisfies EnemyState);
+      addOneWayCollider(this, e, oneWays);
+      addOneWayCollider(this, e, bossOneWays);
       return e;
     };
 
     const spawnChestReward = () => {
       clearChest();
-      chestArt = this.add.image(2200, 548, "key").setDisplaySize(44, 44).setDepth(100).setTint(0xffd166);
-      chestZone = this.physics.add.image(2200, 548, "key").setDisplaySize(56, 56).setAlpha(0).setImmovable(true);
+      chestArt = this.add.image(2200, 548, "chest-boss").setDisplaySize(58, 52).setDepth(100).setTint(0xffd166);
+      chestZone = this.physics.add.image(2200, 548, "chest-boss").setDisplaySize(62, 58).setAlpha(0).setImmovable(true);
       (chestZone.body as Phaser.Physics.Arcade.Body).setAllowGravity(false);
 
       chestOverlap = this.physics.add.overlap(player, chestZone, () => {
@@ -340,16 +448,24 @@ class MainScene extends Phaser.Scene {
     const spawnRoundEnemies = () => {
       enemies.clear(true, true);
       if (isBossFloor()) {
-        spawnEnemy(2000, 534, "orc", true);
+        buildBossLayout();
+        spawnEnemy(1680, 372, "slime");
+        spawnEnemy(1880, 312, "slime");
+        spawnEnemy(2050, 262, "slime");
+        spawnEnemy(2180, 320, "orc");
+        spawnEnemy(2000, 262, "orc", true);
         setDoorLockedVisual();
       } else {
-        spawnEnemy(380, 548, "slime");
-        spawnEnemy(650, 548, "orc");
-        spawnEnemy(950, 548, "slime");
-        spawnEnemy(1250, 548, "orc");
-        spawnEnemy(1550, 548, "slime");
-        spawnEnemy(1850, 548, "orc");
-        spawnEnemy(2150, 548, "slime");
+        clearBossLayout();
+        spawnEnemy(240, 410, "slime");
+        spawnEnemy(620, 288, "orc");
+        spawnEnemy(820, 395, "slime");
+        spawnEnemy(1210, 258, "orc");
+        spawnEnemy(1420, 370, "slime");
+        spawnEnemy(1790, 248, "orc");
+        spawnEnemy(2150, 305, "slime");
+        spawnEnemy(980, 548, "slime");
+        spawnEnemy(1640, 548, "orc");
         setDoorLockedVisual();
       }
     };
@@ -499,7 +615,7 @@ class MainScene extends Phaser.Scene {
           updateHUD();
         } else if (!isBossFloor()) {
           const dropped = spawnCollectibles(this, [
-            { kind: "loot", x: ex, y: ey, texture: "key", scale: 0.1 },
+            { kind: "loot", x: ex, y: ey, texture: "cave-crystal", scale: 0.42 },
           ]);
           wireAutoPickup(this, player, dropped, {
             onPotion: () => {},
