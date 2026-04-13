@@ -6,7 +6,7 @@ import { initializeStore } from "@/game/store";
 import { gameStore } from "@/game/store";
 import { generateLoot } from "@/game/loot";
 import { hashSeed, mulberry32 } from "@/game/rng";
-import { spawnCollectibles, wireAutoPickup } from "@/game/collectibles";
+import { spawnCollectibles, wireAutoPickup, AutoPickupHandlers } from "@/game/collectibles";
 import { addPlatform, createPlatformKit } from "@/phaser/platforms";
 import {
   addOneWayCollider,
@@ -366,13 +366,9 @@ class MainScene extends Phaser.Scene {
     };
 
     // --- Collectibles (auto-pickup) --- positioned on new platform tiers
-    // Power-ups are rare and scattered
     const pickups = spawnCollectibles(this, [
       { kind: "potion", x: 430,  y: 356, texture: "potion-health", scale: 0.42, value: 1 },
       { kind: "potion", x: 1420, y: 376, texture: "potion-health", scale: 0.42, value: 1 },
-      { kind: "powerup", x: 1790, y: 256, texture: "cave-orb", scale: 0.28, value: 1 },
-      { kind: "powerup", x: 900, y: 180, texture: "cave-crystal", scale: 0.22, value: 1 },
-      { kind: "powerup", x: 200, y: 300, texture: "cave-crystal", scale: 0.22, value: 1 },
     ]);
 
     wireAutoPickup(this, player, pickups, {
@@ -380,22 +376,6 @@ class MainScene extends Phaser.Scene {
         gameStore.addPotions(amount);
       },
       onLoot: () => {}, // keys are handled elsewhere
-      onPowerup: () => {
-        // Grant a random stat boost as a power-up
-        const statTypes = ["attack", "defense", "maxHp", "healingPower"];
-        const stat = statTypes[Math.floor(Math.random() * statTypes.length)];
-        // You can expand this logic for more interesting effects
-        // For now, just show a banner
-        const cx = this.cameras.main.midPoint.x;
-        const cy = this.cameras.main.midPoint.y;
-        const banner = this.add.text(cx, cy, `POWER UP! +${stat.toUpperCase()}`, {
-          fontSize: "28px",
-          color: "#ffe066",
-          stroke: "#000000",
-          strokeThickness: 6,
-        }).setOrigin(0.5).setScrollFactor(0).setDepth(350);
-        this.time.delayedCall(1200, () => banner.destroy());
-      },
     });
 
     const spawnEnemy = (x: number, y: number, tex: "orc" | "slime", isBoss = false) => {
@@ -639,30 +619,20 @@ class MainScene extends Phaser.Scene {
           const dropped = spawnCollectibles(this, [
             { kind: "loot", x: ex, y: ey, texture: "cave-crystal", scale: 0.42 },
           ]);
-          wireAutoPickup(this, player, dropped, {
-            onPotion: () => {},
-            onLoot: () => {
-              keysCollected++;
-              if (keysCollected >= keysRequired) setDoorOpenVisual();
-              updateHUD();
+          const handlers = {
+            onPotion: (amount: number) => {
+              gameStore.addPotions(amount);
             },
-          });
+            onLoot: () => {}, // keys are handled elsewhere
+          };
+          wireAutoPickup(this, player, dropped, handlers);
         }
       }
     };
+    // End of attack handler
 
-    // ── update loop ──────────────────────────────────────────────────────────
-    this.events.on("update", (_t: number, delta: number) => {
-      player.x = Math.round(player.x);
-      player.y = Math.round(player.y);
-
-      // movement
-      const goLeft  = cursors.left.isDown  || keys.A.isDown;
-      const goRight = cursors.right.isDown || keys.D.isDown;
-      if (goLeft)       { player.setVelocityX(-165); player.setFlipX(false); }
-      else if (goRight) { player.setVelocityX(165);  player.setFlipX(true); }
-      else              { player.setVelocityX(0); }
-
+    // --- Main update loop ---
+    this.events.on('update', (time: number, delta: number) => {
       const body = player.body as Phaser.Physics.Arcade.Body;
       if (body.touching.down || body.blocked.down) lastGroundedAt = this.time.now;
       if (Phaser.Input.Keyboard.JustDown(keys.SPACE)) jump();
@@ -699,11 +669,13 @@ class MainScene extends Phaser.Scene {
           body.setVelocityX(patrolSpeed * state.patrolDir);
           enemy.setFlipX(state.patrolDir < 0);
         }
+
         return true;
       });
     });
-  }
-}
+    // --- End main update loop ---
+  } // End of create()
+} // End of MainScene class
 
 export default function PhaserGame() {
   const hostRef = useRef<HTMLDivElement | null>(null);

@@ -41,14 +41,17 @@ export function spawnCollectibles(
   return group;
 }
 
+export type AutoPickupHandlers = {
+  onPotion: (amount: number) => void;
+  onLoot: () => void;
+  onPowerup?: () => void;
+};
+
 export function wireAutoPickup(
   scene: Phaser.Scene,
   player: Phaser.Types.Physics.Arcade.GameObjectWithBody,
   group: Phaser.Physics.Arcade.StaticGroup,
-  handlers: {
-    onPotion: (amount: number) => void;
-    onLoot: () => void;
-  }
+  handlers: AutoPickupHandlers
 ): void {
   scene.physics.add.overlap(player, group, (_p, obj) => {
     const item = obj as Phaser.Physics.Arcade.Image;
