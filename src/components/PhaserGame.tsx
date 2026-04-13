@@ -401,7 +401,7 @@ class MainScene extends Phaser.Scene {
       if (this.time.now - lastAttackAt < ATTACK_COOLDOWN) return;
       lastAttackAt = this.time.now;
 
-      const dir = player.flipX ? -1 : 1;
+      const dir = player.flipX ? 1 : -1;
 
       // slash VFX
       const slash = this.add.image(player.x + dir * 32, player.y - 6, "slash");
@@ -472,8 +472,8 @@ class MainScene extends Phaser.Scene {
       // movement
       const goLeft  = cursors.left.isDown  || keys.A.isDown;
       const goRight = cursors.right.isDown || keys.D.isDown;
-      if (goLeft)       { player.setVelocityX(-165); player.setFlipX(true); }
-      else if (goRight) { player.setVelocityX(165);  player.setFlipX(false); }
+      if (goLeft)       { player.setVelocityX(-165); player.setFlipX(false); }
+      else if (goRight) { player.setVelocityX(165);  player.setFlipX(true); }
       else              { player.setVelocityX(0); }
 
       const body = player.body as Phaser.Physics.Arcade.Body;

@@ -20,33 +20,27 @@ export default function GameOverlay() {
 
   return (
     <div className="overlay overlay-hud">
-      <section className="overlay-panel hud-panel hud-top-left">
-        <h3 className="overlay-title title-with-icon">
-          <span className="ui-icon icon-crown" aria-hidden="true" />
-          Adventurer
-        </h3>
-        <p className="overlay-subline">
-          {state.classLabel} • Lv {state.level} • Tier {state.dungeonTier}
-        </p>
+      <section className="overlay-panel hud-panel hud-top-left hud-minimal">
+        <div className="hud-mini-head">
+          <span className="row-label-with-icon">
+            <span className="ui-icon icon-crown" aria-hidden="true" />
+            {state.classLabel}
+          </span>
+          <span className="hud-mini-level">Lv {state.level}</span>
+        </div>
 
-        <div className="overlay-row">
+        <div className="overlay-row hud-health-row">
           <span className="overlay-row-label row-label-with-icon">
             <span className="ui-icon icon-heart" aria-hidden="true" />
-            Health
+            HP
           </span>
           <strong className="overlay-row-value">{state.hp}/{state.maxHp}</strong>
         </div>
-        <div className="hp-wrap hp-wrap-skin">
+        <div className="hp-wrap hp-wrap-skin hud-mini-hp">
           <div className={`hp-bar hp-${hpTier}`} style={{ width: `${hpPercent}%` }} />
         </div>
 
-        <div className="overlay-row">
-          <span className="overlay-row-label row-label-with-icon">
-            <span className="ui-icon icon-flag" aria-hidden="true" />
-            Class
-          </span>
-        </div>
-        <div className="item compact-actions class-buttons">
+        <div className="item compact-actions class-buttons hud-class-buttons">
           <button
             className={`overlay-btn ${state.classId === "tank" ? "active" : ""}`}
             onClick={() => gameStore.setClass("tank")}
