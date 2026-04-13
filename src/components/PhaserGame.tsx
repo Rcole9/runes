@@ -654,8 +654,11 @@ class MainScene extends Phaser.Scene {
       if (cursors.left.isDown || keys.left.isDown) move -= 1;
       if (cursors.right.isDown || keys.right.isDown) move += 1;
       player.setVelocityX(move * 180);
-      if (move < 0) player.setFlipX(true); // face left
-      else if (move > 0) player.setFlipX(false); // face right
+      if (move < 0) {
+        if (!player.flipX) player.setFlipX(true); // face left only if not already
+      } else if (move > 0) {
+        if (player.flipX) player.setFlipX(false); // face right only if not already
+      }
 
       const rightNow = pointer.rightButtonDown();
       if (rightNow && !wasRightDown) attack();
