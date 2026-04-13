@@ -84,13 +84,13 @@
   --hair-light: #7a563d;
   --hair-highlight: #b0845b;
 
-  --bg-top: #232a33;
-  --bg-bottom: #3c6a4a;
-  --panel: rgba(27, 30, 36, 0.9);
-  --panel-border: rgba(167, 183, 201, 0.35);
+  --bg-top: #17181c;
+  --bg-bottom: #2f2325;
+  --panel: rgba(20, 17, 18, 0.9);
+  --panel-border: rgba(157, 125, 118, 0.35);
   --text: var(--paper-light);
-  --muted: var(--stone-light);
-  --accent: var(--sun-warm);
+  --muted: #d2bfbb;
+  --accent: #d7a06b;
   --danger: #ff6b6b;
   --common: #e5e7eb;
   --uncommon: #86efac;
@@ -123,8 +123,8 @@ body {
   overflow: hidden;
   font-family: "Trebuchet MS", "Segoe UI", sans-serif;
   color: var(--text);
-  background: radial-gradient(circle at top left, #3c6a4a 0%, var(--bg-top) 45%),
-    linear-gradient(150deg, var(--bg-top), var(--bg-bottom));
+  background: radial-gradient(circle at top left, #403033 0%, var(--bg-top) 45%),
+    linear-gradient(160deg, var(--bg-top), var(--bg-bottom));
 }
 
 a {
@@ -141,10 +141,48 @@ a {
   height: 100vh;
   padding: 1rem;
   background:
-    radial-gradient(circle at 16% 14%, rgba(246, 226, 168, 0.28), transparent 34%),
-    radial-gradient(circle at 84% 18%, rgba(78, 194, 184, 0.18), transparent 38%),
-    radial-gradient(circle at 50% 100%, rgba(17, 30, 26, 0.72), transparent 50%),
-    linear-gradient(160deg, #121822 0%, #1f2f3f 34%, #244135 64%, #11161f 100%);
+    radial-gradient(circle at 14% 14%, rgba(215, 160, 107, 0.24), transparent 34%),
+    radial-gradient(circle at 82% 16%, rgba(116, 146, 164, 0.16), transparent 34%),
+    radial-gradient(circle at 50% 100%, rgba(18, 14, 16, 0.8), transparent 56%),
+    linear-gradient(180deg, #0f1013 0%, #19181d 32%, #251d20 72%, #100f12 100%);
+}
+
+.landing-cave-layer {
+  position: absolute;
+  inset: auto 0 0 0;
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+  background-position: left bottom;
+  pointer-events: none;
+}
+
+.landing-cave-back {
+  z-index: 0;
+  top: 0;
+  bottom: 0;
+  background-image: url("/assets/tiles/pixel-fantasy-caves/backgrounds/background1.png");
+  background-size: 960px 480px;
+  opacity: 0.94;
+}
+
+.landing-cave-mid {
+  z-index: 0;
+  top: 0;
+  bottom: 0;
+  background-image: url("/assets/tiles/pixel-fantasy-caves/backgrounds/background3.png");
+  background-size: 960px 480px;
+  opacity: 0.7;
+}
+
+.landing-cave-fore {
+  z-index: 1;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: min(44vh, 380px);
+  background-image: url("/assets/tiles/pixel-fantasy-caves/backgrounds/background4a.png");
+  background-size: 960px 480px;
+  opacity: 0.82;
 }
 
 .landing-card {
@@ -154,15 +192,15 @@ a {
   padding: 2rem 2rem 1.6rem;
   border-radius: 16px;
   background-image:
-    linear-gradient(180deg, rgba(17, 21, 26, 0.88), rgba(17, 21, 26, 0.94)),
+    linear-gradient(180deg, rgba(17, 13, 14, 0.9), rgba(20, 16, 18, 0.95)),
     var(--ui-frame-body),
     var(--ui-frame-top),
     var(--ui-frame-footer);
   background-repeat: no-repeat, repeat, repeat-x, repeat-x;
   background-position: center, center, top center, bottom center;
   background-size: 100% 100%, 336px 240px, 256px 160px, 256px 160px;
-  border: 1px solid rgba(173, 142, 84, 0.45);
-  box-shadow: 0 28px 60px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(157, 125, 118, 0.42);
+  box-shadow: 0 28px 60px rgba(0, 0, 0, 0.56), 0 0 0 1px rgba(81, 61, 58, 0.35);
   animation: rise 500ms ease;
 }
 
@@ -171,7 +209,7 @@ a {
   letter-spacing: 0.14em;
   font-size: 0.7rem;
   text-transform: uppercase;
-  color: #c7d0de;
+  color: #ceb4a5;
 }
 
 .landing-title {
@@ -179,14 +217,14 @@ a {
   font-size: clamp(2rem, 4.8vw, 3.3rem);
   line-height: 1.02;
   letter-spacing: 0.015em;
-  color: #f7e5b8;
+  color: #f1d6bb;
   text-shadow: 0 2px 0 rgba(0, 0, 0, 0.35), 0 12px 24px rgba(0, 0, 0, 0.4);
 }
 
 .landing-copy {
   margin: 0.95rem 0 0;
   max-width: 58ch;
-  color: #d7deea;
+  color: #d7c8c4;
   line-height: 1.5;
 }
 
@@ -198,11 +236,11 @@ a {
 }
 
 .landing-tag {
-  border: 1px solid rgba(136, 255, 204, 0.35);
+  border: 1px solid rgba(157, 125, 118, 0.35);
   border-radius: 999px;
   padding: 0.28rem 0.62rem;
-  background: rgba(10, 20, 18, 0.44);
-  color: #b8f0e1;
+  background: rgba(28, 19, 20, 0.56);
+  color: #e4c4a2;
   font-size: 0.78rem;
 }
 
@@ -221,13 +259,13 @@ a {
   min-height: 46px;
   padding: 0.6rem 1.2rem;
   border-radius: 10px;
-  border: 1px solid rgba(173, 142, 84, 0.45);
+  border: 1px solid rgba(182, 133, 90, 0.46);
   background-image:
-    linear-gradient(180deg, rgba(233, 199, 123, 0.94), rgba(181, 130, 47, 0.95)),
+    linear-gradient(180deg, rgba(215, 160, 107, 0.96), rgba(116, 68, 49, 0.95)),
     var(--ui-button-green);
   background-size: 100% 100%, 320px 160px;
   background-position: center, 0 -34px;
-  color: #121821;
+  color: #140f12;
   font-weight: 700;
   letter-spacing: 0.02em;
   box-shadow: 0 10px 18px rgba(0, 0, 0, 0.32);
@@ -240,10 +278,10 @@ a {
 }
 
 .landing-link {
-  color: #d2d9e4;
+  color: #dbc7c1;
   font-size: 0.88rem;
   text-decoration: underline;
-  text-decoration-color: rgba(210, 217, 228, 0.45);
+  text-decoration-color: rgba(219, 199, 193, 0.45);
   text-underline-offset: 2px;
 }
 
@@ -253,8 +291,8 @@ a {
   width: min(92vw, 920px);
   aspect-ratio: 1;
   border-radius: 50%;
-  border: 1px solid rgba(140, 217, 198, 0.2);
-  box-shadow: 0 0 0 22px rgba(140, 217, 198, 0.04), 0 0 120px rgba(140, 217, 198, 0.16);
+  border: 1px solid rgba(157, 125, 118, 0.18);
+  box-shadow: 0 0 0 22px rgba(157, 125, 118, 0.04), 0 0 120px rgba(157, 125, 118, 0.12);
   animation: pulseRing 7s ease-in-out infinite;
 }
 
@@ -263,8 +301,8 @@ a {
   inset: 0;
   z-index: 1;
   background-image:
-    linear-gradient(rgba(169, 182, 199, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(169, 182, 199, 0.06) 1px, transparent 1px);
+    linear-gradient(rgba(157, 125, 118, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(157, 125, 118, 0.06) 1px, transparent 1px);
   background-size: 36px 36px;
   mask-image: radial-gradient(circle at center, black 42%, transparent 82%);
   pointer-events: none;
@@ -272,7 +310,7 @@ a {
 
 .landing-hero-art {
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   right: clamp(0.8rem, 4vw, 2.2rem);
   bottom: clamp(0.8rem, 4vw, 2.2rem);
   width: min(34vw, 360px);
@@ -283,7 +321,7 @@ a {
 .hero-sprite {
   position: absolute;
   image-rendering: pixelated;
-  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.45));
+  filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.56));
 }
 
 .hero-player {
@@ -336,14 +374,14 @@ a {
   pointer-events: auto;
   width: min(360px, 92vw);
   background-image:
-    linear-gradient(180deg, rgba(17, 21, 26, 0.9), rgba(17, 21, 26, 0.94)),
+    linear-gradient(180deg, rgba(19, 15, 17, 0.9), rgba(19, 15, 17, 0.94)),
     var(--ui-frame-body),
     var(--ui-frame-top),
     var(--ui-frame-footer);
   background-repeat: no-repeat, repeat, repeat-x, repeat-x;
   background-position: center, center, top center, bottom center;
   background-size: 100% 100%, 336px 240px, 256px 160px, 256px 160px;
-  border: 1px solid rgba(173, 142, 84, 0.45);
+  border: 1px solid rgba(157, 125, 118, 0.45);
   border-radius: 14px;
   padding: 1.1rem 0.85rem 1rem;
   font-size: 0.9rem;
@@ -368,8 +406,8 @@ a {
 .hud-minimal {
   padding: 0.55rem 0.6rem 0.5rem;
   border-radius: 10px;
-  background-image: linear-gradient(180deg, rgba(12, 16, 21, 0.84), rgba(12, 16, 21, 0.9));
-  border-color: rgba(130, 156, 190, 0.34);
+  background-image: linear-gradient(180deg, rgba(18, 14, 16, 0.88), rgba(18, 14, 16, 0.92));
+  border-color: rgba(157, 125, 118, 0.34);
 }
 
 .hud-mini-head {
@@ -377,12 +415,12 @@ a {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 0.35rem;
-  color: #d8e3f4;
+  color: #ead7d0;
   font-size: 0.8rem;
 }
 
 .hud-mini-level {
-  color: #b7c9e2;
+  color: #d1b5a6;
   font-size: 0.75rem;
 }
 
@@ -419,15 +457,15 @@ a {
   min-height: 52px;
   padding: 0.45rem 0.75rem;
   border-radius: 12px;
-  border: 1px solid rgba(173, 142, 84, 0.45);
+  border: 1px solid rgba(157, 125, 118, 0.45);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.45rem;
-  color: #f4f4f6;
+  color: #f1e6e2;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
   background-image:
-    linear-gradient(180deg, rgba(17, 20, 24, 0.9), rgba(17, 20, 24, 0.78)),
+    linear-gradient(180deg, rgba(22, 16, 18, 0.92), rgba(22, 16, 18, 0.8)),
     var(--ui-button-stone);
   background-size: 100% 100%, 320px 160px;
   background-repeat: no-repeat, no-repeat;
@@ -469,7 +507,7 @@ a {
   justify-content: center;
   font-size: 0.78rem;
   color: #151920;
-  background: linear-gradient(180deg, #f6e2a8, #d6a846);
+  background: linear-gradient(180deg, #f0d1a6, #b87a4f);
   text-shadow: none;
 }
 
@@ -503,7 +541,7 @@ a {
 }
 
 .overlay-title {
-  color: #f6dc9a;
+  color: #f0c29c;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   font-size: 0.8rem;
@@ -522,7 +560,7 @@ a {
 }
 
 .overlay-row-label {
-  color: #c5ccd8;
+  color: #d6c6c1;
 }
 
 .row-label-with-icon {
@@ -533,7 +571,7 @@ a {
 }
 
 .overlay-row-value {
-  color: #f2f4f8;
+  color: #f2e6e0;
 }
 
 .hp-wrap {
@@ -602,7 +640,7 @@ a {
 }
 
 .hp-wrap-skin {
-  border: 1px solid rgba(208, 81, 90, 0.5);
+  border: 1px solid rgba(192, 102, 90, 0.45);
 }
 
 .item {
@@ -624,7 +662,7 @@ a {
   padding: 0.25rem 0.7rem;
   border-radius: 8px;
   background-image:
-    linear-gradient(180deg, rgba(17, 20, 24, 0.6), rgba(17, 20, 24, 0.45)),
+    linear-gradient(180deg, rgba(24, 18, 20, 0.68), rgba(24, 18, 20, 0.48)),
     var(--ui-button-stone);
   background-size: 100% 100%, 320px 160px;
   background-repeat: no-repeat, no-repeat;
@@ -644,11 +682,11 @@ a {
 
 .class-buttons .overlay-btn.active {
   background-image:
-    linear-gradient(180deg, rgba(52, 94, 48, 0.42), rgba(28, 66, 29, 0.24)),
+    linear-gradient(180deg, rgba(130, 77, 49, 0.56), rgba(74, 39, 29, 0.3)),
     var(--ui-button-green);
   background-size: 100% 100%, 320px 160px;
   background-position: center, 0 -34px;
-  color: #14251a;
+  color: #1b1110;
   font-weight: 700;
   text-shadow: none;
 }
@@ -658,8 +696,8 @@ a {
   background-repeat: no-repeat;
   background-position: 6px -124px;
   background-size: 320px 160px;
-  background-color: rgba(17, 20, 24, 0.65);
-  border: 1px solid rgba(135, 162, 212, 0.2);
+  background-color: rgba(22, 16, 18, 0.72);
+  border: 1px solid rgba(157, 125, 118, 0.22);
   border-radius: 8px;
   padding: 0.4rem 0.35rem 0.4rem 2rem;
 }
@@ -735,7 +773,7 @@ a {
 .inventory-drawer {
   margin-top: 0.6rem;
   padding-top: 0.55rem;
-  border-top: 1px solid rgba(173, 142, 84, 0.35);
+  border-top: 1px solid rgba(157, 125, 118, 0.35);
 }
 
 .toast {

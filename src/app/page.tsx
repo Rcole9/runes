@@ -3,6 +3,9 @@ import Link from "next/link";
 export default function Home() {
   return (
     <main className="landing">
+      <div className="landing-cave-layer landing-cave-back" aria-hidden="true" />
+      <div className="landing-cave-layer landing-cave-mid" aria-hidden="true" />
+      <div className="landing-cave-layer landing-cave-fore" aria-hidden="true" />
       <div className="landing-fx-ring" aria-hidden="true" />
       <div className="landing-fx-grid" aria-hidden="true" />
       <div className="landing-hero-art" aria-hidden="true">
@@ -19,22 +22,22 @@ export default function Home() {
       </div>
 
       <section className="landing-card">
-        <p className="eyebrow">Dungeon Briefing</p>
+        <p className="eyebrow">Cave Descent</p>
         <h1 className="landing-title">Runes of the Void</h1>
         <p className="landing-copy">
-          Enter a cursed corridor of shifting floors. Every third door leads to a
-          boss floor, and each victory pushes you deeper into the next level.
+          Drop into a mineral-lit cavern where broken ledges, boss chambers, and
+          buried relics pull every run deeper into the dark.
         </p>
 
         <div className="landing-tags" aria-label="Game highlights">
-          <span className="landing-tag">Boss every 3rd floor</span>
-          <span className="landing-tag">Loot-based progression</span>
-          <span className="landing-tag">Class switching</span>
+          <span className="landing-tag">Cave boss every 3rd floor</span>
+          <span className="landing-tag">Relics and loot drops</span>
+          <span className="landing-tag">Class switching mid-run</span>
         </div>
 
         <div className="landing-actions">
           <Link href="/play" className="play-button">
-            Enter the Dungeon
+            Enter the Caverns
           </Link>
           <a href="https://kenney.nl/assets" target="_blank" rel="noreferrer" className="landing-link">
             Art packs by Kenney

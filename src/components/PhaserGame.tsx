@@ -7,6 +7,12 @@ import { gameStore } from "@/game/store";
 import { generateLoot } from "@/game/loot";
 import { hashSeed, mulberry32 } from "@/game/rng";
 import { spawnCollectibles, wireAutoPickup } from "@/game/collectibles";
+import { addPlatform, createPlatformKit } from "@/phaser/platforms";
+import {
+  addOneWayCollider,
+  addOneWayPlatform,
+  createOneWayGroup,
+} from "@/phaser/oneWayPlatforms";
 
 // ── game constants ────────────────────────────────────────────────────────────
 const KEYS_TO_UNLOCK  = 5;
@@ -27,6 +33,9 @@ class MainScene extends Phaser.Scene {
     this.load.pack("public-pack", "/phaser-pack.json");
     this.load.image("sky",    "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-altar-holy-light-divine-healing-golden_20260217_223403.png");
     this.load.image("ground", "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-stone-floor-tile-bloody-stained-dark_20260217_213627.png");
+    this.load.image("cave-bg-1", "/assets/tiles/pixel-fantasy-caves/backgrounds/background1.png");
+    this.load.image("cave-bg-3", "/assets/tiles/pixel-fantasy-caves/backgrounds/background3.png");
+    this.load.image("cave-bg-4", "/assets/tiles/pixel-fantasy-caves/backgrounds/background4a.png");
     this.load.image("key",    "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-key-golden-boss-door-master-ornate_20260217_220007.png");
     this.load.image("orc",    "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-orc-large-green-axe-warrior-brute_20260217_222727.png");
     this.load.image("slime",  "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-slime-green-blob-bouncing-acidic-basic_20260217_222643.png");
@@ -45,62 +54,51 @@ class MainScene extends Phaser.Scene {
     cam.setBounds(0, 0, worldWidth, worldHeight);
 
     // ── background ───────────────────────────────────────────────────────────
-    this.add.tileSprite(0, 0, worldWidth, worldHeight, "sky")
-      .setOrigin(0, 0).setDepth(-20).setAlpha(0.35);
+    this.add.rectangle(worldWidth / 2, worldHeight / 2, worldWidth, worldHeight, 0x131417)
+      .setDepth(-50);
 
-    // ── platforms ────────────────────────────────────────────────────────────
-    const platforms = this.physics.add.staticGroup();
-    const PLAT_H = 20;
-
-    const makeP = (x: number, y: number, w: number, tier: 1 | 2 | 3) => {
-      const FACE  = tier === 1 ? 0x4a5260 : tier === 2 ? 0x586476 : 0x6d7d8f;
-      const EDGE  = tier === 1 ? 0x2c313a : tier === 2 ? 0x3d4652 : 0x505d6e;
-      const SHINE = tier === 1 ? 0x5e6a7a : tier === 2 ? 0x6e7e92 : 0x8898aa;
-      const g = this.add.graphics().setDepth(10);
-      g.fillStyle(SHINE, 0.55); g.fillRect(x, y, w, 3);
-      g.fillStyle(FACE,  1);    g.fillRect(x, y + 3, w, PLAT_H - 6);
-      g.fillStyle(EDGE,  1);    g.fillRect(x, y + PLAT_H - 3, w, 3);
-      g.fillStyle(EDGE, 0.7);
-      g.fillRect(x,         y + 3, 2, PLAT_H - 6);
-      g.fillRect(x + w - 2, y + 3, 2, PLAT_H - 6);
-      g.lineStyle(1, EDGE, 0.45);
-      for (let bx = x + 32; bx < x + w - 4; bx += 32) g.lineBetween(bx, y + 3, bx, y + PLAT_H - 4);
-      const body = platforms.create(x + w / 2, y + PLAT_H / 2, "ground") as Phaser.Physics.Arcade.Image;
-      body.setDisplaySize(w, PLAT_H).setAlpha(0).refreshBody();
+    const stampLayer = (key: string, y: number, depth: number, alpha = 1) => {
+      for (let x = 0; x < worldWidth; x += 960) {
+        this.add.image(x, y, key)
+          .setOrigin(0, 0)
+          .setDepth(depth)
+          .setAlpha(alpha);
+      }
     };
 
-    // Ground floor
-    this.add.tileSprite(0, 576, worldWidth, worldHeight - 576, "ground")
-      .setOrigin(0, 0).setDepth(5);
-    const groundBody = platforms.create(1200, 592, "ground") as Phaser.Physics.Arcade.Image;
-    groundBody.setDisplaySize(worldWidth, 32).setAlpha(0).refreshBody();
+    stampLayer("cave-bg-1", 0, -40, 1);
+    stampLayer("cave-bg-3", 0, -30, 0.95);
+    stampLayer("cave-bg-4", 140, -20, 0.92);
 
-    // ── Metroid-style multi-tier layout ──────────────────────────────────────
-    //  F3 y=308  high shelves  (pale cobble)
-    //  F2 y=404  mid platforms (mid stone)
-    //  F1 y=500  low ledges    (dark stone)
-    //  GND y=576 ════════════════════════════
+    // ── platforms ────────────────────────────────────────────────────────────
+    const kit = createPlatformKit(this);
 
-    // F1
-    makeP(60,   500, 220, 1); makeP(540,  500, 140, 1); makeP(900,  500, 120, 1);
-    makeP(1160, 500, 160, 1); makeP(1560, 500, 120, 1); makeP(1840, 500, 200, 1);
-    // F2
-    makeP(220,  404, 200, 2); makeP(640,  404, 200, 2); makeP(1020, 404, 160, 2);
-    makeP(1420, 404, 180, 2); makeP(1700, 404, 260, 2); makeP(2020, 404, 200, 2);
-    // F3
-    makeP(380,  308, 200, 3); makeP(780,  308, 200, 3); makeP(1160, 308, 240, 3);
-    makeP(1580, 308, 180, 3); makeP(1900, 308, 220, 3);
+    const drawFloatingPlatform = (x: number, y: number, w: number, h = 24) => {
+      const left = x - w / 2;
+      const face = 0x5e4744;
+      const edge = 0x2b2023;
+      const shine = 0x9d7d76;
+      const shadow = 0x120f12;
+      const g = this.add.graphics().setDepth(10);
+      g.fillStyle(shadow, 0.4); g.fillRect(left + 10, y + h - 1, w - 20, 6);
+      g.fillStyle(shine, 0.55); g.fillRect(left, y, w, 3);
+      g.fillStyle(face, 1); g.fillRect(left, y + 3, w, h - 6);
+      g.fillStyle(edge, 1); g.fillRect(left, y + h - 3, w, 3);
+      g.fillStyle(edge, 0.7);
+      g.fillRect(left, y + 3, 2, h - 6);
+      g.fillRect(left + w - 2, y + 3, 2, h - 6);
+      g.lineStyle(1, edge, 0.45);
+      for (let bx = left + 32; bx < left + w - 4; bx += 32) {
+        g.lineBetween(bx, y + 3, bx, y + h - 4);
+      }
+    };
 
-    // Decorative columns
-    const colG = this.add.graphics().setDepth(3).setAlpha(0.4);
-    colG.fillStyle(0x3d4652, 1);
-    [480, 860, 1360, 1760, 2120].forEach(cx => {
-      colG.fillRect(cx - 7, 200, 14, 376);
-      colG.fillStyle(0x2c313a, 1);
-      colG.fillRect(cx - 7, 200, 14, 3);
-      colG.fillRect(cx - 7, 573, 14, 3);
-      colG.fillStyle(0x3d4652, 1);
-    });
+    // Ground (one big floor)
+    const caveFloor = this.add.graphics().setDepth(4);
+    caveFloor.fillStyle(0x261c1d, 1); caveFloor.fillRect(0, 576, worldWidth, 44);
+    caveFloor.fillStyle(0x4f3c39, 1); caveFloor.fillRect(0, 576, worldWidth, 4);
+    caveFloor.fillStyle(0x171215, 1); caveFloor.fillRect(0, 612, worldWidth, 8);
+    addPlatform(this, kit, { x: 1200, y: 592, w: 2400, h: 32, faceH: 18 });
 
     // ── door (locked until KEYS_TO_UNLOCK keys are collected) ────────────────
     const door = this.add.image(2360, 548, "door").setDisplaySize(56, 76).setDepth(50);
@@ -132,7 +130,7 @@ class MainScene extends Phaser.Scene {
     // ── enemies ──────────────────────────────────────────────────────────────
     const enemies = this.physics.add.group();
 
-    this.physics.add.collider(enemies, platforms);
+    this.physics.add.collider(enemies, kit.solids);
 
     // ── player ───────────────────────────────────────────────────────────────
     gameStore.resetHp();
@@ -143,7 +141,17 @@ class MainScene extends Phaser.Scene {
       .setDisplaySize(40, 40).setDepth(100);
     (player.body as Phaser.Physics.Arcade.Body).setSize(26, 36);
 
-    this.physics.add.collider(player, platforms);
+    this.physics.add.collider(player, kit.solids);
+
+    const oneWays = createOneWayGroup(this);
+
+    // Example one-way ledges
+    drawFloatingPlatform(560, 330, 140);
+    addOneWayPlatform(this, oneWays, { x: 560, y: 330, w: 140 });
+    drawFloatingPlatform(1460, 410, 140);
+    addOneWayPlatform(this, oneWays, { x: 1460, y: 410, w: 140 });
+
+    addOneWayCollider(this, player, oneWays);
 
     // ── HUD ──────────────────────────────────────────────────────────────────
     const hudStyle = {
