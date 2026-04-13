@@ -366,15 +366,29 @@ class MainScene extends Phaser.Scene {
     const pointer = this.input.activePointer;
     let wasRightDown = false;
     let lastAttackAt = 0;
+    let lastGroundedAt = 0;
+    let jumpQueuedUntil = 0;
+
+    const COYOTE_TIME_MS = 50;
+    const JUMP_BUFFER_MS = 70;
 
     cam.startFollow(player, true, 0.1, 0.1);
 
     const jump = () => {
+      jumpQueuedUntil = this.time.now + JUMP_BUFFER_MS;
+    };
+
+    const tryConsumeJump = () => {
       const body = player.body as Phaser.Physics.Arcade.Body;
-      if (body.touching.down || body.blocked.down) {
+      if (jumpQueuedUntil <= this.time.now) return;
+      const canJump = (body.touching.down || body.blocked.down) || (this.time.now - lastGroundedAt <= COYOTE_TIME_MS);
+      if (canJump) {
         player.setVelocityY(-380);
+        jumpQueuedUntil = 0;
       }
     };
+
+    this.input.keyboard?.on("keydown-SPACE", jump);
 
     const attack = () => {
       if (this.time.now - lastAttackAt < ATTACK_COOLDOWN) return;
@@ -455,7 +469,10 @@ class MainScene extends Phaser.Scene {
       else if (goRight) { player.setVelocityX(165);  player.setFlipX(false); }
       else              { player.setVelocityX(0); }
 
+      const body = player.body as Phaser.Physics.Arcade.Body;
+      if (body.touching.down || body.blocked.down) lastGroundedAt = this.time.now;
       if (Phaser.Input.Keyboard.JustDown(keys.SPACE)) jump();
+      tryConsumeJump();
 
       const rightNow = pointer.rightButtonDown();
       if (rightNow && !wasRightDown) attack();
