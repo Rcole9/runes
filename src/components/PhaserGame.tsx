@@ -25,8 +25,10 @@ class MainScene extends Phaser.Scene {
 
   preload() {
     this.load.pack("public-pack", "/phaser-pack.json");
-    this.load.image("sky",    "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-altar-holy-light-divine-healing-golden_20260217_223403.png");
-    this.load.image("ground", "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-stone-floor-tile-bloody-stained-dark_20260217_213627.png");
+    this.load.image("sky",         "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-altar-holy-light-divine-healing-golden_20260217_223403.png");
+    this.load.image("ground",     "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-stone-floor-tile-bloody-stained-dark_20260217_213627.png");
+    this.load.image("plat-stone",  "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-stone-wall-tile-gray-brick-pattern_20260217_213642.png");
+    this.load.image("plat-cobble", "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-cobblestone-floor-tile-uneven-rough_20260217_214245.png");
     this.load.image("key",    "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-key-golden-boss-door-master-ornate_20260217_220007.png");
     this.load.image("orc",    "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-orc-large-green-axe-warrior-brute_20260217_222727.png");
     this.load.image("slime",  "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-slime-green-blob-bouncing-acidic-basic_20260217_222643.png");
@@ -50,25 +52,55 @@ class MainScene extends Phaser.Scene {
 
     // ── platforms ────────────────────────────────────────────────────────────
     const platforms = this.physics.add.staticGroup();
-    const makePlatform = (x: number, y: number, w: number, h = 32) => {
-      const tile = platforms.create(x, y, "ground") as Phaser.Physics.Arcade.Image;
-      tile.setDisplaySize(w, h).refreshBody();
+    const PLAT_H = 22;
+
+    // Tiled platform helper — visual tileSprite + invisible physics body
+    const makeP = (x: number, y: number, w: number, tex = "ground") => {
+      this.add.tileSprite(x, y, w, PLAT_H, tex).setOrigin(0, 0).setDepth(10);
+      const body = platforms.create(x + w / 2, y + PLAT_H / 2, tex) as Phaser.Physics.Arcade.Image;
+      body.setDisplaySize(w, PLAT_H).setAlpha(0).refreshBody();
     };
-    // Ground floor – tileSprite repeats the texture instead of stretching it
+
+    // Ground floor
     this.add.tileSprite(0, 576, worldWidth, worldHeight - 576, "ground")
-      .setOrigin(0, 0)
-      .setDepth(5);
-    // Invisible physics body used only for collision
+      .setOrigin(0, 0).setDepth(5);
     const groundBody = platforms.create(1200, 592, "ground") as Phaser.Physics.Arcade.Image;
     groundBody.setDisplaySize(worldWidth, 32).setAlpha(0).refreshBody();
 
-    makePlatform(260,  460, 180);
-    makePlatform(560,  380, 180);
-    makePlatform(860,  460, 180);
-    makePlatform(1160, 300, 180);
-    makePlatform(1460, 460, 180);
-    makePlatform(1760, 380, 180);
-    makePlatform(2060, 460, 180);
+    // ── Metroid-style multi-tier layout ──────────────────────────────────────
+    //  F3 y=308  ··[========]·········[========]···[=========]··[======]··[========]
+    //  F2 y=404  ···[======]···[======]···[====]··[======]·····[=========]···[======]
+    //  F1 y=500  [========]··[====]···[====]···[======]···[====]···[=======]
+    //  GND y=576 ═══════════════════════════════════════════════════════════════════
+
+    // F1 — low stone ledges
+    makeP(60,   500, 220, "ground");
+    makeP(540,  500, 140, "ground");
+    makeP(900,  500, 120, "ground");
+    makeP(1160, 500, 160, "ground");
+    makeP(1560, 500, 120, "ground");
+    makeP(1840, 500, 200, "ground");
+
+    // F2 — mid stone platforms
+    makeP(220,  404, 200, "plat-stone");
+    makeP(640,  404, 200, "plat-stone");
+    makeP(1020, 404, 160, "plat-stone");
+    makeP(1420, 404, 180, "plat-stone");
+    makeP(1700, 404, 260, "plat-stone");
+    makeP(2020, 404, 200, "plat-stone");
+
+    // F3 — high cobblestone shelves
+    makeP(380,  308, 200, "plat-cobble");
+    makeP(780,  308, 200, "plat-cobble");
+    makeP(1160, 308, 240, "plat-cobble");
+    makeP(1580, 308, 180, "plat-cobble");
+    makeP(1900, 308, 220, "plat-cobble");
+
+    // Decorative vertical stone columns (atmosphere, no physics)
+    [480, 860, 1360, 1760, 2120].forEach(cx => {
+      this.add.tileSprite(cx - 8, 180, 16, 396, "plat-stone")
+        .setOrigin(0, 0).setDepth(3).setAlpha(0.45);
+    });
 
     // ── door (locked until KEYS_TO_UNLOCK keys are collected) ────────────────
     const door = this.add.image(2360, 548, "door").setDisplaySize(56, 76).setDepth(50);
@@ -175,13 +207,15 @@ class MainScene extends Phaser.Scene {
       if (isBossFloor()) return;
 
       const offset = (floor - 1) * 16;
+      // Keys hover 30px above their platform surface
+      // F1 top=500 → y=468 | F2 top=404 → y=372 | F3 top=308 → y=276
       roundKeys = spawnCollectibles(this, [
-        { kind: "loot", x: 260 + offset,  y: 430, texture: "key", scale: 0.1 },
-        { kind: "loot", x: 560 + offset,  y: 350, texture: "key", scale: 0.1 },
-        { kind: "loot", x: 860 + offset,  y: 430, texture: "key", scale: 0.1 },
-        { kind: "loot", x: 1160, y: 270, texture: "key", scale: 0.1 },
-        { kind: "loot", x: 1460 - offset, y: 430, texture: "key", scale: 0.1 },
-        { kind: "loot", x: 1760 - offset, y: 350, texture: "key", scale: 0.1 },
+        { kind: "loot", x: 160  + offset, y: 468, texture: "key", scale: 0.1 }, // F1 left
+        { kind: "loot", x: 716  + offset, y: 372, texture: "key", scale: 0.1 }, // F2 mid-left
+        { kind: "loot", x: 876  + offset, y: 276, texture: "key", scale: 0.1 }, // F3 climb zone
+        { kind: "loot", x: 1240,          y: 276, texture: "key", scale: 0.1 }, // F3 mid
+        { kind: "loot", x: 1494 - offset, y: 372, texture: "key", scale: 0.1 }, // F2 section 4
+        { kind: "loot", x: 1930 - offset, y: 276, texture: "key", scale: 0.1 }, // F3 right
       ]);
 
       roundKeyOverlap = this.physics.add.overlap(player, roundKeys, (_p, obj) => {
@@ -211,11 +245,11 @@ class MainScene extends Phaser.Scene {
       bossDefeated = false;
     };
 
-    // --- Collectibles (auto-pickup) ---
+    // --- Collectibles (auto-pickup) --- positioned on new platform tiers
     const pickups = spawnCollectibles(this, [
-      { kind: "potion", x: 560,  y: 340, texture: "key", scale: 0.9, value: 1 },
-      { kind: "potion", x: 1460, y: 420, texture: "key", scale: 0.9, value: 1 },
-      { kind: "loot",   x: 1160, y: 260, texture: "slash", scale: 0.7, value: 1 },
+      { kind: "potion", x: 380,  y: 372, texture: "key",   scale: 0.9, value: 1 }, // F2 left
+      { kind: "potion", x: 1490, y: 372, texture: "key",   scale: 0.9, value: 1 }, // F2 sect-4
+      { kind: "loot",   x: 1640, y: 276, texture: "slash", scale: 0.7, value: 1 }, // F3 right
     ]);
 
     wireAutoPickup(this, player, pickups, {
