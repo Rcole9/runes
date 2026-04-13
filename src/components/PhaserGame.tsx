@@ -428,7 +428,7 @@ class MainScene extends Phaser.Scene {
         }).setOrigin(0.5).setScrollFactor(0).setDepth(300);
 
         // After looting, progress to next level
-        this.time.delayedCall(1800, () => {
+        this.input.once('pointerdown', () => {
           banner.destroy();
           level += 1;
           floor = 1;
@@ -654,7 +654,8 @@ class MainScene extends Phaser.Scene {
       if (cursors.left.isDown || keys.left.isDown) move -= 1;
       if (cursors.right.isDown || keys.right.isDown) move += 1;
       player.setVelocityX(move * 180);
-      player.setFlipX(move < 0);
+      if (move < 0) player.setFlipX(true); // face left
+      else if (move > 0) player.setFlipX(false); // face right
 
       const rightNow = pointer.rightButtonDown();
       if (rightNow && !wasRightDown) attack();
