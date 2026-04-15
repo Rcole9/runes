@@ -54,9 +54,9 @@ export class DungeonScene extends Phaser.Scene {
 
   init(data: { seed: string; difficulty: number }): void {
     // Always use the latest tier/level from the store for progression
-    const current = gameStore.getState();
-    const tier = current.dungeonTier;
-    const level = current.dungeonLevel;
+    const state = gameStore.getState();
+    const tier = state.dungeonTier;
+    const level = state.dungeonLevel;
     this.seed = dungeonSeedForLevel(tier, level);
     this.difficulty = Math.max(1, tier + difficultyOffsetForLevel(level));
     this.rng = mulberry32(hashSeed(this.seed));
@@ -65,11 +65,11 @@ export class DungeonScene extends Phaser.Scene {
   }
 
   create(): void {
-    const current = gameStore.getState();
+    const state = gameStore.getState();
     const classPlayerTexture =
-      current.classId === "tank"
+      state.classId === "tank"
         ? this.firstAvailable(["player-tank", "player"], "player")
-        : current.classId === "healer"
+        : state.classId === "healer"
           ? this.firstAvailable(["player-healer", "player"], "player")
           : this.firstAvailable(["player-dps", "player"], "player");
 
@@ -111,9 +111,8 @@ export class DungeonScene extends Phaser.Scene {
       Phaser.Input.Keyboard.KeyCodes.H,
     ]);
 
-    const current = gameStore.getState();
     this.statusText = this.add
-      .text(16, 16, `Dungeon Tier ${current.dungeonTier} | Level: ${current.level} | Clear waves to summon the boss | Space/J attack | H potion`, {
+      .text(16, 16, `Dungeon Tier ${state.dungeonTier} | Level: ${state.level} | Clear waves to summon the boss | Space/J attack | H potion`, {
         color: PALETTE.neutrals.paperLight,
         fontSize: "14px",
       })
