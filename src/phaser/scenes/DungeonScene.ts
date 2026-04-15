@@ -315,7 +315,7 @@ export class DungeonScene extends Phaser.Scene {
         if (target === this.boss) {
           this.removeEnemy(target);
           this.boss = null;
-          // Drop a key collectible at boss position
+          // Only drop a key collectible at boss position (no loot/chest)
           if (!this.keyDropped) {
             this.keyDropped = true;
             const keyX = target.sprite.x;
@@ -335,7 +335,7 @@ export class DungeonScene extends Phaser.Scene {
               onPowerup: () => {},
               onKey: () => {
                 // Only allow progression after key is picked up
-                const loot = gameStore.completeDungeonAndGrantLoot(this.seed);
+                gameStore.completeDungeonAndGrantLoot(this.seed); // grant loot silently
                 gameStore.refillPotions();
                 const nextState = gameStore.getState();
                 this.statusText.setText(
@@ -359,7 +359,10 @@ export class DungeonScene extends Phaser.Scene {
           }
           return;
         }
-        this.maybeDropLoot(target);
+        // Only drop loot for regular enemies, not the boss
+        if (target !== this.boss) {
+          this.maybeDropLoot(target);
+        }
         this.removeEnemy(target);
         this.enemies = this.enemies.filter((e) => e !== target);
       }
