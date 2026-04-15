@@ -5,6 +5,7 @@ import { gameStore } from "@/game/store";
 import { hashSeed, mulberry32 } from "@/game/rng";
 import { derivePlayerStats, enemyScaleFromDifficulty } from "@/game/stats";
 import { worldToScreen } from "../iso";
+import { difficultyOffsetForLevel, dungeonSeedForLevel } from "@/game/progression";
 
 type Enemy = {
   sprite: Phaser.GameObjects.Image;
@@ -315,9 +316,9 @@ export class DungeonScene extends Phaser.Scene {
             // Prepare next dungeon parameters
             const current = gameStore.getState();
             const tier = current.dungeonTier;
-            const scaledDifficulty = Math.max(1, tier + require("@/game/progression").difficultyOffsetForLevel(current.dungeonLevel));
+            const scaledDifficulty = Math.max(1, tier + difficultyOffsetForLevel(current.dungeonLevel));
             this.scene.start("DungeonScene", {
-              seed: require("@/game/progression").dungeonSeedForLevel(tier, current.dungeonLevel),
+              seed: dungeonSeedForLevel(tier, current.dungeonLevel),
               difficulty: scaledDifficulty,
             });
           });
