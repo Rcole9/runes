@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 
-export type CollectibleKind = "potion" | "loot" | "powerup";
+export type CollectibleKind = "potion" | "loot" | "powerup" | "key";
 
 export type CollectibleSpec = {
   kind: CollectibleKind;
@@ -45,6 +45,7 @@ export type AutoPickupHandlers = {
   onPotion: (amount: number) => void;
   onLoot: () => void;
   onPowerup?: () => void;
+  onKey?: () => void;
 };
 
 export function wireAutoPickup(
@@ -74,5 +75,6 @@ export function wireAutoPickup(
     if (kind === "potion") handlers.onPotion(value);
     if (kind === "loot") handlers.onLoot();
     if (kind === "powerup" && handlers.onPowerup) handlers.onPowerup();
+    if (kind === "key" && handlers.onKey) handlers.onKey();
   });
 }

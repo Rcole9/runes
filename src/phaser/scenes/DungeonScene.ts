@@ -1,3 +1,6 @@
+import { spawnCollectibles, wireAutoPickup, CollectibleKind } from "@/game/collectibles";
+  private keyDropped = false;
+  private keyGroup?: Phaser.Physics.Arcade.StaticGroup;
 import * as Phaser from "phaser";
 import { generateLoot } from "@/game/loot";
 import { PALETTE, hexToNumber } from "@/game/palette";
@@ -312,20 +315,48 @@ export class DungeonScene extends Phaser.Scene {
         if (target === this.boss) {
           this.removeEnemy(target);
           this.boss = null;
-          const loot = gameStore.completeDungeonAndGrantLoot(this.seed);
-          gameStore.refillPotions();
-          this.statusText.setText(`Boss defeated: ${loot.name}`);
-          // Seamless continue: go directly to next dungeon after short delay
-          this.time.delayedCall(1400, () => {
-            // Prepare next dungeon parameters
-            const current = gameStore.getState();
-            const tier = current.dungeonTier;
-            const scaledDifficulty = Math.max(1, tier + difficultyOffsetForLevel(current.dungeonLevel));
-            this.scene.start("DungeonScene", {
-              seed: dungeonSeedForLevel(tier, current.dungeonLevel),
-              difficulty: scaledDifficulty,
+          // Drop a key collectible at boss position
+          if (!this.keyDropped) {
+            this.keyDropped = true;
+            const keyX = target.sprite.x;
+            const keyY = target.sprite.y;
+            this.keyGroup = spawnCollectibles(this, [
+              {
+                kind: "key",
+                x: keyX,
+                y: keyY,
+                texture: "key",
+                scale: 1.2,
+              },
+            ]);
+            wireAutoPickup(this, this.player, this.keyGroup, {
+              onPotion: () => {},
+              onLoot: () => {},
+              onPowerup: () => {},
+              onKey: () => {
+                // Only allow progression after key is picked up
+                const loot = gameStore.completeDungeonAndGrantLoot(this.seed);
+                gameStore.refillPotions();
+                const nextState = gameStore.getState();
+                this.statusText.setText(
+                  `Key acquired!\nNext: Tier ${nextState.dungeonTier} | Level ${nextState.level}`
+                );
+                // eslint-disable-next-line no-console
+                console.log(
+                  `Progressing to Tier ${nextState.dungeonTier}, Level ${nextState.level}, Seed: ${dungeonSeedForLevel(nextState.dungeonTier, nextState.dungeonLevel)}`
+                );
+                this.time.delayedCall(1400, () => {
+                  const tier = nextState.dungeonTier;
+                  const scaledDifficulty = Math.max(1, tier + difficultyOffsetForLevel(nextState.dungeonLevel));
+                  this.scene.start("DungeonScene", {
+                    seed: dungeonSeedForLevel(tier, nextState.dungeonLevel),
+                    difficulty: scaledDifficulty,
+                  });
+                });
+              },
             });
-          });
+            this.statusText.setText("Boss defeated! Collect the key to unlock the next level.");
+          }
           return;
         }
         this.maybeDropLoot(target);
