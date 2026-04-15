@@ -1,6 +1,4 @@
 import { spawnCollectibles, wireAutoPickup, CollectibleKind } from "@/game/collectibles";
-  private keyDropped = false;
-  private keyGroup?: Phaser.Physics.Arcade.StaticGroup;
 import * as Phaser from "phaser";
 import { generateLoot } from "@/game/loot";
 import { PALETTE, hexToNumber } from "@/game/palette";
@@ -24,6 +22,8 @@ type Enemy = {
 };
 
 export class DungeonScene extends Phaser.Scene {
+  private keyDropped = false;
+  private keyGroup?: Phaser.Physics.Arcade.StaticGroup;
   private playerWorld = { x: 8, y: 8 };
   private player!: Phaser.GameObjects.Image;
   private mapOrigin = { x: 0, y: 140 };
@@ -96,7 +96,7 @@ export class DungeonScene extends Phaser.Scene {
     }
 
     const start = worldToScreen(this.playerWorld);
-    this.player = this.add.image(
+    this.player = this.physics.add.image(
       this.mapOrigin.x + start.x,
       this.mapOrigin.y + start.y - 14,
       classPlayerTexture,
@@ -329,7 +329,7 @@ export class DungeonScene extends Phaser.Scene {
                 scale: 1.2,
               },
             ]);
-            wireAutoPickup(this, this.player, this.keyGroup, {
+            wireAutoPickup(this, this.player as Phaser.Types.Physics.Arcade.GameObjectWithBody, this.keyGroup, {
               onPotion: () => {},
               onLoot: () => {},
               onPowerup: () => {},
