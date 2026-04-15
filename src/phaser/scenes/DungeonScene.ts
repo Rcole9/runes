@@ -310,7 +310,17 @@ export class DungeonScene extends Phaser.Scene {
           const loot = gameStore.completeDungeonAndGrantLoot(this.seed);
           gameStore.refillPotions();
           this.statusText.setText(`Boss defeated: ${loot.name}`);
-          this.time.delayedCall(1400, () => this.scene.start("OverworldScene"));
+          // Seamless continue: go directly to next dungeon after short delay
+          this.time.delayedCall(1400, () => {
+            // Prepare next dungeon parameters
+            const current = gameStore.getState();
+            const tier = current.dungeonTier;
+            const scaledDifficulty = Math.max(1, tier + require("@/game/progression").difficultyOffsetForLevel(current.dungeonLevel));
+            this.scene.start("DungeonScene", {
+              seed: require("@/game/progression").dungeonSeedForLevel(tier, current.dungeonLevel),
+              difficulty: scaledDifficulty,
+            });
+          });
           return;
         }
         this.maybeDropLoot(target);
