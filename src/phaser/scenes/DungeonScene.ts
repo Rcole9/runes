@@ -53,9 +53,13 @@ export class DungeonScene extends Phaser.Scene {
   }
 
   init(data: { seed: string; difficulty: number }): void {
-    this.seed = data.seed;
-    this.difficulty = data.difficulty;
-    this.rng = mulberry32(hashSeed(data.seed));
+    // Always use the latest tier/level from the store for progression
+    const current = gameStore.getState();
+    const tier = current.dungeonTier;
+    const level = current.dungeonLevel;
+    this.seed = dungeonSeedForLevel(tier, level);
+    this.difficulty = Math.max(1, tier + difficultyOffsetForLevel(level));
+    this.rng = mulberry32(hashSeed(this.seed));
     this.wave = 0;
     this.phase = 1;
   }
@@ -107,8 +111,9 @@ export class DungeonScene extends Phaser.Scene {
       Phaser.Input.Keyboard.KeyCodes.H,
     ]);
 
+    const current = gameStore.getState();
     this.statusText = this.add
-      .text(16, 16, "Clear waves to summon the boss | Space/J attack | H potion", {
+      .text(16, 16, `Dungeon Tier ${current.dungeonTier} | Level: ${current.level} | Clear waves to summon the boss | Space/J attack | H potion`, {
         color: PALETTE.neutrals.paperLight,
         fontSize: "14px",
       })
