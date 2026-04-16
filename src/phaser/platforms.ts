@@ -55,12 +55,12 @@ export function addPlatform(
 
   // ── visual ────────────────────────────────────────────────────────────────
   if (options.top) {
-    // Use a visually distinct, lighter stone region from the cave-main tileset for the platform top
-    // Crop region: x=12, y=20, w=160, h=32 (adjust as needed for best look)
+    // Use a larger, more visible stone region for the platform top
+    // Crop region: x=12, y=20, w=320, h=48 (adjust as needed for best look)
     scene.add
       .image(lx, spec.y, options.top)
       .setOrigin(0, 0)
-      .setCrop(12, 20, spec.w, h)
+      .setCrop(12, 20, 320, 48)
       .setDisplaySize(spec.w, h)
       .setDepth(5)
       .setAlpha(1);

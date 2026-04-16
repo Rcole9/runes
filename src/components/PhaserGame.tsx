@@ -177,19 +177,19 @@ class MainScene extends Phaser.Scene {
       .setOrigin(0, 0)
       .setDepth(4)
       .setAlpha(1);
-    addPlatform(this, kit, { x: 1200, y: 592, w: 2400, h: 32, faceH: 18 }, { top: "cave-main" });
+    addPlatform(this, kit, { x: 1200, y: 592, w: 2400, h: 48, faceH: 18 }, { top: "cave-main" });
 
     // Add classic jumpable platforms with cave-main tile
-    addPlatform(this, kit, { x: 400, y: 480, w: 180 }, { top: "cave-main" });
-    addPlatform(this, kit, { x: 700, y: 400, w: 160 }, { top: "cave-main" });
-    addPlatform(this, kit, { x: 1000, y: 320, w: 140 }, { top: "cave-main" });
-    addPlatform(this, kit, { x: 1300, y: 400, w: 160 }, { top: "cave-main" });
-    addPlatform(this, kit, { x: 1600, y: 480, w: 180 }, { top: "cave-main" });
-    addPlatform(this, kit, { x: 1900, y: 380, w: 140 }, { top: "cave-main" });
+    addPlatform(this, kit, { x: 400, y: 480, w: 180, h: 40 }, { top: "cave-main" });
+    addPlatform(this, kit, { x: 700, y: 400, w: 160, h: 40 }, { top: "cave-main" });
+    addPlatform(this, kit, { x: 1000, y: 320, w: 140, h: 40 }, { top: "cave-main" });
+    addPlatform(this, kit, { x: 1300, y: 400, w: 160, h: 40 }, { top: "cave-main" });
+    addPlatform(this, kit, { x: 1600, y: 480, w: 180, h: 40 }, { top: "cave-main" });
+    addPlatform(this, kit, { x: 1900, y: 380, w: 140, h: 40 }, { top: "cave-main" });
 
     // Example one-way platforms (add more as needed) with cave-main tile
-    addOneWayPlatform(this, oneWayGroup, { x: 600, y: 420, w: 220 }, "cave-main");
-    addOneWayPlatform(this, oneWayGroup, { x: 1400, y: 340, w: 220 }, "cave-main");
+    addOneWayPlatform(this, oneWayGroup, { x: 600, y: 420, w: 220, thickness: 36 }, "cave-main");
+    addOneWayPlatform(this, oneWayGroup, { x: 1400, y: 340, w: 220, thickness: 36 }, "cave-main");
 
     // ── door (locked until KEYS_TO_UNLOCK keys are collected) ────────────────
     const door = this.add.image(2360, 548, "door").setDisplaySize(56, 76).setDepth(50);
