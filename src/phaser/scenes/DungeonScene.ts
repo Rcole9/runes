@@ -69,6 +69,10 @@ export class DungeonScene extends Phaser.Scene {
   }
 
   create(): void {
+        // Enable attack on pointerdown (mouse, tap, trackpad)
+        this.input.on('pointerdown', () => {
+          this.playerAttack();
+        });
     const state = gameStore.getState();
     const classPlayerTexture =
       state.classId === "tank"
@@ -211,7 +215,7 @@ export class DungeonScene extends Phaser.Scene {
         regenDelayMs: 1400,
         regenDelayRemaining: 0,
       });
-
+      // Draw health bar immediately
       this.updateEnemyHealthBar(this.enemies[this.enemies.length - 1]);
     }
 
@@ -242,6 +246,7 @@ export class DungeonScene extends Phaser.Scene {
       regenDelayMs: 1900,
       regenDelayRemaining: 0,
     };
+    // Draw boss health bar immediately
     this.updateEnemyHealthBar(this.boss);
     this.statusText.setText("Boss phase 1: watch telegraphs");
   }
