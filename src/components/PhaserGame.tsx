@@ -6,7 +6,9 @@ import { initializeStore } from "@/game/store";
 import { gameStore } from "@/game/store";
 import { generateLoot } from "@/game/loot";
 import { hashSeed, mulberry32 } from "@/game/rng";
-import { spawnCollectibles, wireAutoPickup, AutoPickupHandlers } from "@/game/collectibles";
+import { spawnCollectibles, wireAutoPickup } from "@/game/collectibles";
+import { generateLoot } from "@/game/loot";
+import { mulberry32, hashSeed } from "@/game/rng";
 import { addPlatform, createPlatformKit } from "@/phaser/platforms";
 import {
   addOneWayCollider,
@@ -623,15 +625,11 @@ class MainScene extends Phaser.Scene {
           updateHUD();
         } else if (!isBossFloor()) {
           // Generate random loot (weapon or armor)
-          const { generateLoot } = require("@/game/loot");
-          const { mulberry32, hashSeed } = require("@/game/rng");
-          const { grantLoot } = gameStore;
           const rng = mulberry32(hashSeed(`${Date.now()}-${Math.random()}`));
           const loot = generateLoot(rng, level);
           // Choose a texture based on loot type
           let lootTexture = "cave-crystal";
           if (loot.slot === "weapon") {
-            // Use a sword or staff icon if available
             lootTexture = "icon-sword";
             if (loot.name.toLowerCase().includes("staff")) lootTexture = "icon-staff";
             if (loot.name.toLowerCase().includes("bow")) lootTexture = "icon-bow";
@@ -649,7 +647,7 @@ class MainScene extends Phaser.Scene {
             onPotion: (amount: number) => {
               gameStore.addPotions(amount);
             },
-            onLoot: (_amount?: number, item?: any) => {
+            onLoot: () => {
               // Grant the generated loot to the player
               if (loot) gameStore.grantLoot(loot);
             },
