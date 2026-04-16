@@ -639,7 +639,7 @@ class MainScene extends Phaser.Scene {
             lootTexture = "icon-armor";
           }
           const dropped = spawnCollectibles(this, [
-            { kind: "loot", x: ex, y: ey, texture: lootTexture, scale: 0.48, loot },
+            { kind: "loot", x: ex, y: ey, texture: lootTexture, scale: 0.48 },
           ]);
           const handlers = {
             onPotion: (amount: number) => {
