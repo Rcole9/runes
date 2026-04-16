@@ -190,8 +190,22 @@ class MainScene extends Phaser.Scene {
     addPlatform(this, kit, { x: 1900, y: 380, w: 140, h: 40 }, { top: "cave-props-1", crop: { x: 176, y: 32, w: 160, h: 88 } });
 
     // Example one-way platforms (add more as needed) with cave-main tile
-    addOneWayPlatform(this, oneWayGroup, { x: 600, y: 420, w: 220, thickness: 36 }, "cave-props-1", { x: 176, y: 32, w: 160, h: 88 });
-    addOneWayPlatform(this, oneWayGroup, { x: 1400, y: 340, w: 220, thickness: 36 }, "cave-props-1", { x: 176, y: 32, w: 160, h: 88 });
+    // Add one-way platforms and draw log visuals manually
+    addOneWayPlatform(this, oneWayGroup, { x: 600, y: 420, w: 220, thickness: 36 }, "cave-props-1");
+    this.add.image(600 - 110, 420, "cave-props-1")
+      .setOrigin(0, 0)
+      .setCrop(176, 32, 160, 88)
+      .setDisplaySize(220, 40)
+      .setDepth(5)
+      .setAlpha(1);
+
+    addOneWayPlatform(this, oneWayGroup, { x: 1400, y: 340, w: 220, thickness: 36 }, "cave-props-1");
+    this.add.image(1400 - 110, 340, "cave-props-1")
+      .setOrigin(0, 0)
+      .setCrop(176, 32, 160, 88)
+      .setDisplaySize(220, 40)
+      .setDepth(5)
+      .setAlpha(1);
 
     // ── door (locked until KEYS_TO_UNLOCK keys are collected) ────────────────
     const door = this.add.image(2360, 548, "door").setDisplaySize(56, 76).setDepth(50);
