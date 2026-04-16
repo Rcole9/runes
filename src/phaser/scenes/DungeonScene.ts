@@ -22,6 +22,7 @@ type Enemy = {
 };
 
 export class DungeonScene extends Phaser.Scene {
+  private _pointerWasDown = false;
   private keyDropped = false;
   private keyGroup?: Phaser.Physics.Arcade.StaticGroup;
   private playerWorld = { x: 8, y: 8 };
