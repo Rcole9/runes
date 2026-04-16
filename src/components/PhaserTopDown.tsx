@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import * as Phaser from "phaser";
 
-const TILE_SIZE = 16;
+const TILE_SIZE = 32; // Chunkier pixels for Gungeon-like look
 const MAP_W = 22;
 const MAP_H = 16;
 
@@ -78,16 +78,24 @@ class TopDownScene extends Phaser.Scene {
     const bg = this.add.image(0, 0, 'background1').setOrigin(0).setDepth(-10);
     bg.setDisplaySize(this.cameras.main.width, this.cameras.main.height);
 
+    // --- Vignette overlay for moody look ---
+    const g = this.add.graphics({ x: 0, y: 0 });
+    const w = this.cameras.main.width, h = this.cameras.main.height;
+    g.fillStyle(0x000000, 0.6);
+    g.fillCircle(w/2, h/2, Math.max(w, h)*0.6);
+    g.setBlendMode(Phaser.BlendModes.MULTIPLY);
+    g.setDepth(20);
+
     // ----- Dungeon Generation -----
     const map = makeDungeon();
 
-    // Floor & Walls
+    // Floor & Walls (scaled up for chunky pixels)
     for (let y = 0; y < MAP_H; ++y) {
       for (let x = 0; x < MAP_W; ++x) {
         if (map[y][x] === 1) {
-          this.add.image(x * TILE_SIZE, y * TILE_SIZE, "Dungeon_FloorsWallsA5").setOrigin(0);
+          this.add.image(x * TILE_SIZE, y * TILE_SIZE, "Dungeon_FloorsWallsA5").setOrigin(0).setScale(2);
         } else {
-          this.add.image(x * TILE_SIZE, y * TILE_SIZE, "Dungeon_FloorsA2").setOrigin(0);
+          this.add.image(x * TILE_SIZE, y * TILE_SIZE, "Dungeon_FloorsA2").setOrigin(0).setScale(2);
         }
       }
     }
@@ -98,11 +106,11 @@ class TopDownScene extends Phaser.Scene {
       for (let x = 0; x < MAP_W; ++x)
         if (map[y][x] === 1)
           walls.create(x * TILE_SIZE + TILE_SIZE/2, y * TILE_SIZE + TILE_SIZE/2, "Dungeon_FloorsWallsA5")
-            .setDisplaySize(TILE_SIZE, TILE_SIZE).refreshBody().setVisible(false);
+            .setDisplaySize(TILE_SIZE*2, TILE_SIZE*2).refreshBody().setVisible(false);
 
     // ----- Player -----
     this.player = this.physics.add.sprite(TILE_SIZE*2 + TILE_SIZE/2, TILE_SIZE*Math.floor(MAP_H/2) + TILE_SIZE/2, "Dungeon_HeroMan1")
-      .setDepth(3).setDisplaySize(TILE_SIZE, TILE_SIZE);
+      .setDepth(3).setDisplaySize(TILE_SIZE*2, TILE_SIZE*2);
     if (this.player.body) {
       (this.player.body as Phaser.Physics.Arcade.Body).setCollideWorldBounds(true);
     }
@@ -113,17 +121,17 @@ class TopDownScene extends Phaser.Scene {
       TILE_SIZE*(MAP_W-3) + TILE_SIZE/2,
       TILE_SIZE*Math.floor(MAP_H/2) + TILE_SIZE/2,
       "Dungeon_Slimes1"
-    ).setDisplaySize(TILE_SIZE, TILE_SIZE).setDepth(2);
+    ).setDisplaySize(TILE_SIZE*2, TILE_SIZE*2).setDepth(2);
 
     this.physics.add.existing(this.collectible, true);
 
     this.physics.add.overlap(this.player, this.collectible, () => {
       this.collectible.setVisible(false);
-      this.add.text(this.player.x-20, this.player.y-24, "Got it!", { color: "#fff", fontSize: "12px" }).setDepth(10);
+      this.add.text(this.player.x-20, this.player.y-24, "Got it!", { color: "#fff", fontSize: "16px" }).setDepth(10);
     });
 
     // ----- Camera -----
-    this.cameras.main.setZoom(3);
+    this.cameras.main.setZoom(2.2); // More "roomy" feel
     this.cameras.main.startFollow(this.player, true, 0.13, 0.13);
 
     // ----- Movement -----
