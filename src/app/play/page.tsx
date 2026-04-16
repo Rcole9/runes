@@ -1,3 +1,4 @@
+"use client";
 import GamePlayClient from "@/components/GamePlayClient";
 
 import dynamic from "next/dynamic";
