@@ -570,3 +570,6 @@ export class DungeonScene extends Phaser.Scene {
         });
       }
     }
+  }
+
+}
