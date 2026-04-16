@@ -476,6 +476,55 @@ export class DungeonScene extends Phaser.Scene {
       return;
     }
 
+    const speed = dt * 0.0043;
+    if (this.keys.W.isDown) this.playerWorld.y -= speed;
+    if (this.keys.S.isDown) this.playerWorld.y += speed;
+    if (this.keys.A.isDown) this.playerWorld.x -= speed;
+    if (this.keys.D.isDown) this.playerWorld.x += speed;
+
+    this.playerWorld.x = Phaser.Math.Clamp(this.playerWorld.x, 1, 14);
+    this.playerWorld.y = Phaser.Math.Clamp(this.playerWorld.y, 1, 14);
+    const pos = worldToScreen(this.playerWorld);
+    this.player.setPosition(
+      this.mapOrigin.x + pos.x,
+      this.mapOrigin.y + pos.y - 14,
+    );
+    this.player.setDepth(this.mapOrigin.y + pos.y + 90);
+
+    this.attackCooldown -= dt;
+    if (Phaser.Input.Keyboard.JustDown(this.keys.H)) {
+      gameStore.usePotion();
+    }
+
+    // Attack with SPACE, J, or mouse click/tap
+    const pointer = this.input.activePointer;
+    let pointerAttack = false;
+    if (pointer.leftButtonDown() && !this._pointerWasDown) {
+      pointerAttack = true;
+    }
+    this._pointerWasDown = pointer.leftButtonDown();
+
+    const attackPressed =
+      Phaser.Input.Keyboard.JustDown(this.keys.SPACE) ||
+      Phaser.Input.Keyboard.JustDown(this.keys.J) ||
+      pointerAttack;
+    if (attackPressed) {
+      this.playerAttack();
+    }
+
+    this.enemies.forEach((enemy) => this.updateEnemy(enemy, dt));
+
+    if (!this.boss) {
+      if (this.enemies.length === 0) {
+        if (this.wave < 2) {
+          this.spawnWave();
+        } else {
+          this.spawnBoss();
+        }
+      }
+      return;
+    }
+
     this.updateEnemy(this.boss, dt);
 
     if (this.phase === 1 && this.boss.hp < 0.5 * enemyScaleFromDifficulty(this.difficulty + 5, gameStore.getState().powerLevel).hp * 8) {
@@ -519,8 +568,5 @@ export class DungeonScene extends Phaser.Scene {
           regenDelayMs: 1200,
           regenDelayRemaining: 0,
         });
-        this.updateEnemyHealthBar(this.enemies[this.enemies.length - 1]);
       }
     }
-  }
-}
