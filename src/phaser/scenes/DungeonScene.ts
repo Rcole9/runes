@@ -436,45 +436,7 @@ export class DungeonScene extends Phaser.Scene {
   }
 
   update(_time: number, dt: number): void {
-    const speed = dt * 0.0043;
-    if (this.keys.W.isDown) this.playerWorld.y -= speed;
-    if (this.keys.S.isDown) this.playerWorld.y += speed;
-    if (this.keys.A.isDown) this.playerWorld.x -= speed;
-    if (this.keys.D.isDown) this.playerWorld.x += speed;
-
-    this.playerWorld.x = Phaser.Math.Clamp(this.playerWorld.x, 1, 14);
-    this.playerWorld.y = Phaser.Math.Clamp(this.playerWorld.y, 1, 14);
-    const pos = worldToScreen(this.playerWorld);
-    this.player.setPosition(
-      this.mapOrigin.x + pos.x,
-      this.mapOrigin.y + pos.y - 14,
-    );
-    this.player.setDepth(this.mapOrigin.y + pos.y + 90);
-
-    this.attackCooldown -= dt;
-    if (Phaser.Input.Keyboard.JustDown(this.keys.H)) {
-      gameStore.usePotion();
-    }
-
-    const attackPressed =
-      Phaser.Input.Keyboard.JustDown(this.keys.SPACE) ||
-      Phaser.Input.Keyboard.JustDown(this.keys.J);
-    if (attackPressed) {
-      this.playerAttack();
-    }
-
-    this.enemies.forEach((enemy) => this.updateEnemy(enemy, dt));
-
-    if (!this.boss) {
-      if (this.enemies.length === 0) {
-        if (this.wave < 2) {
-          this.spawnWave();
-        } else {
-          this.spawnBoss();
-        }
-      }
-      return;
-    }
+    // ...existing code...
 
     const speed = dt * 0.0043;
     if (this.keys.W.isDown) this.playerWorld.y -= speed;
