@@ -172,24 +172,24 @@ class MainScene extends Phaser.Scene {
     placeSheetDeco("cave-props-2", 604, 438, 308, 174, 1470, 432, 7, 0.72, 0.94);
     placeSheetDeco("cave-props-2", 0, 864, 370, 142, 1830, 470, 7, 0.82, 0.95);
 
-    // Ground (one big floor)
-    const caveFloor = this.add.graphics().setDepth(4);
-    caveFloor.fillStyle(0x261c1d, 1); caveFloor.fillRect(0, 576, worldWidth, 44);
-    caveFloor.fillStyle(0x4f3c39, 1); caveFloor.fillRect(0, 576, worldWidth, 4);
-    caveFloor.fillStyle(0x171215, 1); caveFloor.fillRect(0, 612, worldWidth, 8);
-    addPlatform(this, kit, { x: 1200, y: 592, w: 2400, h: 32, faceH: 18 });
+    // Ground (one big floor) using cave-main tile
+    this.add.tileSprite(0, 576, worldWidth, 44, "cave-main")
+      .setOrigin(0, 0)
+      .setDepth(4)
+      .setAlpha(1);
+    addPlatform(this, kit, { x: 1200, y: 592, w: 2400, h: 32, faceH: 18 }, { top: "cave-main" });
 
-    // Add classic jumpable platforms
-    addPlatform(this, kit, { x: 400, y: 480, w: 180 });
-    addPlatform(this, kit, { x: 700, y: 400, w: 160 });
-    addPlatform(this, kit, { x: 1000, y: 320, w: 140 });
-    addPlatform(this, kit, { x: 1300, y: 400, w: 160 });
-    addPlatform(this, kit, { x: 1600, y: 480, w: 180 });
-    addPlatform(this, kit, { x: 1900, y: 380, w: 140 });
+    // Add classic jumpable platforms with cave-main tile
+    addPlatform(this, kit, { x: 400, y: 480, w: 180 }, { top: "cave-main" });
+    addPlatform(this, kit, { x: 700, y: 400, w: 160 }, { top: "cave-main" });
+    addPlatform(this, kit, { x: 1000, y: 320, w: 140 }, { top: "cave-main" });
+    addPlatform(this, kit, { x: 1300, y: 400, w: 160 }, { top: "cave-main" });
+    addPlatform(this, kit, { x: 1600, y: 480, w: 180 }, { top: "cave-main" });
+    addPlatform(this, kit, { x: 1900, y: 380, w: 140 }, { top: "cave-main" });
 
-    // Example one-way platforms (add more as needed)
-    addOneWayPlatform(this, oneWayGroup, { x: 600, y: 420, w: 220 });
-    addOneWayPlatform(this, oneWayGroup, { x: 1400, y: 340, w: 220 });
+    // Example one-way platforms (add more as needed) with cave-main tile
+    addOneWayPlatform(this, oneWayGroup, { x: 600, y: 420, w: 220 }, "cave-main");
+    addOneWayPlatform(this, oneWayGroup, { x: 1400, y: 340, w: 220 }, "cave-main");
 
     // ── door (locked until KEYS_TO_UNLOCK keys are collected) ────────────────
     const door = this.add.image(2360, 548, "door").setDisplaySize(56, 76).setDepth(50);
