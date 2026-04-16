@@ -11,6 +11,7 @@ export interface PlatformSpec {
 export interface PlatformOptions {
   /** Texture key for the surface tile. If omitted, draws with Graphics. */
   top?: string;
+  crop?: { x: number; y: number; w: number; h: number };
   /**
    * When true the platform is added to kit.oneWay instead of kit.solids.
    * Players can jump up through it; they only land when falling from above.
@@ -55,12 +56,12 @@ export function addPlatform(
 
   // ── visual ────────────────────────────────────────────────────────────────
   if (options.top) {
-    // Use a larger, more visible stone region for the platform top
-    // Crop region: x=12, y=20, w=320, h=48 (adjust as needed for best look)
+    // Use the log platform art from props1.png
+    const crop = options.crop || { x: 176, y: 32, w: 160, h: 88 };
     scene.add
       .image(lx, spec.y, options.top)
       .setOrigin(0, 0)
-      .setCrop(12, 20, 320, 48)
+      .setCrop(crop.x, crop.y, crop.w, crop.h)
       .setDisplaySize(spec.w, h)
       .setDepth(5)
       .setAlpha(1);
