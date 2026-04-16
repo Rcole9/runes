@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Phaser from "phaser";
+import * as Phaser from "phaser";
 
 const TILE_SIZE = 32; // Chunkier pixels
 const MAP_W = 18;
@@ -159,8 +159,8 @@ class MultiRoomScene extends Phaser.Scene {
   update() {
     if (!this.cursors) return;
     let vx = 0,
-      vy = 0,
-      speed = 100;
+      vy = 0;
+    const speed = 100;
     if (this.cursors.left.isDown || this.input.keyboard!.addKey("A").isDown) vx -= speed;
     if (this.cursors.right.isDown || this.input.keyboard!.addKey("D").isDown) vx += speed;
     if (this.cursors.up.isDown || this.input.keyboard!.addKey("W").isDown) vy -= speed;
