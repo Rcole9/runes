@@ -103,7 +103,9 @@ class TopDownScene extends Phaser.Scene {
     // ----- Player -----
     this.player = this.physics.add.sprite(TILE_SIZE*2 + TILE_SIZE/2, TILE_SIZE*Math.floor(MAP_H/2) + TILE_SIZE/2, "Dungeon_HeroMan1")
       .setDepth(3).setDisplaySize(TILE_SIZE, TILE_SIZE);
-    this.player.body.setCollideWorldBounds(true);
+    if (this.player.body) {
+      (this.player.body as Phaser.Physics.Arcade.Body).setCollideWorldBounds(true);
+    }
     this.physics.add.collider(this.player, walls);
 
     // ----- Collectible -----
