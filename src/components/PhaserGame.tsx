@@ -85,6 +85,23 @@ class MainScene extends Phaser.Scene {
 
     // ── platforms ────────────────────────────────────────────────────────────
     const kit = createPlatformKit(this);
+    // Add a step ramp after solids group is created
+    // Import at top: import { addStepRamp } from "@/phaser/stepRamps";
+    // Step ramp: left edge x=300, ground y=592, 10 steps, each 18px wide, 6px high
+    // (feels like a gentle slope)
+    // This is invisible collision; visuals can be added separately
+    // @ts-ignore-next-line
+    import("@/phaser/stepRamps").then(({ addStepRamp }) => {
+      addStepRamp(this, kit.solids, {
+        x: 300,
+        y: 592,
+        steps: 10,
+        stepW: 18,
+        stepH: 6,
+      });
+    });
+    // Create a one-way platform group
+    const oneWayGroup = createOneWayGroup(this);
 
     const placeSheetDeco = (
       key: string,
@@ -167,6 +184,10 @@ class MainScene extends Phaser.Scene {
     caveFloor.fillStyle(0x171215, 1); caveFloor.fillRect(0, 612, worldWidth, 8);
     addPlatform(this, kit, { x: 1200, y: 592, w: 2400, h: 32, faceH: 18 });
 
+    // Example one-way platforms (add more as needed)
+    addOneWayPlatform(this, oneWayGroup, { x: 600, y: 420, w: 220 });
+    addOneWayPlatform(this, oneWayGroup, { x: 1400, y: 340, w: 220 });
+
     // ── door (locked until KEYS_TO_UNLOCK keys are collected) ────────────────
     const door = this.add.image(2360, 548, "door").setDisplaySize(56, 76).setDepth(50);
     const doorGlow = this.add
@@ -196,8 +217,10 @@ class MainScene extends Phaser.Scene {
 
     // ── enemies ──────────────────────────────────────────────────────────────
     const enemies = this.physics.add.group();
-
     this.physics.add.collider(enemies, kit.solids);
+
+    // ── enemy health bars ──
+    const enemyHpBars = new Map<Phaser.Physics.Arcade.Sprite, Phaser.GameObjects.Graphics>();
 
     // ── player ───────────────────────────────────────────────────────────────
     gameStore.resetHp();
@@ -208,7 +231,8 @@ class MainScene extends Phaser.Scene {
       .setDisplaySize(40, 40).setDepth(100);
     (player.body as Phaser.Physics.Arcade.Body).setSize(26, 36);
 
-    // Remove platformer physics/colliders for top-down
+    // Enable one-way platform collision for player
+    addOneWayCollider(this, player, oneWayGroup);
 
 
     // ── HUD ──────────────────────────────────────────────────────────────────
@@ -344,8 +368,30 @@ class MainScene extends Phaser.Scene {
         patrolTimer: Phaser.Math.Between(1000, 2500),
         hitTimer: 0,
       } satisfies EnemyState);
-      // Platformer colliders removed
+      // Add health bar
+      const hpBar = this.add.graphics();
+      enemyHpBars.set(e, hpBar);
+      updateEnemyHpBar(e);
       return e;
+    };
+
+    // Draw/update enemy health bar
+    const updateEnemyHpBar = (enemy: Phaser.Physics.Arcade.Sprite) => {
+      const state = enemy.getData("state") as EnemyState;
+      const isBoss = enemy.getData("isBoss") === true;
+      const hpBar = enemyHpBars.get(enemy);
+      if (!hpBar) return;
+      const width = isBoss ? 54 : 28;
+      const height = isBoss ? 10 : 5;
+      const x = enemy.x - width / 2;
+      const y = enemy.y - (isBoss ? 54 : 24);
+      const pct = Phaser.Math.Clamp(state.hp / (isBoss ? 18 : enemy.texture.key === "orc" ? 3 : 2), 0, 1);
+      hpBar.clear();
+      hpBar.fillStyle(0x222222, 0.9);
+      hpBar.fillRect(x - 1, y - 1, width + 2, height + 2);
+      hpBar.fillStyle(isBoss ? 0xff6666 : 0x66ff66, 1);
+      hpBar.fillRect(x, y, width * pct, height);
+      hpBar.setDepth(enemy.depth + 10);
     };
 
     // Chest reward logic: Only allow looting after boss defeat, and only progress after chest is opened
@@ -535,6 +581,7 @@ class MainScene extends Phaser.Scene {
         enemy.setVelocity(220 * kbDir, -130);
         this.time.delayedCall(130, () => { if (enemy.active) enemy.clearTint(); });
 
+        updateEnemyHpBar(enemy);
         if (state.hp <= 0) toKill.push(enemy);
         return true;
       });
@@ -543,6 +590,9 @@ class MainScene extends Phaser.Scene {
         const ex = enemy.x;
         const ey = enemy.y - 8;
         const isBoss = enemy.getData("isBoss") === true;
+        // Remove health bar
+        const hpBar = enemyHpBars.get(enemy);
+        if (hpBar) { hpBar.destroy(); enemyHpBars.delete(enemy); }
         enemy.destroy();
         if (isBoss) {
           bossDefeated = true;
@@ -566,7 +616,6 @@ class MainScene extends Phaser.Scene {
 
     // --- Main update loop ---
     this.events.on('update', (time: number, delta: number) => {
-
       // Top-down movement: WASD or arrows
       let vx = 0, vy = 0;
       if (cursors.left.isDown || keys.left.isDown) vx -= 1;
@@ -582,11 +631,12 @@ class MainScene extends Phaser.Scene {
       if (vx < 0) player.setFlipX(true);
       else if (vx > 0) player.setFlipX(false);
 
-      const rightNow = pointer.rightButtonDown();
-      if (rightNow && !wasRightDown) attack();
-      wasRightDown = rightNow;
+      // Enable attack on pointer down (left click/tap)
+      const leftNow = pointer.leftButtonDown();
+      if (leftNow && !wasRightDown) attack();
+      wasRightDown = leftNow;
 
-      // enemy AI (patrol / chase)
+      // enemy AI (patrol / chase) and update health bars
       enemies.children.iterate((child) => {
         const enemy = child as Phaser.Physics.Arcade.Sprite;
         if (!enemy.active) return true;
@@ -614,6 +664,8 @@ class MainScene extends Phaser.Scene {
           enemy.setFlipX(state.patrolDir < 0);
         }
 
+        // Update health bar position and value
+        updateEnemyHpBar(enemy);
         return true;
       });
     });
