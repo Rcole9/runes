@@ -7,8 +7,6 @@ import { gameStore } from "@/game/store";
 import { generateLoot } from "@/game/loot";
 import { hashSeed, mulberry32 } from "@/game/rng";
 import { spawnCollectibles, wireAutoPickup } from "@/game/collectibles";
-import { generateLoot } from "@/game/loot";
-import { mulberry32, hashSeed } from "@/game/rng";
 import { addPlatform, createPlatformKit } from "@/phaser/platforms";
 import {
   addOneWayCollider,
