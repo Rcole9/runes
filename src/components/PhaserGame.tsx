@@ -53,6 +53,15 @@ class MainScene extends Phaser.Scene {
     this.load.image("door",   "/assets/sprites/rpg-enemies/freepixel-theme-dungeon-crawler/dungeon-door-boss-ornate-large-menacing-skull_20260217_215806.png");
     this.load.image("player", "/assets/sprites/rpg-characters/freepixel-rpg-characters-companions/warrior-knight-with-sword-021.png");
     this.load.image("slash",  "/assets/kenney/slash.png");
+
+    // Load representative weapon and armor sprites for loot drops
+    this.load.image("loot-sword", "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/steel-longsword-shiny-blade-012-v2.png");
+    this.load.image("loot-staff", "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/magical-staff-wand-crystal-025-v3.png");
+    this.load.image("loot-bow", "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/longbow-elven-elegant-curved-022-v3.png");
+    this.load.image("loot-dagger", "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/dagger-knife-weapon-short-026-v3.png");
+    this.load.image("loot-mace", "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/war-hammer-mace-heavy-015-v2.png");
+    this.load.image("loot-spear", "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/spear-polearm-weapon-long-007.png");
+    this.load.image("loot-armor", "/assets/sprites/rpg-weapons/freepixel-rpg-weapons-armor/plate-armor-full-heavy-023-v3.png");
   }
 
   create() {
@@ -612,17 +621,17 @@ class MainScene extends Phaser.Scene {
           const rng = mulberry32(hashSeed(`${Date.now()}-${Math.random()}`));
           const loot = generateLoot(rng, level);
           // Choose a texture based on loot type
-          let lootTexture = "cave-crystal";
+          // Choose a real weapon/armor sprite for loot drop
+          let lootTexture = "loot-sword";
           if (loot.slot === "weapon") {
-            lootTexture = "icon-sword";
-            if (loot.name.toLowerCase().includes("staff")) lootTexture = "icon-staff";
-            if (loot.name.toLowerCase().includes("bow")) lootTexture = "icon-bow";
-            if (loot.name.toLowerCase().includes("dagger")) lootTexture = "icon-dagger";
-            if (loot.name.toLowerCase().includes("mace")) lootTexture = "icon-mace";
-            if (loot.name.toLowerCase().includes("spear")) lootTexture = "icon-spear";
-            if (loot.name.toLowerCase().includes("blade")) lootTexture = "icon-sword";
+            if (loot.name.toLowerCase().includes("staff")) lootTexture = "loot-staff";
+            else if (loot.name.toLowerCase().includes("bow")) lootTexture = "loot-bow";
+            else if (loot.name.toLowerCase().includes("dagger")) lootTexture = "loot-dagger";
+            else if (loot.name.toLowerCase().includes("mace")) lootTexture = "loot-mace";
+            else if (loot.name.toLowerCase().includes("spear")) lootTexture = "loot-spear";
+            else lootTexture = "loot-sword";
           } else if (loot.slot === "armor") {
-            lootTexture = "icon-armor";
+            lootTexture = "loot-armor";
           }
           const dropped = spawnCollectibles(this, [
             { kind: "loot", x: ex, y: ey, texture: lootTexture, scale: 0.48 },
