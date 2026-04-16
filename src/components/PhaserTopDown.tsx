@@ -104,7 +104,8 @@ class TopDownScene extends Phaser.Scene {
     const cursors = this.cursors;
     if (!cursors) return;
 
-    let vx = 0, vy = 0, speed = 100;
+    let vx = 0, vy = 0;
+    const speed = 100;
     if (cursors.left.isDown || this.input.keyboard!.addKey('A').isDown) vx -= speed;
     if (cursors.right.isDown || this.input.keyboard!.addKey('D').isDown) vx += speed;
     if (cursors.up.isDown || this.input.keyboard!.addKey('W').isDown) vy -= speed;
