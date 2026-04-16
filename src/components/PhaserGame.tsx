@@ -321,8 +321,9 @@ class MainScene extends Phaser.Scene {
       wireAutoPickup(this, player, roundKeys, {
         onPotion: () => {},
         onLoot: () => {},
-        onKey: () => {
-          keysCollected++;
+        onKey: (_amount?: number) => {
+          // Always count 1 per key, ignore value
+          keysCollected += 1;
           console.log("Collected, keys:", keysCollected);
           updateHUD();
           if (keysCollected >= keysRequired) {
