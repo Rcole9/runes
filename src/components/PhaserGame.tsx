@@ -91,7 +91,6 @@ class MainScene extends Phaser.Scene {
     // Step ramp: left edge x=300, ground y=592, 10 steps, each 18px wide, 6px high
     // (feels like a gentle slope)
     // This is invisible collision; visuals can be added separately
-    // @ts-expect-error-next-line
     import("@/phaser/stepRamps").then(({ addStepRamp }) => {
       addStepRamp(this, kit.solids, {
         x: 300,
