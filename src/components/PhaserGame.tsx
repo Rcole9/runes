@@ -86,20 +86,6 @@ class MainScene extends Phaser.Scene {
 
     // ── platforms ────────────────────────────────────────────────────────────
     const kit = createPlatformKit(this);
-    // Add a step ramp after solids group is created
-    // Import at top: import { addStepRamp } from "@/phaser/stepRamps";
-    // Step ramp: left edge x=300, ground y=592, 10 steps, each 18px wide, 6px high
-    // (feels like a gentle slope)
-    // This is invisible collision; visuals can be added separately
-    import("@/phaser/stepRamps").then(({ addStepRamp }) => {
-      addStepRamp(this, kit.solids, {
-        x: 300,
-        y: 592,
-        steps: 10,
-        stepW: 18,
-        stepH: 6,
-      });
-    });
     // Create a one-way platform group
     const oneWayGroup = createOneWayGroup(this);
 
