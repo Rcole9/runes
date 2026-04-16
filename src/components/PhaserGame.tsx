@@ -208,37 +208,7 @@ class MainScene extends Phaser.Scene {
       .setDisplaySize(40, 40).setDepth(100);
     (player.body as Phaser.Physics.Arcade.Body).setSize(26, 36);
 
-    this.physics.add.collider(player, kit.solids);
-
-    const oneWays = createOneWayGroup(this);
-    const bossOneWays = createOneWayGroup(this);
-
-    // One-way ledges
-    drawFloatingPlatform(240, 450, 230, 34, 0);
-    addOneWayPlatform(this, oneWays, { x: 240, y: 450, w: 230, thickness: 30 });
-    drawFloatingPlatform(430, 390, 210, 34, 1);
-    addOneWayPlatform(this, oneWays, { x: 430, y: 390, w: 210, thickness: 30 });
-    drawFloatingPlatform(620, 330, 240, 34, 2);
-    addOneWayPlatform(this, oneWays, { x: 620, y: 330, w: 240, thickness: 30 });
-    drawFloatingPlatform(820, 435, 220, 34, 3);
-    addOneWayPlatform(this, oneWays, { x: 820, y: 435, w: 220, thickness: 30 });
-    drawFloatingPlatform(1020, 365, 230, 34, 0);
-    addOneWayPlatform(this, oneWays, { x: 1020, y: 365, w: 230, thickness: 30 });
-    drawFloatingPlatform(1210, 300, 260, 34, 1);
-    addOneWayPlatform(this, oneWays, { x: 1210, y: 300, w: 260, thickness: 30 });
-    drawFloatingPlatform(1420, 410, 220, 34, 2);
-    addOneWayPlatform(this, oneWays, { x: 1420, y: 410, w: 220, thickness: 30 });
-    drawFloatingPlatform(1600, 350, 230, 34, 3);
-    addOneWayPlatform(this, oneWays, { x: 1600, y: 350, w: 230, thickness: 30 });
-    drawFloatingPlatform(1790, 290, 250, 34, 0);
-    addOneWayPlatform(this, oneWays, { x: 1790, y: 290, w: 250, thickness: 30 });
-    drawFloatingPlatform(1980, 405, 220, 34, 1);
-    addOneWayPlatform(this, oneWays, { x: 1980, y: 405, w: 220, thickness: 30 });
-    drawFloatingPlatform(2170, 345, 210, 34, 2);
-    addOneWayPlatform(this, oneWays, { x: 2170, y: 345, w: 210, thickness: 30 });
-
-    addOneWayCollider(this, player, oneWays);
-    addOneWayCollider(this, player, bossOneWays);
+    // Remove platformer physics/colliders for top-down
 
     let bossLedgeArt: Phaser.GameObjects.GameObject[] = [];
     let bossLedgeBodies: Phaser.Physics.Arcade.Image[] = [];
@@ -544,36 +514,16 @@ class MainScene extends Phaser.Scene {
     // ── input ────────────────────────────────────────────────────────────────
     const cursors = this.input.keyboard!.createCursorKeys();
     const keys = this.input.keyboard!.addKeys({
+      up: Phaser.Input.Keyboard.KeyCodes.W,
+      down: Phaser.Input.Keyboard.KeyCodes.S,
       left: Phaser.Input.Keyboard.KeyCodes.A,
       right: Phaser.Input.Keyboard.KeyCodes.D,
-      space: Phaser.Input.Keyboard.KeyCodes.SPACE,
     }) as Record<string, Phaser.Input.Keyboard.Key>;
     const pointer = this.input.activePointer;
     let wasRightDown = false;
     let lastAttackAt = 0;
-    let lastGroundedAt = 0;
-    let jumpQueuedUntil = 0;
-
-    const COYOTE_TIME_MS = 50;
-    const JUMP_BUFFER_MS = 70;
 
     cam.startFollow(player, true, 0.1, 0.1);
-
-    const jump = () => {
-      jumpQueuedUntil = this.time.now + JUMP_BUFFER_MS;
-    };
-
-    const tryConsumeJump = () => {
-      const body = player.body as Phaser.Physics.Arcade.Body;
-      if (jumpQueuedUntil <= this.time.now) return;
-      const canJump = (body.touching.down || body.blocked.down) || (this.time.now - lastGroundedAt <= COYOTE_TIME_MS);
-      if (canJump) {
-        player.setVelocityY(-380);
-        jumpQueuedUntil = 0;
-      }
-    };
-
-    this.input.keyboard?.on("keydown-SPACE", jump);
 
     const attack = () => {
       if (this.time.now - lastAttackAt < ATTACK_COOLDOWN) return;
@@ -644,18 +594,21 @@ class MainScene extends Phaser.Scene {
 
     // --- Main update loop ---
     this.events.on('update', (time: number, delta: number) => {
-      const body = player.body as Phaser.Physics.Arcade.Body;
-      if (body.touching.down || body.blocked.down) lastGroundedAt = this.time.now;
-      if (Phaser.Input.Keyboard.JustDown(keys.space)) jump();
-      tryConsumeJump();
 
-      // Movement: A/D or arrows
-      let move = 0;
-      if (cursors.left.isDown || keys.left.isDown) move -= 1;
-      if (cursors.right.isDown || keys.right.isDown) move += 1;
-      player.setVelocityX(move * 180);
-      if (move < 0) player.setFlipX(true); // face left
-      else if (move > 0) player.setFlipX(false); // face right
+      // Top-down movement: WASD or arrows
+      let vx = 0, vy = 0;
+      if (cursors.left.isDown || keys.left.isDown) vx -= 1;
+      if (cursors.right.isDown || keys.right.isDown) vx += 1;
+      if (cursors.up.isDown || keys.up.isDown) vy -= 1;
+      if (cursors.down.isDown || keys.down.isDown) vy += 1;
+      // Normalize diagonal movement
+      if (vx !== 0 && vy !== 0) {
+        vx *= Math.SQRT1_2;
+        vy *= Math.SQRT1_2;
+      }
+      player.setVelocity(vx * 180, vy * 180);
+      if (vx < 0) player.setFlipX(true);
+      else if (vx > 0) player.setFlipX(false);
 
       const rightNow = pointer.rightButtonDown();
       if (rightNow && !wasRightDown) attack();
