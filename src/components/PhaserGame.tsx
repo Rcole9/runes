@@ -344,8 +344,7 @@ class MainScene extends Phaser.Scene {
         patrolTimer: Phaser.Math.Between(1000, 2500),
         hitTimer: 0,
       } satisfies EnemyState);
-      addOneWayCollider(this, e, oneWays);
-      addOneWayCollider(this, e, bossOneWays);
+      // Platformer colliders removed
       return e;
     };
 
