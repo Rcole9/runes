@@ -184,6 +184,14 @@ class MainScene extends Phaser.Scene {
     caveFloor.fillStyle(0x171215, 1); caveFloor.fillRect(0, 612, worldWidth, 8);
     addPlatform(this, kit, { x: 1200, y: 592, w: 2400, h: 32, faceH: 18 });
 
+    // Add classic jumpable platforms
+    addPlatform(this, kit, { x: 400, y: 480, w: 180 });
+    addPlatform(this, kit, { x: 700, y: 400, w: 160 });
+    addPlatform(this, kit, { x: 1000, y: 320, w: 140 });
+    addPlatform(this, kit, { x: 1300, y: 400, w: 160 });
+    addPlatform(this, kit, { x: 1600, y: 480, w: 180 });
+    addPlatform(this, kit, { x: 1900, y: 380, w: 140 });
+
     // Example one-way platforms (add more as needed)
     addOneWayPlatform(this, oneWayGroup, { x: 600, y: 420, w: 220 });
     addOneWayPlatform(this, oneWayGroup, { x: 1400, y: 340, w: 220 });
