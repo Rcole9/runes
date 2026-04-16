@@ -317,13 +317,18 @@ class MainScene extends Phaser.Scene {
         { kind: "loot", x: 2170 - offset, y: 311, texture: "key-brass", scale: 0.34 },
       ]);
 
-      roundKeyOverlap = this.physics.add.overlap(player, roundKeys, (_p, obj) => {
-        const item = obj as Phaser.Physics.Arcade.Image;
-        if (!item?.active) return;
-        item.disableBody(true, true);
+      // Overlap logic for collecting keys and unlocking the door
+      roundKeyOverlap = this.physics.add.overlap(player, roundKeys, (_p, kObj) => {
+        if (!(kObj instanceof Phaser.Physics.Arcade.Image)) return;
+        kObj.destroy();
         keysCollected++;
-        if (keysCollected >= keysRequired) setDoorOpenVisual();
+        console.log("Collected, keys:", keysCollected);
         updateHUD();
+        if (keysCollected >= keysRequired) {
+          doorGlow.setFillStyle(0x00ff99, 0.5);
+          door.setTint(0x88ffcc);
+          setDoorOpenVisual();
+        }
       });
     };
 
@@ -483,6 +488,7 @@ class MainScene extends Phaser.Scene {
 
     // ── door: advance area when unlocked ─────────────────────────────────────
     this.physics.add.overlap(player, doorZoneBody, () => {
+      console.log("Overlap with door! keys:", keysCollected);
       if (isBossFloor() || keysCollected < keysRequired || inTransition) return;
       inTransition = true;
       this.physics.pause();
@@ -608,6 +614,7 @@ class MainScene extends Phaser.Scene {
         if (hpBar) { hpBar.destroy(); enemyHpBars.delete(enemy); }
         enemy.destroy();
         if (isBoss) {
+          console.log("Boss killed, spawn key at", ex, ey);
           bossDefeated = true;
           spawnChestReward();
           updateHUD();
