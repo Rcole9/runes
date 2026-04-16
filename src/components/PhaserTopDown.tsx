@@ -34,92 +34,67 @@ class TopDownScene extends Phaser.Scene {
   collectible!: Phaser.GameObjects.Sprite;
 
   preload() {
-    // Simple pixel blocks for prototyping
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    this.textures.generate("floor", { data: [".", ".", ".", ".", ".", ".", ".", "."],
-                      pixelWidth: TILE_SIZE, palette: { ["."]: "#828691" } as any });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    this.textures.generate("wall", { data: ["#", "#", "#", "#", "#", "#", "#", "#"],
-                     pixelWidth: TILE_SIZE, palette: { ["#"]: "#1a1e23" } as any });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    this.textures.generate("player", { data: [" 1 ", "111", " 1 "],
-                       pixelWidth: TILE_SIZE, palette: { ["1"]: "#c8ff56", [" "]: "rgba(0,0,0,0)" } as any });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    this.textures.generate("item", { data: ["*", "*", ".", "*"],
-                     pixelWidth: TILE_SIZE, palette: { ["*"]: "#abc4fa", ["."]: "#376ee6" } as any });
+    // --- Load all extracted PNGs from public/tiles ---
+    // PixelFantasy
+    this.load.image('background1', 'tiles/PixelFantasy_Caves_1.0/background1.png');
+    this.load.image('background2', 'tiles/PixelFantasy_Caves_1.0/background2.png');
+    this.load.image('background3', 'tiles/PixelFantasy_Caves_1.0/background3.png');
+    this.load.image('background4a', 'tiles/PixelFantasy_Caves_1.0/background4a.png');
+    this.load.image('background4b', 'tiles/PixelFantasy_Caves_1.0/background4b.png');
+    this.load.image('mainlev_build', 'tiles/PixelFantasy_Caves_1.0/mainlev_build.png');
+    this.load.image('props1', 'tiles/PixelFantasy_Caves_1.0/props1.png');
+    this.load.image('props2', 'tiles/PixelFantasy_Caves_1.0/props2.png');
+
+    // DampDungeons Characters
+    const ddChar = 'tiles/DampDungeonsRPGMakerMZ/DampDungeonsRPGMakerMZ/Characters/';
+    this.load.image('Dungeon_HeroMan1', ddChar + 'Dungeon_HeroMan1.png');
+    this.load.image('Dungeon_HeroMan1Attack', ddChar + 'Dungeon_HeroMan1Attack.png');
+    this.load.image('Dungeon_Minecart', ddChar + 'Dungeon_Minecart.png');
+    this.load.image('Dungeon_Monsters1', ddChar + 'Dungeon_Monsters1.png');
+    this.load.image('Dungeon_Monsters2', ddChar + 'Dungeon_Monsters2.png');
+    this.load.image('Dungeon_MushroomMan', ddChar + 'Dungeon_MushroomMan.png');
+    this.load.image('Dungeon_ObjectBigdoor', ddChar + 'Dungeon_ObjectBigdoor.png');
+    this.load.image('Dungeon_ObjectsBig', ddChar + 'Dungeon_ObjectsBig.png');
+    this.load.image('Dungeon_ObjectsDoorUp', ddChar + 'Dungeon_ObjectsDoorUp.png');
+    this.load.image('Dungeon_ObjectsDungeon', ddChar + 'Dungeon_ObjectsDungeon.png');
+    this.load.image('Dungeon_Slimes1', ddChar + 'Dungeon_Slimes1.png');
+
+    // DampDungeons Tilesets
+    const ddTiles = 'tiles/DampDungeonsRPGMakerMZ/DampDungeonsRPGMakerMZ/Tilesets/';
+    this.load.image('Dungeon_DecorationsC', ddTiles + 'Dungeon_DecorationsC.png');
+    this.load.image('Dungeon_FloorsA2', ddTiles + 'Dungeon_FloorsA2.png');
+    this.load.image('Dungeon_FloorsWallsA5', ddTiles + 'Dungeon_FloorsWallsA5.png');
+    this.load.image('Dungeon_FloorsWallsSandA5', ddTiles + 'Dungeon_FloorsWallsSandA5.png');
+    this.load.image('Dungeon_FurnitureB', ddTiles + 'Dungeon_FurnitureB.png');
+    this.load.image('Dungeon_SandDecorationsC', ddTiles + 'Dungeon_SandDecorationsC.png');
+    this.load.image('Dungeon_WaterA1', ddTiles + 'Dungeon_WaterA1.png');
   }
 
   create() {
     // Pixel art crispness
     this.cameras.main.setRoundPixels(true);
 
-    // ----- Dungeon Generation -----
-    const map = makeDungeon();
-
-    // Floor & Walls
-    for (let y = 0; y < MAP_H; ++y) {
-      for (let x = 0; x < MAP_W; ++x) {
-        if (map[y][x] === 1) {
-          this.add.image(x * TILE_SIZE, y * TILE_SIZE, "wall").setOrigin(0);
-        } else {
-          this.add.image(x * TILE_SIZE, y * TILE_SIZE, "floor").setOrigin(0);
-        }
-      }
-    }
-
-    // ----- Physics Walls (Arcade) -----
-    const walls = this.physics.add.staticGroup();
-    for (let y = 0; y < MAP_H; ++y)
-      for (let x = 0; x < MAP_W; ++x)
-        if (map[y][x] === 1)
-          walls.create(x * TILE_SIZE + TILE_SIZE/2, y * TILE_SIZE + TILE_SIZE/2, "wall")
-            .setDisplaySize(TILE_SIZE, TILE_SIZE).refreshBody().setVisible(false);
-
-    // ----- Player -----
-    this.player = this.physics.add.sprite(TILE_SIZE*2 + TILE_SIZE/2, TILE_SIZE*Math.floor(MAP_H/2) + TILE_SIZE/2, "player")
-      .setDepth(3).setDisplaySize(TILE_SIZE, TILE_SIZE);
-    this.player.body.setCollideWorldBounds(true);
-    this.physics.add.collider(this.player, walls);
-
-    // ----- Collectible -----
-    this.collectible = this.add.sprite(
-      TILE_SIZE*(MAP_W-3) + TILE_SIZE/2,
-      TILE_SIZE*Math.floor(MAP_H/2) + TILE_SIZE/2,
-      "item"
-    ).setDisplaySize(TILE_SIZE, TILE_SIZE).setDepth(2);
-
-    this.physics.add.existing(this.collectible, true);
-
-    this.physics.add.overlap(this.player, this.collectible, () => {
-      this.collectible.setVisible(false);
-      this.add.text(this.player.x-20, this.player.y-24, "Got it!", { color: "#fff", fontSize: "12px" }).setDepth(10);
+    // Display all loaded images in a grid for reference
+    const keys = [
+      // PixelFantasy
+      'background1','background2','background3','background4a','background4b','mainlev_build','props1','props2',
+      // DampDungeons Characters
+      'Dungeon_HeroMan1','Dungeon_HeroMan1Attack','Dungeon_Minecart','Dungeon_Monsters1','Dungeon_Monsters2','Dungeon_MushroomMan','Dungeon_ObjectBigdoor','Dungeon_ObjectsBig','Dungeon_ObjectsDoorUp','Dungeon_ObjectsDungeon','Dungeon_Slimes1',
+      // DampDungeons Tilesets
+      'Dungeon_DecorationsC','Dungeon_FloorsA2','Dungeon_FloorsWallsA5','Dungeon_FloorsWallsSandA5','Dungeon_FurnitureB','Dungeon_SandDecorationsC','Dungeon_WaterA1',
+    ];
+    const cols = 4;
+    let x = 0, y = 0;
+    keys.forEach((key, i) => {
+      const img = this.add.image(60 + x * 140, 60 + y * 140, key).setOrigin(0).setScale(0.3);
+      this.add.text(60 + x * 140, 60 + y * 140 + img.displayHeight * 0.3 + 4, key, { fontSize: '12px', color: '#fff' });
+      x++;
+      if (x >= cols) { x = 0; y++; }
     });
-
-    // ----- Camera -----
-    this.cameras.main.setZoom(3);
-    this.cameras.main.startFollow(this.player, true, 0.13, 0.13);
-
-    // ----- Movement -----
-    this.cursors = this.input.keyboard!.createCursorKeys();
-    this.input.keyboard!.addKeys("W,A,S,D");
   }
 
-  update() {
-    const cursors = this.cursors;
-    if (!cursors) return;
-
-    let vx = 0, vy = 0;
-    const speed = 100;
-    if (cursors.left.isDown || this.input.keyboard!.addKey('A').isDown) vx -= speed;
-    if (cursors.right.isDown || this.input.keyboard!.addKey('D').isDown) vx += speed;
-    if (cursors.up.isDown || this.input.keyboard!.addKey('W').isDown) vy -= speed;
-    if (cursors.down.isDown || this.input.keyboard!.addKey('S').isDown) vy += speed;
-    this.player.setVelocity(vx, vy);
-
-    // Crisp pixels
-    this.player.x = Math.round(this.player.x);
-    this.player.y = Math.round(this.player.y);
-  }
+  // No update needed for grid display
+  update() {}
 }
 
 export default function PhaserTopDown() {
