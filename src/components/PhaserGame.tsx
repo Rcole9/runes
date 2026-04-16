@@ -401,7 +401,6 @@ class MainScene extends Phaser.Scene {
     const spawnRoundEnemies = () => {
       enemies.clear(true, true);
       if (isBossFloor()) {
-        buildBossLayout();
         spawnEnemy(1680, 372, "slime");
         spawnEnemy(1880, 312, "slime");
         spawnEnemy(2050, 262, "slime");
@@ -409,7 +408,6 @@ class MainScene extends Phaser.Scene {
         spawnEnemy(2000, 262, "orc", true);
         setDoorLockedVisual();
       } else {
-        clearBossLayout();
         spawnEnemy(240, 410, "slime");
         spawnEnemy(620, 288, "orc");
         spawnEnemy(820, 395, "slime");
