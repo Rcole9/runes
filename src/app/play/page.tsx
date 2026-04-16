@@ -1,5 +1,8 @@
 import GamePlayClient from "@/components/GamePlayClient";
 
-export default function GamePage() {
-  return <GamePlayClient />;
+import dynamic from "next/dynamic";
+const PhaserTopDown = dynamic(() => import("@/components/PhaserTopDown"), { ssr: false });
+
+export default function TopDownPage() {
+  return <PhaserTopDown />;
 }
