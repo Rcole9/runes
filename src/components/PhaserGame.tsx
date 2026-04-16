@@ -210,31 +210,6 @@ class MainScene extends Phaser.Scene {
 
     // Remove platformer physics/colliders for top-down
 
-    let bossLedgeArt: Phaser.GameObjects.GameObject[] = [];
-    let bossLedgeBodies: Phaser.Physics.Arcade.Image[] = [];
-
-    const clearBossLayout = () => {
-      for (const deco of bossLedgeArt) deco.destroy();
-      for (const body of bossLedgeBodies) body.destroy();
-      bossLedgeArt = [];
-      bossLedgeBodies = [];
-    };
-
-    const buildBossLayout = () => {
-      if (bossLedgeBodies.length > 0) return;
-      const addBossLedge = (x: number, y: number, w: number, variant: number) => {
-        bossLedgeArt.push(...drawFloatingPlatform(x, y, w, 34, variant));
-        const body = addOneWayPlatform(this, bossOneWays, { x, y, w, thickness: 30 });
-        bossLedgeBodies.push(body);
-      };
-
-      // Distinct floor-3 arena near the boss door.
-      addBossLedge(1500, 470, 240, 1);
-      addBossLedge(1700, 410, 220, 2);
-      addBossLedge(1880, 350, 230, 3);
-      addBossLedge(2050, 300, 210, 0);
-      addBossLedge(2220, 360, 200, 2);
-    };
 
     // ── HUD ──────────────────────────────────────────────────────────────────
     const hudStyle = {
