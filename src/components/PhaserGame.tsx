@@ -317,18 +317,20 @@ class MainScene extends Phaser.Scene {
         { kind: "key", x: 2170 - offset, y: 311, texture: "key-brass", scale: 0.34 },
       ]);
 
-      // Overlap logic for collecting keys and unlocking the door
-      roundKeyOverlap = this.physics.add.overlap(player, roundKeys, (_p, kObj) => {
-        if (!(kObj instanceof Phaser.Physics.Arcade.Image)) return;
-        kObj.destroy();
-        keysCollected++;
-        console.log("Collected, keys:", keysCollected);
-        updateHUD();
-        if (keysCollected >= keysRequired) {
-          doorGlow.setFillStyle(0x00ff99, 0.5);
-          door.setTint(0x88ffcc);
-          setDoorOpenVisual();
-        }
+      // Use wireAutoPickup for collecting keys and unlocking the door
+      wireAutoPickup(this, player, roundKeys, {
+        onPotion: () => {},
+        onLoot: () => {},
+        onKey: () => {
+          keysCollected++;
+          console.log("Collected, keys:", keysCollected);
+          updateHUD();
+          if (keysCollected >= keysRequired) {
+            doorGlow.setFillStyle(0x00ff99, 0.5);
+            door.setTint(0x88ffcc);
+            setDoorOpenVisual();
+          }
+        },
       });
     };
 
