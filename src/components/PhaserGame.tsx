@@ -309,12 +309,12 @@ class MainScene extends Phaser.Scene {
       const offset = (floor - 1) * 18;
       // Keys hover just above the current one-way jump route.
       roundKeys = spawnCollectibles(this, [
-        { kind: "loot", x: 240  + offset, y: 416, texture: "key-brass", scale: 0.34 },
-        { kind: "loot", x: 620  + offset, y: 296, texture: "key-brass", scale: 0.34 },
-        { kind: "loot", x: 1020 + offset, y: 331, texture: "key-brass", scale: 0.34 },
-        { kind: "loot", x: 1210,          y: 266, texture: "key-brass", scale: 0.34 },
-        { kind: "loot", x: 1600 - offset, y: 316, texture: "key-brass", scale: 0.34 },
-        { kind: "loot", x: 2170 - offset, y: 311, texture: "key-brass", scale: 0.34 },
+        { kind: "key", x: 240  + offset, y: 416, texture: "key-brass", scale: 0.34 },
+        { kind: "key", x: 620  + offset, y: 296, texture: "key-brass", scale: 0.34 },
+        { kind: "key", x: 1020 + offset, y: 331, texture: "key-brass", scale: 0.34 },
+        { kind: "key", x: 1210,          y: 266, texture: "key-brass", scale: 0.34 },
+        { kind: "key", x: 1600 - offset, y: 316, texture: "key-brass", scale: 0.34 },
+        { kind: "key", x: 2170 - offset, y: 311, texture: "key-brass", scale: 0.34 },
       ]);
 
       // Overlap logic for collecting keys and unlocking the door
