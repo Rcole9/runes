@@ -58,6 +58,7 @@ class MainScene extends Phaser.Scene {
   create() {
     const cam = this.cameras.main;
     cam.setRoundPixels(true);
+    cam.setZoom(1); // Traditional platformer zoom
 
     const worldWidth = 2400;
     const worldHeight = 620;
@@ -90,7 +91,7 @@ class MainScene extends Phaser.Scene {
     // Step ramp: left edge x=300, ground y=592, 10 steps, each 18px wide, 6px high
     // (feels like a gentle slope)
     // This is invisible collision; visuals can be added separately
-    // @ts-ignore-next-line
+    // @ts-expect-error-next-line
     import("@/phaser/stepRamps").then(({ addStepRamp }) => {
       addStepRamp(this, kit.solids, {
         x: 300,
@@ -541,7 +542,10 @@ class MainScene extends Phaser.Scene {
     let wasRightDown = false;
     let lastAttackAt = 0;
 
-    cam.startFollow(player, true, 0.1, 0.1);
+    // Traditional platformer camera: follow player horizontally, restrict vertical movement
+    cam.startFollow(player, true, 0.12, 0.0, 0, 0);
+    cam.setLerp(0.12, 0); // Only follow X axis
+    cam.setFollowOffset(0, 0);
 
     const attack = () => {
       if (this.time.now - lastAttackAt < ATTACK_COOLDOWN) return;
@@ -616,20 +620,17 @@ class MainScene extends Phaser.Scene {
 
     // --- Main update loop ---
     this.events.on('update', (time: number, delta: number) => {
-      // Top-down movement: WASD or arrows
-      let vx = 0, vy = 0;
+      // Platformer movement: left/right and jump
+      let vx = 0;
       if (cursors.left.isDown || keys.left.isDown) vx -= 1;
       if (cursors.right.isDown || keys.right.isDown) vx += 1;
-      if (cursors.up.isDown || keys.up.isDown) vy -= 1;
-      if (cursors.down.isDown || keys.down.isDown) vy += 1;
-      // Normalize diagonal movement
-      if (vx !== 0 && vy !== 0) {
-        vx *= Math.SQRT1_2;
-        vy *= Math.SQRT1_2;
-      }
-      player.setVelocity(vx * 180, vy * 180);
+      player.setVelocityX(vx * 180);
       if (vx < 0) player.setFlipX(true);
       else if (vx > 0) player.setFlipX(false);
+      // Jumping
+      if ((cursors.up.isDown || keys.up.isDown || cursors.space.isDown) && player.body.blocked.down) {
+        player.setVelocityY(-320);
+      }
 
       // Enable attack on pointer down (left click/tap)
       const leftNow = pointer.leftButtonDown();
