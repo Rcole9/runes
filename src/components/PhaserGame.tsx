@@ -622,14 +622,37 @@ class MainScene extends Phaser.Scene {
           spawnChestReward();
           updateHUD();
         } else if (!isBossFloor()) {
+          // Generate random loot (weapon or armor)
+          const { generateLoot } = require("@/game/loot");
+          const { mulberry32, hashSeed } = require("@/game/rng");
+          const { grantLoot } = gameStore;
+          const rng = mulberry32(hashSeed(`${Date.now()}-${Math.random()}`));
+          const loot = generateLoot(rng, level);
+          // Choose a texture based on loot type
+          let lootTexture = "cave-crystal";
+          if (loot.slot === "weapon") {
+            // Use a sword or staff icon if available
+            lootTexture = "icon-sword";
+            if (loot.name.toLowerCase().includes("staff")) lootTexture = "icon-staff";
+            if (loot.name.toLowerCase().includes("bow")) lootTexture = "icon-bow";
+            if (loot.name.toLowerCase().includes("dagger")) lootTexture = "icon-dagger";
+            if (loot.name.toLowerCase().includes("mace")) lootTexture = "icon-mace";
+            if (loot.name.toLowerCase().includes("spear")) lootTexture = "icon-spear";
+            if (loot.name.toLowerCase().includes("blade")) lootTexture = "icon-sword";
+          } else if (loot.slot === "armor") {
+            lootTexture = "icon-armor";
+          }
           const dropped = spawnCollectibles(this, [
-            { kind: "loot", x: ex, y: ey, texture: "cave-crystal", scale: 0.42 },
+            { kind: "loot", x: ex, y: ey, texture: lootTexture, scale: 0.48, loot },
           ]);
           const handlers = {
             onPotion: (amount: number) => {
               gameStore.addPotions(amount);
             },
-            onLoot: () => {}, // keys are handled elsewhere
+            onLoot: (_amount?: number, item?: any) => {
+              // Grant the generated loot to the player
+              if (loot) gameStore.grantLoot(loot);
+            },
           };
           wireAutoPickup(this, player, dropped, handlers);
         }
