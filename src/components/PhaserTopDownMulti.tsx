@@ -43,7 +43,8 @@ class MultiRoomScene extends Phaser.Scene {
     // Use extracted PNGs
     this.load.image('floor', 'tiles/DampDungeonsRPGMakerMZ/DampDungeonsRPGMakerMZ/Tilesets/Dungeon_FloorsA2.png');
     this.load.image('wall', 'tiles/DampDungeonsRPGMakerMZ/DampDungeonsRPGMakerMZ/Tilesets/Dungeon_FloorsWallsA5.png');
-    this.load.image('player', 'tiles/DampDungeonsRPGMakerMZ/DampDungeonsRPGMakerMZ/Characters/Dungeon_HeroMan1.png');
+    // Load player as spritesheet (assume 48x48 per frame, adjust if needed)
+    this.load.spritesheet('player', 'tiles/DampDungeonsRPGMakerMZ/DampDungeonsRPGMakerMZ/Characters/Dungeon_HeroMan1.png', { frameWidth: 48, frameHeight: 48 });
     this.load.image('item', 'tiles/DampDungeonsRPGMakerMZ/DampDungeonsRPGMakerMZ/Characters/Dungeon_Slimes1.png');
     this.load.image('stairs', 'tiles/DampDungeonsRPGMakerMZ/DampDungeonsRPGMakerMZ/Characters/Dungeon_ObjectsDoorUp.png');
   }
@@ -104,10 +105,12 @@ class MultiRoomScene extends Phaser.Scene {
     this.drawRoom();
 
     // Player starting position (entry point)
+    // Use only the first frame of the spritesheet for the player
     this.player = this.physics.add.sprite(
       TILE_SIZE*2+TILE_SIZE/2,
       TILE_SIZE*Math.floor(MAP_H/2)+TILE_SIZE/2,
-      "player"
+      "player",
+      0 // frame index
     ).setDepth(3).setDisplaySize(TILE_SIZE*2, TILE_SIZE*2);
 
     if (this.player.body) {
