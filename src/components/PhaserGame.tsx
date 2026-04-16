@@ -241,6 +241,8 @@ class MainScene extends Phaser.Scene {
 
     // Enable one-way platform collision for player
     addOneWayCollider(this, player, oneWayGroup);
+    // Enable landing on solid platforms
+    this.physics.add.collider(player, kit.solids);
 
 
     // ── HUD ──────────────────────────────────────────────────────────────────
