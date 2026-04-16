@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Phaser from "phaser";
+import * as Phaser from "phaser";
 
 const TILE_SIZE = 16;
 const MAP_W = 22;
