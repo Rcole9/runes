@@ -36,13 +36,13 @@ class TopDownScene extends Phaser.Scene {
   preload() {
     // Simple pixel blocks for prototyping
     this.textures.generate("floor", { data: [".", ".", ".", ".", ".", ".", ".", "."],
-                                      pixelWidth: TILE_SIZE, palette: { ".": "#828691" } });
+                      pixelWidth: TILE_SIZE, palette: { ["."]: "#828691" } });
     this.textures.generate("wall", { data: ["#", "#", "#", "#", "#", "#", "#", "#"],
-                                     pixelWidth: TILE_SIZE, palette: { "#": "#1a1e23" } });
+                     pixelWidth: TILE_SIZE, palette: { ["#"]: "#1a1e23" } });
     this.textures.generate("player", { data: [" 1 ", "111", " 1 "],
-                                       pixelWidth: TILE_SIZE, palette: { "1": "#c8ff56", " ": "rgba(0,0,0,0)" } });
+                       pixelWidth: TILE_SIZE, palette: { ["1"]: "#c8ff56", [" "]: "rgba(0,0,0,0)" } });
     this.textures.generate("item", { data: ["*", "*", ".", "*"],
-                                     pixelWidth: TILE_SIZE, palette: { "*": "#abc4fa", ".": "#376ee6" } });
+                     pixelWidth: TILE_SIZE, palette: { ["*"]: "#abc4fa", ["."]: "#376ee6" } });
   }
 
   create() {
